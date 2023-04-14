@@ -63,5 +63,22 @@ public class Operators {
 
         String worthRepairingText = isDamaged || price <= 10000 ? "It's worth repairing the car" : "It's not worth repairing the car";
         System.out.println(worthRepairingText);
+
+        System.out.println("---------------------------------------------------------------------------------------------------------");
+
+        price += 1000;
+        System.out.println("Price increased: $" + price);
+
+        price -= 2000;
+        System.out.println("Price decreased: $" + price);
+
+        price *= 2;
+        System.out.println("Price multiplied: $" + price);
+
+        price /= 2;
+        System.out.println("Price divided: $" + price);
+
+        price %= 10000;
+        System.out.println("Price remained: $" + price);
     }
 }
