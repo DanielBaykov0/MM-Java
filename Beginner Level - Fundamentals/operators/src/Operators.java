@@ -5,7 +5,7 @@ public class Operators {
         String carModel = "Dodge Challenger SRT 392";
         int price = 14999;
         int moneyInTheBank = 100000;
-        boolean isDamaged = true;
+        boolean isDamaged = false;
 
         System.out.println("Price of a " + carModel + ": $" + price);
 
@@ -55,5 +55,13 @@ public class Operators {
 
         String damagedText = isDamaged ? "The car is damaged" : "The car isn't damaged";
         System.out.println(damagedText);
+
+        System.out.println("---------------------------------------------------------------------------------------------------------");
+
+        String worthSeeingText = !isDamaged || price <= 20000 ? "It's worth seeing the car" : "It's not worth seeing the car";
+        System.out.println(worthSeeingText);
+
+        String worthRepairingText = isDamaged || price <= 10000 ? "It's worth repairing the car" : "It's not worth repairing the car";
+        System.out.println(worthRepairingText);
     }
 }
