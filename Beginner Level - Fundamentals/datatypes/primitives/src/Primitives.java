@@ -33,14 +33,24 @@ public class Primitives {
         System.out.println("Registration number: " + registrationNumber);
         System.out.println("Cubic capacity: " + cubicCapacity + "ccm");
         System.out.println("Power: " + power + "kW(" + horsePower + "hp)");
-        System.out.println("CO2 emission: " + co2Emission + " g/km");
+        System.out.println("CO2 emission: " + co2Emission + "g/km");
         System.out.println("Emission sticker: " + emissionSticker + " (Energy Efficiency Category: " + energyEfficiencyCategory + ")");
-        System.out.println("Combined Fuel Consumption: " + fuelConsumptionCombined + " l/100km");
-        System.out.println("Urban Fuel Consumption: " + fuelConsumptionUrban + " l/100km");
-        System.out.println("Extra Urban Fuel Consumption: " + fuelConsumptionExtraUrban + " l/100km");
-        System.out.println("Precise Average Fuel Consumption: " + fuelConsumptionPreciseAverage + " l/100km");
+        System.out.println("Combined Fuel Consumption: " + fuelConsumptionCombined + "l/100km");
+        System.out.println("Urban Fuel Consumption: " + fuelConsumptionUrban + "l/100km");
+        System.out.println("Extra Urban Fuel Consumption: " + fuelConsumptionExtraUrban + "l/100km");
+        System.out.println("Precise Average Fuel Consumption: " + fuelConsumptionPreciseAverage + "l/100km");
         System.out.println("Number of previous owners: " + numberOfVehicleOwners);
         System.out.println("Number of doors: " + numberOfDoors);
         System.out.println("Number of seats: " + numberOfSeats);
+
+        System.out.println("Conversion");
+        short newNumberOfSeats = numberOfSeats;
+        System.out.println("The value of newNumberOfSeats = " + newNumberOfSeats);
+
+        double newFuelConsumptionCombined = fuelConsumptionCombined;
+        System.out.println("The value of newFuelConsumptionCombined = " + newFuelConsumptionCombined + "l/100km");
+
+        byte newPower = (byte) power;
+        System.out.println("The value of newPower = " + newPower + "kW");
     }
 }
