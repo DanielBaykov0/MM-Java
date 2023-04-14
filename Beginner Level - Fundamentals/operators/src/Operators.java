@@ -24,5 +24,21 @@ public class Operators {
         int moneyRemaining = moneyInTheBank % price;
         System.out.println("Money we would remain with after buying " + dodgesYouCanBuy + " " + carModel + ": $" + moneyRemaining);
 
+        System.out.println("---------------------------------------------------------------------------------------------------------");
+
+        int priceNegative = -14999;
+        int priceNegativeWithPlusSign = +priceNegative;
+        System.out.println("Negative price with plus sign: $" + priceNegativeWithPlusSign);
+
+        int priceNegativeWithMinusSign = -priceNegative;
+        System.out.println("Negative price with minus sign: $" + priceNegativeWithMinusSign);
+
+        int priceOneDollarIncrease = ++price;
+        System.out.println("Price after one dollar increase: $" + priceOneDollarIncrease);
+
+        int priceOneDollarDecrease = --price;
+        System.out.println("Price after one dollar decrease: $" + priceOneDollarDecrease);
+
+        System.out.println("This car is damaged: " + !isDamaged);
     }
 }
