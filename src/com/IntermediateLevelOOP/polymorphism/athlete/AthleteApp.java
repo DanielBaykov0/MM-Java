@@ -54,6 +54,8 @@ public class AthleteApp {
 
         System.out.println("-----------------------------------");
         katinka.compete();
+        katinka.freestyle(100);
+        katinka.freestyle(200);
         System.out.println("-----------------------------------");
         katinka.getBio();
         System.out.println(katinka.getBodyType());
