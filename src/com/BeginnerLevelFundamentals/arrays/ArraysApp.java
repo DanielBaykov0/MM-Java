@@ -1,11 +1,15 @@
 package com.BeginnerLevelFundamentals.arrays;
 
+import java.util.Random;
+
 public class ArraysApp {
 
     public static void main(String[] args) {
 
         int[] lotteryNumbers = new int[5];
-        lotteryNumbers[0] = 17;
+
+        Random randomNumberGenerator = new Random();
+        lotteryNumbers[0] = randomNumberGenerator.nextInt(90) + 1;
         lotteryNumbers[1] = 23;
         lotteryNumbers[2] = 67;
         lotteryNumbers[3] = 37;
