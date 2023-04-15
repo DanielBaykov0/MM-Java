@@ -2,7 +2,7 @@ package com.IntermediateLevelOOP.abstraction.car;
 
 import java.util.Random;
 
-public class Car {
+public abstract class Car {
 
     private byte numberOfSeats = 5;
     private byte numberOfDoors = 3;
@@ -47,9 +47,7 @@ public class Car {
         this.registrationNumber = randomNumberGenerator.nextLong();
     }
 
-    public void startTheEngine() {
-        System.out.println("The engine is started");
-    }
+    public abstract void startTheEngine();
 
     public void getDescription() {
         System.out.println("A(n) " + color + " " + carName + " is created");

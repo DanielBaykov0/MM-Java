@@ -1,6 +1,6 @@
 package com.IntermediateLevelOOP.abstraction.car;
 
-public class DodgeChallenger extends Car {
+public class DodgeChallenger extends Car implements ElectricMode {
 
     public DodgeChallenger(String color, byte numberOfVehicleOwners, short power, short horsePower, short cubicCapacity,
                            int price, int mileage, boolean isDamaged) {
@@ -10,5 +10,10 @@ public class DodgeChallenger extends Car {
     @Override
     public void startTheEngine() {
         System.out.println("A Dodge Challenger engine is starting");
+    }
+
+    @Override
+    public void startTheElectricEngine() {
+        System.out.println("Dodge Challenger starts its electric engine");
     }
 }
