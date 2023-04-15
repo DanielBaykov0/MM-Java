@@ -30,9 +30,14 @@ public class BasketballPlayer extends Athlete {
     }
 
     @Override
-    public void playGame() {
-        super.playGame();
+    public void compete() {
+        super.compete();
         freeThrow();
+    }
+
+    @Override
+    public String getBodyType() {
+        return "Tall and lean muscle";
     }
 
     public void setFreeThrowPercentage(double freeThrowPercentage) {
