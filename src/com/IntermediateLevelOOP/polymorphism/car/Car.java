@@ -33,7 +33,7 @@ public abstract class Car {
     private String carName;
 
     public Car(String carName, String color, byte numberOfVehicleOwners, short power, short horsePower, short cubicCapacity,
-                           int price, int mileage, boolean isDamaged) {
+               int price, int mileage, boolean isDamaged) {
         this.carName = carName;
         this.color = color;
         this.numberOfVehicleOwners = numberOfVehicleOwners;
@@ -82,6 +82,13 @@ public abstract class Car {
 
     public void drive(int mileage) {
         this.mileage += Math.abs(mileage);
+        System.out.println("int function is called");
+    }
+
+    public void drive(double mileage) {
+        int wholeNumberMileage = (int) Math.round(mileage);
+        this.mileage += Math.abs(wholeNumberMileage);
+        System.out.println("double function is called");
     }
 
     public String getCarName() {

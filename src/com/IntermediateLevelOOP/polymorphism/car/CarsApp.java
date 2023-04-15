@@ -13,7 +13,7 @@ public class CarsApp {
         redDodgeChallenger.startTheElectricEngine();
         redDodgeChallenger.startTheEngine();
         System.out.println("The car has " + redDodgeChallenger.getMileage() + " miles");
-        redDodgeChallenger.drive(0);
+        redDodgeChallenger.drive(140);
         System.out.println("After driving the car has " + redDodgeChallenger.getMileage() + " miles");
 
         System.out.println("----------------------------------------------------------");
