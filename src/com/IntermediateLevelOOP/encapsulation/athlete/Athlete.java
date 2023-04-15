@@ -25,4 +25,17 @@ public class Athlete {
         System.out.println("Born in " + yearOfBirth);
         System.out.println("Last team is " + team + " and played " + gamesPlayed + " games");
     }
+
+    public void playGame() {
+        System.out.println(name + " started a game");
+        gamesPlayed++;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
 }
