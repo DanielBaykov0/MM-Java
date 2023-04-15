@@ -6,17 +6,18 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/Final Practice/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/arrays/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/codeblocks/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/controlflow/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/datatypes/object/references/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/datatypes/primitives/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/loops/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/methods/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/my-first-java-project/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/operators/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Beginner Level - Fundamentals/variables/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/Final Practice/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/arrays/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/codeblocks/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/controlflow/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/datatypes/object/references/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/datatypes/primitives/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/loops/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/methods/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/my-first-java-project/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/operators/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/Beginner Level - Fundamentals/variables/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
