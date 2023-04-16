@@ -22,7 +22,7 @@ public abstract class Person {
         System.out.println("Year of born: " + yearOfBorn);
         System.out.println("Expert in: " + expertIn);
         for (Item item : items) {
-            System.out.println(item);
+            System.out.println(item.getName());
         }
     }
 

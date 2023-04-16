@@ -2,7 +2,7 @@ package com.IntermediateLevelOOP.FinalPractice;
 
 public class Criminal extends Person {
 
-    private static final int SUCCESS_PERCENTAGE = 20;
+    public static final int SUCCESS_PERCENTAGE = 20;
 
     public Criminal(String name, String nickname, int yearOfBorn, String expertIn, Item[] items) {
         super(name, nickname, yearOfBorn, expertIn, items);
