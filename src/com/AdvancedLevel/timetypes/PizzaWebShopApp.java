@@ -1,8 +1,8 @@
 package com.AdvancedLevel.timetypes;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.chrono.HijrahDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class PizzaWebShopApp {
@@ -35,6 +35,20 @@ public class PizzaWebShopApp {
             System.out.println("The pizza didn't arrive in time");
         } else {
             System.out.println("The pizza arrived in time");
+        }
+
+        HijrahDate hijrahDate = HijrahDate.from(orderDate);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        System.out.println("Based on Hijrah calendar I ordered my pizza on " +dateTimeFormatter.format(hijrahDate));
+
+        ZonedDateTime myLocalDateTime = orderDateTime.atZone(ZoneId.of("Europe/Budapest"));
+        System.out.println("The time I ordered pizza was " + myLocalDateTime + " in Budapest");
+
+        ZonedDateTime tokioDateTime = myLocalDateTime.withZoneSameInstant(ZoneId.of("Asia/Tokyo"));
+        System.out.println("The time I ordered pizza was " + tokioDateTime + " in Tokyo");
+
+        for (String zoneId : ZoneId.getAvailableZoneIds()) {
+            System.out.println(zoneId);
         }
     }
 }
