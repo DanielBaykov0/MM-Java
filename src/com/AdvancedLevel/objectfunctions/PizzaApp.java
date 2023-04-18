@@ -1,4 +1,6 @@
-package com.AdvancedLevel.objectclone;
+package com.AdvancedLevel.objectfunctions;
+
+import java.util.Arrays;
 
 public class PizzaApp {
 
@@ -26,5 +28,15 @@ public class PizzaApp {
         Pizza anotherPizza = new Pizza("Margareta", PizzaSize.LARGE);
         System.out.println(pizzaOrder.equals(anotherPizza));
         System.out.println(pizzaOrder.equals(samePizza));
+
+        System.out.println("--------------------------------------");
+
+        System.out.println(anotherPizza.getClass().getSimpleName());
+        System.out.println(anotherPizza.getClass().getName());
+        System.out.println(Arrays.toString(anotherPizza.getClass().getFields()));
+        System.out.println(Arrays.toString(anotherPizza.getClass().getDeclaredFields()));
+        System.out.println(Arrays.toString(anotherPizza.getClass().getMethods()));
+        System.out.println(Arrays.toString(anotherPizza.getClass().getDeclaredMethods()));
+        System.out.println(anotherPizza.getClass().getSuperclass());
     }
 }
