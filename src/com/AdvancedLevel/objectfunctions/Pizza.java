@@ -75,4 +75,13 @@ public class Pizza implements Cloneable {
 
         return Objects.hash(name, pizzaSize, price);
     }
+
+    @Override
+    public String toString() {
+        return "Pizza{" +
+                "name='" + name + '\'' +
+                ", pizzaSize=" + pizzaSize +
+                ", price=" + price +
+                '}';
+    }
 }
