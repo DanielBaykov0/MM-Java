@@ -12,7 +12,7 @@ public class IMDB {
         float[] moviesRatings = {7.2F, 6.1F, 7.2F, 6.0F};
 
         System.out.println("My favourite actress name is " + actressName);
-        System.out.println("She is born in " + yearOfBirth + " and she is " + (Year.now().getValue() - yearOfBirth) + " old");
+        System.out.println("She is born in " + yearOfBirth + " and she is " + (Year.now().getValue() - yearOfBirth) + " years old");
         System.out.println("She acts in the following movies:");
         for (int i = 0; i < moviesTitles.length; i++) {
             System.out.println(moviesTitles[i] + " with " + getMoviesRatingsAssessment(moviesRatings[i]) + " rating");
