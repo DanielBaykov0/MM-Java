@@ -4,7 +4,9 @@ public class IMDB {
 
     public static void main(String[] args) {
 
+        Actor margot = new Actor();
         Movies movies = new Movies();
-        movies.printBio();
+        margot.printBio();
+        movies.printMovies();
     }
 }
