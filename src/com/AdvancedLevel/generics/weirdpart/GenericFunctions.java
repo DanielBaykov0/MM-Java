@@ -2,7 +2,7 @@ package com.AdvancedLevel.generics.weirdpart;
 
 import java.util.ArrayList;
 
-public class GenericFunctions {
+public class GenericFunctions<T> {
 
     public static <T> void displayToString(T typeData) {
         System.out.println(typeData.toString());
@@ -15,6 +15,13 @@ public class GenericFunctions {
     }
 
     public static void printList(ArrayList<?> list) {
+        for (Object element : list) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+    }
+
+    public void printSimpleGenerics(ArrayList<T> list) {
         for (Object element : list) {
             System.out.print(element + " ");
         }

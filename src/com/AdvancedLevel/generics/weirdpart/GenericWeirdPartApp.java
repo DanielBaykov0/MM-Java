@@ -11,5 +11,7 @@ public class GenericWeirdPartApp {
         GenericFunctions.addNumbers(lotteryNumbers);
         GenericFunctions.printList(lotteryNumbers);
         GenericFunctions.displayToString(lotteryNumbers);
+
+        GenericFunctions<Double> genericFunctions = new GenericFunctions<>();
     }
 }
