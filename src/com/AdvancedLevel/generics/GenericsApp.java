@@ -18,5 +18,16 @@ public class GenericsApp {
         pileOfBoxes.add(myFavoriteActor);
         pileOfBoxes.add(myFavoriteActor);
         Util.displayToString(pileOfBoxes);
+
+        OrderedPair<Integer, String> kobeBryant = new OrderedPair<>(24, "Kobe Bryant");
+        Util.displayToString(kobeBryant.toString());
+
+        ArrayList<OrderedPair<String, String>> listOfCountries = new ArrayList<>();
+        OrderedPair<String, String> malta = new OrderedPair<>("MLT", "Malta");
+        OrderedPair<String, String> germany = new OrderedPair<>("GER", "Germany");
+
+        listOfCountries.add(malta);
+        listOfCountries.add(germany);
+        Util.displayToString(listOfCountries.toString());
     }
 }
