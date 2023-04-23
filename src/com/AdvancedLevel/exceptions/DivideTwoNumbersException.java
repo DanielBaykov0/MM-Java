@@ -10,9 +10,13 @@ public class DivideTwoNumbersException {
     }
 
     private static int divide(int dividend, int divisor) {
+
         try {
+            if (divisor == 0) {
+                throw new ZeroDivisorException("The divisor can't be zero! - Custom exception");
+            }
             return dividend / divisor;
-        } catch (ArithmeticException e) {
+        } catch (ZeroDivisorException e) {
             System.err.println("The divisor can't be zero");
             e.printStackTrace();
             return 0;
