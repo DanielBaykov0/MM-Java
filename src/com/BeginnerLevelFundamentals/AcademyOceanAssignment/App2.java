@@ -8,14 +8,25 @@ public class App2 {
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter how many numbers to display: ");
+        int numbers = 0;
+        boolean valid = false;
 
-        try {
-            int numbers = scanner.nextInt();
-            fibonacciSeries(numbers);
-        } catch (InputMismatchException e) {
-            System.out.println("You didn't enter a number");
+        while (!valid) {
+            System.out.println("Enter a number from 1 to 20 to display fibonacci series:");
+            try {
+                numbers = scanner.nextInt();
+                if (numbers >= 1 && numbers <= 20) {
+                    valid = true;
+                } else {
+                    System.out.println("Number out of scope");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number from 1 to 20");
+                scanner.nextLine();
+            }
         }
+
+        fibonacciSeries(numbers);
     }
 
     // Bogdan suggested to put my code in a separate method, have a validation for 0 entered numbers
@@ -27,17 +38,12 @@ public class App2 {
         int number2 = 1;
         int number3;
 
-
-        if (numbers == 0) {
-            System.out.println("Please enter a higher number");
-        } else {
-            System.out.print(number1 + " " + number2);
-            for (int i = 2; i < numbers; i++) {
-                number3 = number1 + number2;
-                System.out.print(" " + number3);
-                number1 = number2;
-                number2 = number3;
-            }
+        System.out.print(number1 + " " + number2);
+        for (int i = 2; i < numbers; i++) {
+            number3 = number1 + number2;
+            System.out.print(" " + number3);
+            number1 = number2;
+            number2 = number3;
         }
     }
 }
