@@ -16,7 +16,7 @@ public class App3 {
             System.out.println("Choose a number from 1 to 9: ");
             try {
                 n = scanner.nextInt();
-                if (n >= 1 && n <= 10) {
+                if (n >= 1 && n <= 9) {
                     valid = true;
                 } else {
                     System.out.println("Number out of range");
