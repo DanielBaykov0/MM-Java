@@ -29,9 +29,20 @@ public class TreeMapExtraFunctionsApp {
         }
 
         System.out.println();
-        System.out.println("Lower key: " + productPricesTreeMap.lowerKey("Cereals"));
-        System.out.println("Floor key: " + productPricesTreeMap.floorKey("Cereals"));
-        System.out.println("Higher key: " + productPricesTreeMap.higherKey("Cereals"));
-        System.out.println("Ceiling key: " + productPricesTreeMap.ceilingKey("Cereals"));
+        System.out.println("Lower key: " + productPricesTreeMap.lowerKey("Pasta"));
+        System.out.println("Floor key: " + productPricesTreeMap.floorKey("Pasta"));
+        System.out.println("Higher key: " + productPricesTreeMap.higherKey("Pasta"));
+        System.out.println("Ceiling key: " + productPricesTreeMap.ceilingKey("Pasta"));
+
+        System.out.println();
+        System.out.println("Poll first entry: " + productPricesTreeMap.pollFirstEntry());
+        System.out.println("The first entry: " + productPricesTreeMap.firstEntry());
+        System.out.println("The last entry: " + productPricesTreeMap.lastEntry());
+
+        System.out.println();
+        System.out.println("Lower entry: " + productPricesTreeMap.lowerEntry("Pasta"));
+        System.out.println("Floor entry: " + productPricesTreeMap.floorEntry("Pasta"));
+        System.out.println("Higher entry: " + productPricesTreeMap.higherEntry("Pasta"));
+        System.out.println("Ceiling entry: " + productPricesTreeMap.ceilingEntry("Pasta"));
     }
 }
