@@ -44,5 +44,10 @@ public class TreeMapExtraFunctionsApp {
         System.out.println("Floor entry: " + productPricesTreeMap.floorEntry("Pasta"));
         System.out.println("Higher entry: " + productPricesTreeMap.higherEntry("Pasta"));
         System.out.println("Ceiling entry: " + productPricesTreeMap.ceilingEntry("Pasta"));
+
+        System.out.println();
+        System.out.println("Tail map: " + productPricesTreeMap.tailMap("Orange", true));
+        System.out.println("Head map: " + productPricesTreeMap.headMap("Orange", true));
+        System.out.println("Sub map: " + productPricesTreeMap.subMap("Orange", false, "Teabox", true));
     }
 }
