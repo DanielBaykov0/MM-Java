@@ -34,5 +34,33 @@ public class HashMapApp {
         capitals.replace("India", "Ankara", "Mumbai");
         System.out.println("The capital of India is: " + capitals.get("India"));
 
+        /*if (!capitals.containsKey(userInput)) {
+            capitals.put(userInput, "Copenhagen");
+        }*/
+
+        capitals.putIfAbsent(userInput, "Copenhagen");
+
+        capitals.remove(null);
+
+        System.out.println(capitals.size() + " countries can be found in the hashmap: ");
+        for (String country : capitals.keySet()) {
+            System.out.println("- " + country);
+        }
+
+        capitals.clear();
+        System.out.println(capitals.size() + " capitals can be found in the hashmap: ");
+        for (String capital : capitals.values()) {
+            System.out.println("- " + capital);
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }
