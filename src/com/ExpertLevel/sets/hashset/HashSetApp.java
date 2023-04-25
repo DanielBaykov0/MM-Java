@@ -7,24 +7,24 @@ public class HashSetApp {
 
     public static void main(String[] args) {
 
-        Set<String> carModels = new HashSet<>();
-        carModels.add("Toyota");
-        carModels.add("Nissan");
-        carModels.add("Ford");
-        carModels.add("Kia");
-        carModels.add("Toyota");
+        Set<String> carBrands = new HashSet<>();
+        carBrands.add("Toyota");
+        carBrands.add("Nissan");
+        carBrands.add("Ford");
+        carBrands.add("Kia");
+        carBrands.add("Toyota");
 
-        carModels.clear();
-        carModels.remove("Ford");
+        carBrands.clear();
+        carBrands.remove("Ford");
 
-        System.out.println(carModels);
-        System.out.println("Kia is in the set: " + carModels.contains("Kia"));
-        System.out.println("The size of the set: " + carModels.size());
+        System.out.println(carBrands);
+        System.out.println("Kia is in the set: " + carBrands.contains("Kia"));
+        System.out.println("The size of the set: " + carBrands.size());
 
         System.out.println();
-        System.out.println("We have the following car models:");
-        for (String carModel : carModels) {
-            System.out.println("- " + carModel.toUpperCase());
+        System.out.println("We have the following car brands:");
+        for (String carBrand : carBrands) {
+            System.out.println("- " + carBrand.toUpperCase());
         }
     }
 }
