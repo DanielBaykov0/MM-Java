@@ -6,8 +6,6 @@ public class HangmanApp {
 
     public static void main(String[] args) throws IOException {
 
-        HangmanService hangman = new HangmanService();
-//        HangmanService.createFile();
-        hangman.start();
+        HangmanService.startGame();
     }
 }
