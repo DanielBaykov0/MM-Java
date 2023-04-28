@@ -7,7 +7,7 @@ public abstract class Hero {
     protected final Random RANDOM_NUMBER_GENERATOR = new Random();
     private final String className;
     protected int HEALTH_POINTS = 100;
-    protected int ATTACK_POINTS = 20;
+    protected int ATTACK_POINTS = 25;
     protected int ARMOR_POINTS = 20;
 
     public Hero(String className) {
@@ -20,7 +20,7 @@ public abstract class Hero {
         return RANDOM_NUMBER_GENERATOR.nextInt((int) (ATTACK_POINTS * 0.8), (int) (ATTACK_POINTS * 1.21));
     }
     public int defend() {
-        return RANDOM_NUMBER_GENERATOR.nextInt((int) (ATTACK_POINTS * 0.8), (int) (ATTACK_POINTS * 1.21));
+        return RANDOM_NUMBER_GENERATOR.nextInt((int) (ARMOR_POINTS * 0.8), (int) (ARMOR_POINTS * 1.21));
     }
 
     public String getClassName() {
