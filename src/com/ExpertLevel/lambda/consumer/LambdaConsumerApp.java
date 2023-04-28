@@ -2,23 +2,24 @@ package com.ExpertLevel.lambda.consumer;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class LambdaConsumerApp {
 
     public static void main(String[] args) {
 
-        Consumer<Integer> printMultiplyNumber = number -> System.out.println(number * 4);
-        printMultiplyNumber.accept(10);
+        BiConsumer<String, Integer> printAttribute = (text, number) -> System.out.println(text + number);
+        printAttribute.accept("Points: ", 10);
+        printAttribute.accept("Price: $", 14000);
 
-        Consumer<List<Integer>> multiplyNumbers = list -> {
+        BiConsumer<List<Integer>, Integer> multiplyNumbers = (list, number) -> {
             for (int i = 0; i < list.size(); i++) {
-                list.set(i, list.get(i) * 3);
+                list.set(i, list.get(i) * number);
             }
         };
 
         List<Integer> numbers = Arrays.asList(5, 4, 3, 2, 1);
-        multiplyNumbers.accept(numbers);
+        multiplyNumbers.accept(numbers, 5);
         System.out.println(numbers);
 
     }
