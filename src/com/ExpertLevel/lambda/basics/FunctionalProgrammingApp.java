@@ -6,9 +6,11 @@ public class FunctionalProgrammingApp {
 
         WelcomeMessageService welcomeMessageService = new WelcomeMessageService();
         Greeter greeter = new GuestUserGreeter();
-        welcomeMessageService.greet(greeter);
+        Greeter loggedInUserGreeter = () -> System.out.println("Welcome back");
+        welcomeMessageService.greet(() -> System.out.println("Welcome back"));
+//        greeter.perform();
+//        loggedInUserGreeter.perform();
 
-        MyFunctionType loggedInUserGreeter = () -> System.out.println("Welcome back");
     }
 }
 
