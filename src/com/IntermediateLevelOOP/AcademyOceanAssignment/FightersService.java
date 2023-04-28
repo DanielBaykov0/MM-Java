@@ -4,8 +4,8 @@ import java.util.*;
 
 public class FightersService {
 
-    protected static final Random RANDOM_NUMBER_GENERATOR = new Random();
-    protected static final Scanner SCANNER = new Scanner(System.in);
+    private static final Random RANDOM_NUMBER_GENERATOR = new Random();
+    private static final Scanner SCANNER = new Scanner(System.in);
     private static boolean IS_RUNNING = true;
 
     private static final Warrior WARRIOR = new Warrior();
