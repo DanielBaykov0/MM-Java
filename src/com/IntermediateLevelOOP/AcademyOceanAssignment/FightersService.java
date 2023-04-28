@@ -47,6 +47,22 @@ public class FightersService {
 
         while (true) {
 
+            if (FIRST_HERO.HEALTH_POINTS <= 0) {
+                System.out.println();
+                System.out.println(FIRST_HERO.getClassName() + " died...");
+                System.out.println();
+                FIRST_HERO = getRandomHero();
+                printMenu();
+                break;
+            } else if (SECOND_HERO.HEALTH_POINTS <= 0) {
+                System.out.println();
+                System.out.println(SECOND_HERO.getClassName() + " died...");
+                System.out.println();
+                SECOND_HERO = getRandomHero();
+                printMenu();
+                break;
+            }
+
             int damage = FIRST_HERO.attack() - SECOND_HERO.defend();
             int damageTook = SECOND_HERO.attack() - FIRST_HERO.defend();
 
@@ -77,20 +93,6 @@ public class FightersService {
 
             System.out.println(SECOND_HERO.getClassName() + " dealt " + damageTook + " damage to the " + FIRST_HERO.getClassName());
             System.out.println(SECOND_HERO.getClassName() + " has " + SECOND_HERO.HEALTH_POINTS + " health points left");
-
-            if (FIRST_HERO.HEALTH_POINTS <= 0) {
-                System.out.println();
-                System.out.println(FIRST_HERO.getClassName() + " died...");
-                System.out.println();
-                printMenu();
-                break;
-            } else if (SECOND_HERO.HEALTH_POINTS <= 0) {
-                System.out.println();
-                System.out.println(SECOND_HERO.getClassName() + " died...");
-                System.out.println();
-                printMenu();
-                break;
-            }
         }
     }
 
@@ -109,7 +111,6 @@ public class FightersService {
             FIRST_HERO = getRandomHero();
             SECOND_HERO = getRandomHero();
         }
-
     }
 
 
