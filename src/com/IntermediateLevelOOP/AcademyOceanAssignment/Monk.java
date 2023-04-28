@@ -20,12 +20,10 @@ public class Monk extends Hero {
 
     @Override
     public int defend() {
-        int defenceNumber = super.defend();
-        int specialDefenceNumber = RANDOM_NUMBER_GENERATOR.nextInt(1, 101);
-        if (isSpecialDefence(specialDefenceNumber)) {
+        if (isSpecialDefence(RANDOM_NUMBER_GENERATOR.nextInt(1, 101))) {
             return 0;
         } else {
-            return defenceNumber;
+            return super.defend();
         }
     }
 

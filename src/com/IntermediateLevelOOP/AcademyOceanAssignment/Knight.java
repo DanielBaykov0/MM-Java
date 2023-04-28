@@ -14,23 +14,19 @@ public class Knight extends Hero {
 
     @Override
     public int attack() {
-        int attackNumber = super.attack();
-        int specialAttackNumber = RANDOM_NUMBER_GENERATOR.nextInt(1, 101);
-        if (isSpecialAttack(specialAttackNumber)) {
-            return attackNumber * 2;
+        if (isSpecialAttack(RANDOM_NUMBER_GENERATOR.nextInt(1, 101))) {
+            return super.attack() * 2;
         } else {
-            return attackNumber;
+            return super.attack();
         }
     }
 
     @Override
     public int defend() {
-        int defenceNumber = super.defend();
-        int specialDefenceNumber = RANDOM_NUMBER_GENERATOR.nextInt(1, 101);
-        if (isSpecialDefence(specialDefenceNumber)) {
+        if (isSpecialDefence(RANDOM_NUMBER_GENERATOR.nextInt(1, 101))) {
             return 0;
         } else {
-            return defenceNumber;
+            return super.defend();
         }
     }
 

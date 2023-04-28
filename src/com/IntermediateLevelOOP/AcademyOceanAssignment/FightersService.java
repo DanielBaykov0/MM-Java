@@ -51,6 +51,7 @@ public class FightersService {
                 System.out.println();
                 System.out.println(FIRST_HERO.getClassName() + " died...");
                 System.out.println();
+                resetFirstHeroStats();
                 FIRST_HERO = getRandomHero();
                 printMenu();
                 break;
@@ -58,6 +59,7 @@ public class FightersService {
                 System.out.println();
                 System.out.println(SECOND_HERO.getClassName() + " died...");
                 System.out.println();
+                resetSecondHeroStats();
                 SECOND_HERO = getRandomHero();
                 printMenu();
                 break;
@@ -113,7 +115,6 @@ public class FightersService {
         }
     }
 
-
     private static void printHeroesInfo() {
         randomHeroValidation();
         System.out.println(FIRST_HERO.toString());
@@ -122,6 +123,18 @@ public class FightersService {
         System.out.println(SECOND_HERO.toString());
         System.out.println(SECOND_HERO.getQuote());
         System.out.println();
+    }
+
+    private static void resetFirstHeroStats() {
+        FIRST_HERO.HEALTH_POINTS = 100;
+        FIRST_HERO.ATTACK_POINTS = 25;
+        FIRST_HERO.ARMOR_POINTS = 20;
+    }
+
+    private static void resetSecondHeroStats() {
+        SECOND_HERO.HEALTH_POINTS = 100;
+        SECOND_HERO.ATTACK_POINTS = 25;
+        SECOND_HERO.ARMOR_POINTS = 20;
     }
 
     private static void printSeparator() {

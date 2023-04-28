@@ -15,12 +15,10 @@ public class Assassin extends Hero {
 
     @Override
     public int attack() {
-        int attackNumber = super.attack();
-        int specialAttackNumber = RANDOM_NUMBER_GENERATOR.nextInt(1, 101);
-        if (isSpecialAttack(specialAttackNumber)) {
-            return attackNumber * 3;
+        if (isSpecialAttack(RANDOM_NUMBER_GENERATOR.nextInt(1, 101))) {
+            return super.attack() * 3;
         } else {
-            return attackNumber;
+            return super.attack();
         }
     }
 
