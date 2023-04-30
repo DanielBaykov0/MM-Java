@@ -24,7 +24,7 @@ public class Knight extends Hero {
     @Override
     public int defend() {
         if (isSpecialDefence(RANDOM_NUMBER_GENERATOR.nextInt(1, 101))) {
-            return 0;
+            return Integer.MAX_VALUE;
         } else {
             return super.defend();
         }
