@@ -2,8 +2,8 @@ package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
 public class Warrior extends Hero {
 
-    public Warrior() {
-        super("Warrior");
+    public Warrior(int id) {
+        super(id, "Warrior");
     }
 
     @Override

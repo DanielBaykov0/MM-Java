@@ -9,12 +9,18 @@ public abstract class Hero {
     protected int healthPoints = 100;
     protected int attackPoints = 25;
     protected int armorPoints = 20;
+    private final int id;
 
-    public Hero(String className) {
+    public Hero(int id, String className) {
         this.className = className;
+        this.id = id;
     }
 
     public abstract String getQuote();
+
+    public int getId() {
+        return id;
+    }
 
     public int getMaxHealthPoints() {
         return 100;

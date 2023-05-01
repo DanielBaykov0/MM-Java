@@ -6,8 +6,8 @@ import java.util.List;
 public class Assassin extends Hero {
 
 
-    public Assassin() {
-        super("Assassin");
+    public Assassin(int id) {
+        super(id, "Assassin");
     }
 
     @Override

@@ -8,9 +8,15 @@ public class FightersService {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     private static int INPUT_NUMBER;
-    private static int ROUNDS;
-
     protected static String location;
+
+    private static final FinalStatistics finalStatistics = new FinalStatistics();
+
+    private static HashMap<Integer, Hero> heroHashMap = new HashMap<>();
+    private static HashMap<Integer, Integer> hashMap = new HashMap<>();
+
+    private static Map<String, Integer> map = new HashMap<>();
+
 
     public static void gameLoop() {
         getInput();
@@ -31,7 +37,12 @@ public class FightersService {
             }
             SCANNER.nextLine();
 
-            if (input >= 4 && input <= 256 && input % 2 == 0) {
+            int n = input;
+            while (n % 2 != 1) {
+                n /= 2;
+            }
+
+            if (input >= 4 && input <= 256 && n == 1) {
                 printMenu();
                 battle();
                 break;
@@ -45,6 +56,10 @@ public class FightersService {
     private static void battle() {
 
         List<Hero> heroes = generateHeroes();
+        for (Hero hero : heroes) {
+            heroHashMap.put(hero.getId(), hero);
+        }
+
         printStartingHeroes(heroes);
 
         while (heroes.size() > 1) {
@@ -53,8 +68,11 @@ public class FightersService {
 
             for (int i = 0; i < heroes.size(); i += 2) {
                 isFinal(heroes);
+                finalStatistics.setRounds(finalStatistics.getRounds() + 1);
                 Hero firstHero = heroes.get(i);
+                System.out.println("First hero id = " + firstHero.getId() + " hero: " + firstHero.getClassName());
                 Hero secondHero = heroes.get(i + 1);
+                System.out.println("Second hero id = " + secondHero.getId() + " hero: " + secondHero.getClassName());
                 Hero winner = getHeroWinner(firstHero, secondHero);
                 lastTwoStanding.add(winner);
             }
@@ -64,7 +82,14 @@ public class FightersService {
         }
 
         System.out.println("THE LAST HERO REMAINING IS THE " + "'" + heroes.get(0).getClassName() + "'");
-
+        System.out.println("ROUNDS = " + finalStatistics.getRounds());
+        System.out.println("Number of all battles = " + finalStatistics.getNumberOfAllBattles());
+        printSeparator();
+        System.out.println("First hero fights = " + finalStatistics.getFirstHeroFights());
+        System.out.println("Second hero fights = " + finalStatistics.getSecondHeroFights());
+        printSeparator();
+        finalStatistics.printHighestDamageOutput(map);
+        printSeparator();
     }
 
     private static void printMenu() {
@@ -93,25 +118,19 @@ public class FightersService {
 
         while (true) {
 
-            if (firstHero.healthPoints <= 0) {
-                isHeroDead(firstHero);
-                return secondHero;
-            } else if (secondHero.healthPoints <= 0) {
+            if (secondHero.healthPoints <= 0) {
                 isHeroDead(secondHero);
+                finalStatistics.setSecondHeroFights(finalStatistics.getSecondHeroFights() + 1);
                 return firstHero;
+            } else if (firstHero.healthPoints <= 0) {
+                isHeroDead(firstHero);
+                finalStatistics.setFirstHeroFights(finalStatistics.getFirstHeroFights() + 1);
+                return secondHero;
             }
 
-            int damage = firstHero.attack() - secondHero.defend();
-            int damageTook = secondHero.attack() - firstHero.defend();
+            int damage = firstHeroDamage(firstHero, secondHero);
+            int damageTook = secondHeroDamage(firstHero, secondHero);
             isWarriorHealed(location, firstHero, secondHero, damage, damageTook);
-
-            if (damage < 0) {
-                damage = 0;
-            }
-
-            if (damageTook < 0) {
-                damageTook = 0;
-            }
 
             firstHero.healthPoints -= damageTook;
             secondHero.healthPoints -= damage;
@@ -130,12 +149,35 @@ public class FightersService {
             printSeparator();
             System.out.println("\t\t\t\tBATTLE");
             printSeparator();
-            System.out.println(firstHero.getClassName() + " dealt " + damage + " damage to the " + secondHero.getClassName());
+            System.out.println("\t\t" + firstHero.getClassName() + " dealt " + damage + " damage to the " + secondHero.getClassName());
             System.out.println(firstHero.getClassName() + " has " + firstHero.healthPoints + " health points left");
+            System.out.println("\t\tFirst Hero ID = " + firstHero.getId() + " " + firstHero.getClassName());
+            System.out.println("\t\tFirst hero damage sum = " + finalStatistics.getFirstHeroDamageSum());
+            finalStatistics.setNumberOfAllBattles(finalStatistics.getNumberOfAllBattles() + 1);
 
             System.out.println(secondHero.getClassName() + " dealt " + damageTook + " damage to the " + firstHero.getClassName());
             System.out.println(secondHero.getClassName() + " has " + secondHero.healthPoints + " health points left");
+            System.out.println("\t\tSecond Hero ID = " + secondHero.getId() + " " + secondHero.getClassName());
+            System.out.println("\t\tSecond hero damage sum = " + finalStatistics.getSecondHeroDamageSum());
         }
+    }
+
+    private static int firstHeroDamage(Hero firstHero, Hero secondHero) {
+        int damage = firstHero.attack() - secondHero.defend();
+        if (damage < 0) {
+            damage = 0;
+        }
+
+        return damage;
+    }
+
+    private static int secondHeroDamage(Hero firstHero, Hero secondHero) {
+        int damageTook = secondHero.attack() - firstHero.defend();
+        if (damageTook < 0) {
+            damageTook = 0;
+        }
+
+        return damageTook;
     }
 
     private static void isKnightLocation(String location, Hero firstHero, Hero secondHero) {
@@ -182,19 +224,19 @@ public class FightersService {
     private static List<Hero> generateHeroes() {
         List<Hero> heroes = new ArrayList<>();
         for (int i = 0; i < INPUT_NUMBER; i++) {
-            heroes.add(getRandomHero());
+            heroes.add(getRandomHero(i));
         }
 
         return heroes;
     }
 
-    private static Hero getRandomHero() {
-        return getHeroes().get(RANDOM_NUMBER_GENERATOR.nextInt(getHeroes().size()));
+    private static Hero getRandomHero(int id) {
+        return getHeroes(id).get(RANDOM_NUMBER_GENERATOR.nextInt(getHeroes(id).size()));
     }
 
-    private static List<Hero> getHeroes() {
-        return new ArrayList<>(List.of(new Warrior(), new Knight(), new Assassin()
-                , new Monk()));
+    private static List<Hero> getHeroes(int id) {
+        return new ArrayList<>(List.of(new Warrior(id), new Knight(id), new Assassin(id)
+                , new Monk(id)));
     }
 
     protected static String getRandomLocation() {

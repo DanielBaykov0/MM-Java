@@ -3,8 +3,8 @@ package com.IntermediateLevelOOP.AcademyOceanAssignment;
 public class Monk extends Hero {
 
 
-    public Monk() {
-        super("Monk");
+    public Monk(int id) {
+        super(id, "Monk");
     }
 
     @Override
