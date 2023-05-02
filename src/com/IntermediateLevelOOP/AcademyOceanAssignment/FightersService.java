@@ -11,18 +11,9 @@ public class FightersService {
     protected static String location;
 
     private static final FinalStatistics finalStatistics = new FinalStatistics();
-
-    private static HashMap<Integer, Hero> heroHashMap = new HashMap<>();
-    private static HashMap<Integer, Integer> hashMap = new HashMap<>();
-
-    private static Map<String, Integer> map = new HashMap<>();
-
+    private static List<Hero> heroes = new ArrayList<>();
 
     public static void gameLoop() {
-        getInput();
-    }
-
-    private static void getInput() {
         int input = 0;
 
         printMenu();
@@ -55,110 +46,137 @@ public class FightersService {
 
     private static void battle() {
 
-        List<Hero> heroes = generateHeroes();
-        for (Hero hero : heroes) {
-            heroHashMap.put(hero.getId(), hero);
-        }
+        heroes = generateHeroes();
+        generateHeroStoreMap();
 
         printStartingHeroes(heroes);
 
         while (heroes.size() > 1) {
 
-            List<Hero> lastTwoStanding = new ArrayList<>();
+            List<Hero> lastOneStanding = new ArrayList<>();
 
             for (int i = 0; i < heroes.size(); i += 2) {
                 isFinal(heroes);
                 finalStatistics.setRounds(finalStatistics.getRounds() + 1);
                 Hero firstHero = heroes.get(i);
-                System.out.println("First hero id = " + firstHero.getId() + " hero: " + firstHero.getClassName());
                 Hero secondHero = heroes.get(i + 1);
-                System.out.println("Second hero id = " + secondHero.getId() + " hero: " + secondHero.getClassName());
                 Hero winner = getHeroWinner(firstHero, secondHero);
-                lastTwoStanding.add(winner);
+                lastOneStanding.add(winner);
             }
 
-            resetHeroStats(lastTwoStanding);
-            heroes = lastTwoStanding;
+            resetHeroStats(lastOneStanding);
+            heroes = lastOneStanding;
         }
 
+        generateLosers();
         System.out.println("THE LAST HERO REMAINING IS THE " + "'" + heroes.get(0).getClassName() + "'");
-        System.out.println("ROUNDS = " + finalStatistics.getRounds());
-        System.out.println("Number of all battles = " + finalStatistics.getNumberOfAllBattles());
         printSeparator();
-        System.out.println("First hero fights = " + finalStatistics.getFirstHeroFights());
-        System.out.println("Second hero fights = " + finalStatistics.getSecondHeroFights());
-        printSeparator();
-        finalStatistics.printHighestDamageOutput(map);
-        printSeparator();
-    }
-
-    private static void printMenu() {
-        printSeparator();
-        System.out.println("\tWelcome to Heroes Fighting App");
-        printSeparator();
-    }
-
-    private static void printSeparator() {
-        for (int i = 0; i < 37; i++) {
-            System.out.print("-");
-        }
-
-        System.out.println();
-    }
-
-    private static void printStartingHeroes(List<Hero> heroes) {
-        for (Hero hero : heroes) {
-            System.out.println(hero);
-        }
+        printFinalInfo();
     }
 
     private static Hero getHeroWinner(Hero firstHero, Hero secondHero) {
         location = getRandomLocation();
         isKnightLocation(location, firstHero, secondHero);
 
+        finalStatistics.setFirstHeroDamageValue(0);
+        checkFirstHeroDamageValue(firstHero);
+
+        finalStatistics.setFirstHeroBattle(0);
+        checkFirstHeroBattles(firstHero);
+
+        finalStatistics.setFirstHeroFights(0);
+        checkFirstHeroFights(firstHero);
+
+        finalStatistics.setFirstHeroHighestDamageValue(0);
+        checkFirstHeroHighestDamageValue(firstHero);
+
+        finalStatistics.setFirstHeroHighestNumberOfSuccessfulAttackDodges(0);
+        checkFirstHeroHighestNumberOfSuccessfulAttackDodges(firstHero);
+
+        finalStatistics.setSecondHeroDamageValue(0);
+        checkSecondHeroDamageValue(secondHero);
+
+        finalStatistics.setSecondHeroBattle(0);
+        checkSecondHeroBattles(secondHero);
+
+        finalStatistics.setSecondHeroFights(0);
+        checkSecondHeroFights(secondHero);
+
+        finalStatistics.setSecondHeroHighestDamageValue(0);
+        checkSecondHeroHighestDamageValue(secondHero);
+
+        finalStatistics.setSecondHeroHighestNumberOfSuccessfulAttackDodges(0);
+        checkSecondHeroHighestNumberOfSuccessfulAttackDodges(secondHero);
+
         while (true) {
 
             if (secondHero.healthPoints <= 0) {
                 isHeroDead(secondHero);
-                finalStatistics.setSecondHeroFights(finalStatistics.getSecondHeroFights() + 1);
+                putFirstHeroIDFightsMap(firstHero);
                 return firstHero;
             } else if (firstHero.healthPoints <= 0) {
                 isHeroDead(firstHero);
-                finalStatistics.setFirstHeroFights(finalStatistics.getFirstHeroFights() + 1);
+                putSecondHeroIDFightsMap(secondHero);
                 return secondHero;
             }
 
             int damage = firstHeroDamage(firstHero, secondHero);
+            putFirstHeroIDDamageBattlesMap(firstHero, damage);
+            putFirstHeroIDHighestDamageMap(firstHero, damage);
+            putFirstHeroHighestNumberOfSuccessfulAttackDodges(secondHero, damage);
+
             int damageTook = secondHeroDamage(firstHero, secondHero);
+            putSecondHeroIDDamageBattleMap(secondHero, damageTook);
+            putSecondHeroIDHighestDamageMap(secondHero, damageTook);
+            putSecondHeroHighestNumberOfSuccessfulAttackDodges(firstHero, damageTook);
+
             isWarriorHealed(location, firstHero, secondHero, damage, damageTook);
 
             firstHero.healthPoints -= damageTook;
             secondHero.healthPoints -= damage;
 
-            if (firstHero.healthPoints <= 0) {
-                firstHero.healthPoints = 0;
+            checkBothHeroesHealthPoints(firstHero, secondHero);
+            printBattleInfo(firstHero, secondHero, damage, damageTook);
+        }
+    }
+
+    private static void checkFirstHeroDamageValue(Hero firstHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDDamageMap.entrySet()) {
+            if (entry.getKey().equals(firstHero.getId())) {
+                finalStatistics.setFirstHeroDamageValue(entry.getValue());
             }
+        }
+    }
 
-            if (secondHero.healthPoints <= 0) {
-                secondHero.healthPoints = 0;
+    private static void checkFirstHeroHighestDamageValue(Hero firstHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestDamageMap.entrySet()) {
+            if (entry.getKey().equals(firstHero.getId())) {
+                finalStatistics.setFirstHeroHighestDamageValue(entry.getValue());
             }
+        }
+    }
 
-            printSeparator();
-            System.out.println("The heroes fighting location: " + location);
+    private static void checkFirstHeroHighestNumberOfSuccessfulAttackDodges(Hero firstHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestNumberOfSuccessfulAttackDodgesMap.entrySet()) {
+            if (entry.getKey().equals(firstHero.getId())) {
+                finalStatistics.setFirstHeroHighestNumberOfSuccessfulAttackDodges(entry.getValue());
+            }
+        }
+    }
 
-            printSeparator();
-            System.out.println("\t\t\t\tBATTLE");
-            printSeparator();
-            System.out.println("\t\t" + firstHero.getClassName() + " dealt " + damage + " damage to the " + secondHero.getClassName());
-            System.out.println(firstHero.getClassName() + " has " + firstHero.healthPoints + " health points left");
-            System.out.println("\t\tFirst Hero ID = " + firstHero.getId() + " " + firstHero.getClassName());
-            System.out.println("\t\tFirst hero damage sum = " + finalStatistics.getFirstHeroDamageSum());
-            finalStatistics.setNumberOfAllBattles(finalStatistics.getNumberOfAllBattles() + 1);
+    private static void checkFirstHeroBattles(Hero firstHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDBattlesMap.entrySet()) {
+            if (entry.getKey().equals(firstHero.getId())) {
+                finalStatistics.setFirstHeroBattle(entry.getValue());
+            }
+        }
+    }
 
-            System.out.println(secondHero.getClassName() + " dealt " + damageTook + " damage to the " + firstHero.getClassName());
-            System.out.println(secondHero.getClassName() + " has " + secondHero.healthPoints + " health points left");
-            System.out.println("\t\tSecond Hero ID = " + secondHero.getId() + " " + secondHero.getClassName());
-            System.out.println("\t\tSecond hero damage sum = " + finalStatistics.getSecondHeroDamageSum());
+    private static void checkFirstHeroFights(Hero firstHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDFightsMap.entrySet()) {
+            if (entry.getKey().equals(firstHero.getId())) {
+                finalStatistics.setFirstHeroFights(entry.getValue());
+            }
         }
     }
 
@@ -171,6 +189,46 @@ public class FightersService {
         return damage;
     }
 
+    private static void checkSecondHeroBattles(Hero secondHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDBattlesMap.entrySet()) {
+            if (entry.getKey().equals(secondHero.getId())) {
+                finalStatistics.setSecondHeroBattle(entry.getValue());
+            }
+        }
+    }
+
+    private static void checkSecondHeroHighestDamageValue(Hero secondHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestDamageMap.entrySet()) {
+            if (entry.getKey().equals(secondHero.getId())) {
+                finalStatistics.setSecondHeroHighestDamageValue(entry.getValue());
+            }
+        }
+    }
+
+    private static void checkSecondHeroHighestNumberOfSuccessfulAttackDodges(Hero secondHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestNumberOfSuccessfulAttackDodgesMap.entrySet()) {
+            if (entry.getKey().equals(secondHero.getId())) {
+                finalStatistics.setSecondHeroHighestNumberOfSuccessfulAttackDodges(entry.getValue());
+            }
+        }
+    }
+
+    private static void checkSecondHeroDamageValue(Hero secondHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDDamageMap.entrySet()) {
+            if (entry.getKey().equals(secondHero.getId())) {
+                finalStatistics.setSecondHeroDamageValue(entry.getValue());
+            }
+        }
+    }
+
+    private static void checkSecondHeroFights(Hero secondHero) {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDFightsMap.entrySet()) {
+            if (entry.getKey().equals(secondHero.getId())) {
+                finalStatistics.setSecondHeroFights(entry.getValue());
+            }
+        }
+    }
+
     private static int secondHeroDamage(Hero firstHero, Hero secondHero) {
         int damageTook = secondHero.attack() - firstHero.defend();
         if (damageTook < 0) {
@@ -178,6 +236,76 @@ public class FightersService {
         }
 
         return damageTook;
+    }
+
+    private static void putFirstHeroIDFightsMap(Hero firstHero) {
+        for (Hero hero : heroes) {
+            if (hero.getId() == firstHero.getId()) {
+                FinalStatistics.heroesIDFightsMap.put(hero.getId(), finalStatistics.setFirstHeroFights(finalStatistics.getFirstHeroFights() + 1));
+            }
+        }
+    }
+
+    private static void putFirstHeroIDHighestDamageMap(Hero firstHero, int damage) {
+        for (Hero hero : heroes) {
+            if (hero.getId() == firstHero.getId() && damage > finalStatistics.getFirstHeroHighestDamageValue()) {
+                FinalStatistics.heroesIDHighestDamageMap.put(hero.getId(), finalStatistics.setFirstHeroHighestDamageValue(damage));
+            }
+        }
+    }
+
+    private static void putFirstHeroHighestNumberOfSuccessfulAttackDodges(Hero secondHero, int damage) {
+        for (Hero hero : heroes) {
+            if (hero.getId() == secondHero.getId() && damage == 0) {
+                FinalStatistics.heroesIDHighestNumberOfSuccessfulAttackDodgesMap
+                        .put(hero.getId(),
+                                finalStatistics.setSecondHeroHighestNumberOfSuccessfulAttackDodges(1 + finalStatistics.getSecondHeroHighestNumberOfSuccessfulAttackDodges()));
+            }
+        }
+    }
+
+    private static void putFirstHeroIDDamageBattlesMap(Hero firstHero, int damage) {
+        for (Hero hero : heroes) {
+            if (hero.getId() == firstHero.getId()) {
+                FinalStatistics.heroesIDDamageMap.put(hero.getId(), finalStatistics.setFirstHeroDamageValue(finalStatistics.getFirstHeroDamageValue() + damage));
+                FinalStatistics.heroesIDBattlesMap.put(hero.getId(), finalStatistics.setFirstHeroBattle(1 + finalStatistics.getFirstHeroBattle()));
+            }
+        }
+    }
+
+    private static void putSecondHeroIDFightsMap(Hero secondHero) {
+        for (Hero hero : heroes) {
+            if (hero.getId() == secondHero.getId()) {
+                FinalStatistics.heroesIDFightsMap.put(hero.getId(), finalStatistics.setSecondHeroFights(finalStatistics.getSecondHeroFights() + 1));
+            }
+        }
+    }
+
+    private static void putSecondHeroIDHighestDamageMap(Hero secondHero, int damageTook) {
+        for (Hero hero : heroes) {
+            if (hero.getId() == secondHero.getId() && damageTook > finalStatistics.getSecondHeroHighestDamageValue()) {
+                FinalStatistics.heroesIDHighestDamageMap.put(hero.getId(), finalStatistics.setSecondHeroHighestDamageValue(damageTook));
+            }
+        }
+    }
+
+    private static void putSecondHeroHighestNumberOfSuccessfulAttackDodges(Hero firstHero, int damageTook) {
+        for (Hero hero : heroes) {
+            if (hero.getId() == firstHero.getId() && damageTook == 0) {
+                FinalStatistics.heroesIDHighestNumberOfSuccessfulAttackDodgesMap
+                        .put(hero.getId(),
+                                finalStatistics.setFirstHeroHighestNumberOfSuccessfulAttackDodges(1 + finalStatistics.getFirstHeroHighestNumberOfSuccessfulAttackDodges()));
+            }
+        }
+    }
+
+    private static void putSecondHeroIDDamageBattleMap(Hero secondHero, int damageTook) {
+        for (Hero hero : heroes) {
+            if (hero.getId() == secondHero.getId()) {
+                FinalStatistics.heroesIDDamageMap.put(hero.getId(), finalStatistics.setSecondHeroDamageValue(finalStatistics.getSecondHeroDamageValue() + damageTook));
+                FinalStatistics.heroesIDBattlesMap.put(hero.getId(), finalStatistics.setSecondHeroBattle(1 + finalStatistics.getSecondHeroBattle()));
+            }
+        }
     }
 
     private static void isKnightLocation(String location, Hero firstHero, Hero secondHero) {
@@ -203,6 +331,7 @@ public class FightersService {
 
     private static void isFinal(List<Hero> heroes) {
         if (heroes.size() == 2) {
+            FinalStatistics.finalTwoStanding = heroes;
             System.out.println("\t\t\t   LAST MATCH");
         }
     }
@@ -215,10 +344,35 @@ public class FightersService {
         }
     }
 
+    private static void checkBothHeroesHealthPoints(Hero firstHero, Hero secondHero) {
+        if (firstHero.healthPoints <= 0) {
+            firstHero.healthPoints = 0;
+        }
+
+        if (secondHero.healthPoints <= 0) {
+            secondHero.healthPoints = 0;
+        }
+    }
+
     private static void isHeroDead(Hero hero) {
         System.out.println();
         System.out.println(hero.getClassName() + " died...");
         System.out.println();
+    }
+
+    private static void generateLosers() {
+        for (Hero hero : FinalStatistics.heroesHashMapStore.values()) {
+            if (!FinalStatistics.finalTwoStanding.contains(hero)) {
+                FinalStatistics.losers.add(hero);
+
+            }
+        }
+    }
+
+    private static void generateHeroStoreMap() {
+        for (Hero hero : heroes) {
+            FinalStatistics.heroesHashMapStore.put(hero.getId(), hero);
+        }
     }
 
     private static List<Hero> generateHeroes() {
@@ -245,5 +399,221 @@ public class FightersService {
 
     private static ArrayList<String> getLocations() {
         return new ArrayList<>(Locations.getLocations());
+    }
+
+    private static void printMenu() {
+        printSeparator();
+        System.out.println("\tWelcome to Heroes Fighting App");
+        printSeparator();
+    }
+
+    private static void printSeparator() {
+        for (int i = 0; i < 45; i++) {
+            System.out.print("-");
+        }
+
+        System.out.println();
+    }
+
+    private static void printStartingHeroes(List<Hero> heroes) {
+        for (Hero hero : heroes) {
+            System.out.println(hero);
+        }
+    }
+
+    private static void printTwoFinalistsStats() {
+        System.out.println("\t\t\t\t\t\tTWO FINALISTS INFO");
+        for (Hero hero : FinalStatistics.finalTwoStanding) {
+            resetHeroStats(FinalStatistics.finalTwoStanding);
+            System.out.println(hero);
+        }
+    }
+
+    // not used at the moment
+    private static void printAllHeroesIDDamageInfo() {
+        printSeparator();
+        System.out.println("\t\tDAMAGE SUMMARY");
+        printSeparator();
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDDamageMap.entrySet()) {
+            for (Map.Entry<Integer, Hero> heroId : FinalStatistics.heroesHashMapStore.entrySet()) {
+                if (heroId.getKey().equals(entry.getKey())) {
+                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getClassName() + " Damage = " + entry.getValue());
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    // not used at the moment
+    private static void printAllHeroesIDBattlesInfo() {
+        printSeparator();
+        System.out.println("\t\tBATTLES SUMMARY");
+        printSeparator();
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDBattlesMap.entrySet()) {
+            for (Map.Entry<Integer, Hero> heroId : FinalStatistics.heroesHashMapStore.entrySet()) {
+                if (heroId.getKey().equals(entry.getKey())) {
+                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getClassName() + " Battles = " + entry.getValue());
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    // not used at the moment
+    private static void printAllHeroesIDHighestDamageValueInfo() {
+        printSeparator();
+        System.out.println("\t\tHIGHEST DAMAGE VALUE SUMMARY");
+        printSeparator();
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestDamageMap.entrySet()) {
+            for (Map.Entry<Integer, Hero> heroId : FinalStatistics.heroesHashMapStore.entrySet()) {
+                if (heroId.getKey().equals(entry.getKey())) {
+                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getClassName() + " Battles = " + entry.getValue());
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    // not used at the moment
+    private static void printAllHeroesIDHighestNumberOfSuccessfulAttackDodgesInfo() {
+        printSeparator();
+        System.out.println("\t\tHIGHEST DAMAGE VALUE SUMMARY");
+        printSeparator();
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestNumberOfSuccessfulAttackDodgesMap.entrySet()) {
+            for (Map.Entry<Integer, Hero> heroId : FinalStatistics.heroesHashMapStore.entrySet()) {
+                if (heroId.getKey().equals(entry.getKey())) {
+                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getClassName() + " Highest Number of Successful Dodges = " + entry.getValue());
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private static void printFinalistsIDDamageInfo() {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDDamageMap.entrySet()) {
+            for (Hero hero : FinalStatistics.finalTwoStanding) {
+                if (entry.getKey().equals(hero.getId())) {
+                    FinalStatistics.finalistsIDDamageMap.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.finalistsIDDamageMap.entrySet()) {
+            System.out.print("\t\tID = " + entry.getKey() + " Damage = " + entry.getValue());
+        }
+    }
+
+    private static void printTopTwoLosersHighestDamageValueInfo() {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestDamageMap.entrySet()) {
+            FinalStatistics.topTwoLosersHighestDamageValue.add(entry.getValue());
+            if (FinalStatistics.topTwoLosersHighestDamageValue.size() > 2) {
+                FinalStatistics.topTwoLosersHighestDamageValue.poll();
+            }
+        }
+
+        for (Integer integer : FinalStatistics.topTwoLosersHighestDamageValue) {
+            System.out.println("\t\t Highest Damage Value = " + integer);
+        }
+    }
+
+    // not used at the moment
+    private static void printLosersIDHighestDamageValueInfo() {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestDamageMap.entrySet()) {
+            for (Hero hero : FinalStatistics.losers) {
+                if (entry.getKey().equals(hero.getId())) {
+                    FinalStatistics.losersHighestDamageValue.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.losersHighestDamageValue.entrySet()) {
+            System.out.println("\t\tID = " + entry.getKey() + " Highest Damage Value = " + entry.getValue());
+        }
+    }
+
+    private static void printTopTwoLosersHighestNumberOfSuccessfulAttackDodgesInfo() {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestNumberOfSuccessfulAttackDodgesMap.entrySet()) {
+            FinalStatistics.topTwoLosersHighestNumberOfSuccessfulAttackDodges.add(entry.getValue());
+            if (FinalStatistics.topTwoLosersHighestNumberOfSuccessfulAttackDodges.size() > 2) {
+                FinalStatistics.topTwoLosersHighestNumberOfSuccessfulAttackDodges.poll();
+            }
+        }
+
+        for (Integer integer : FinalStatistics.topTwoLosersHighestNumberOfSuccessfulAttackDodges) {
+            System.out.println("\t\t Highest Number of Successful Dodges = " + integer);
+        }
+    }
+
+    // not used at the moment
+    private static void printLosersIDHighestNumberOfSuccessfulAttackDodgesInfo() {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDHighestNumberOfSuccessfulAttackDodgesMap.entrySet()) {
+            for (Hero hero : FinalStatistics.losers) {
+                if (entry.getKey().equals(hero.getId())) {
+                    FinalStatistics.losersHighestNumberOfSuccessfulAttackDodges.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.losersHighestNumberOfSuccessfulAttackDodges.entrySet()) {
+            System.out.println("\t\tID = " + entry.getKey() + " Highest Number of Successful Dodges = " + entry.getValue());
+        }
+    }
+
+    private static void printFinalistsIDFightsInfo() {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDFightsMap.entrySet()) {
+            for (Hero hero : FinalStatistics.finalTwoStanding) {
+                if (entry.getKey().equals(hero.getId())) {
+                    FinalStatistics.finalistsIDFigthsMap.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.finalistsIDFigthsMap.entrySet()) {
+            System.out.print("\t\tID = " + entry.getKey() + " Fights = " + entry.getValue());
+        }
+    }
+
+    private static void printFinalistsIDBattleInfo() {
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.heroesIDBattlesMap.entrySet()) {
+            for (Hero hero : FinalStatistics.finalTwoStanding) {
+                if (entry.getKey().equals(hero.getId())) {
+                    FinalStatistics.finalistsIDBattlesMap.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : FinalStatistics.finalistsIDBattlesMap.entrySet()) {
+            System.out.print("\t\tID = " + entry.getKey() + " Battles = " + entry.getValue());
+        }
+    }
+
+    private static void printBattleInfo(Hero firstHero, Hero secondHero, int damage, int damageTook) {
+        printSeparator();
+        System.out.println("The heroes fighting location: " + location);
+        printSeparator();
+
+        System.out.println("\t\t\t\tBATTLE");
+        printSeparator();
+        System.out.println("ID = " + firstHero.getId() + " " + firstHero.getClassName() + " dealt " + damage + " damage to the " + secondHero.getClassName());
+        System.out.println("ID = " + firstHero.getId() + " " + firstHero.getClassName() + " has " + firstHero.healthPoints + " health points left");
+
+        System.out.println("ID = " + secondHero.getId() + " " + secondHero.getClassName() + " dealt " + damageTook + " damage to the " + firstHero.getClassName());
+        System.out.println("ID = " + secondHero.getId() + " " + secondHero.getClassName() + " has " + secondHero.healthPoints + " health points left");
+    }
+
+    private static void printFinalInfo() {
+        printTwoFinalistsStats();
+        printSeparator();
+        System.out.println("\t\t\t\t\t\tROUNDS = " + finalStatistics.getRounds());
+        printFinalistsIDBattleInfo();
+        System.out.println();
+        printFinalistsIDFightsInfo();
+        System.out.println();
+        printFinalistsIDDamageInfo();
+        System.out.println();
+        printSeparator();
+        System.out.println("\t\t\t\t\tHONORABLE MENTIONS");
+        printTopTwoLosersHighestDamageValueInfo();
+        printTopTwoLosersHighestNumberOfSuccessfulAttackDodgesInfo();
     }
 }

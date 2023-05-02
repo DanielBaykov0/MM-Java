@@ -71,7 +71,7 @@ public abstract class Hero {
 
     @Override
     public String toString() {
-        return "Hero: " +
+        return "ID=" + id + " Hero: " +
                 "'" + className + '\'' +
                 ", healthPoints=" + healthPoints +
                 ", attackPoints=" + attackPoints +

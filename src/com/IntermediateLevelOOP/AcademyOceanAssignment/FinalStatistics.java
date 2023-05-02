@@ -1,34 +1,113 @@
 package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FinalStatistics {
 
-    private HashMap<Integer, Hero> highestDamageOutput = new HashMap<>();
-    private HashMap<Integer, Hero> highestNumberOfSuccessfulAttackDodges;
-    private HashMap<Integer, Hero> highestDamageSurvivedOnASingleFight;
-    private HashMap<Integer, Integer> allHeroesDamageSum = new HashMap<>();
-    private int longestFight;
-    private int firstHeroDamageSum;
-    private int secondHeroDamageSum;
+    protected static Map<Integer, Hero> heroesHashMapStore = new HashMap<>();
+    protected static Map<Integer, Integer> heroesIDDamageMap = new HashMap<>();
+    protected static Map<Integer, Integer> heroesIDBattlesMap = new HashMap<>();
+    protected static Map<Integer, Integer> heroesIDFightsMap = new HashMap<>();
+    protected static Map<Integer, Integer> heroesIDHighestDamageMap = new HashMap<>();
+    protected static Map<Integer, Integer> heroesIDHighestNumberOfSuccessfulAttackDodgesMap = new HashMap<>();
 
-    private int firstHeroFights = 0;
-    private int secondHeroFights = 0;
-    private int rounds = 0;
-    private int numberOfAllBattles = 0;
+    protected static List<Hero> finalTwoStanding = new ArrayList<>();
+    protected static Map<Integer, Integer> finalistsIDBattlesMap = new HashMap<>();
+    protected static Map<Integer, Integer> finalistsIDFigthsMap = new HashMap<>();
+    protected static Map<Integer, Integer> finalistsIDDamageMap = new HashMap<>();
+
+    protected static List<Hero> losers = new ArrayList<>();
+    protected static Map<Integer, Integer> losersHighestDamageValue = new HashMap<>();
+    protected static Queue<Integer> topTwoLosersHighestDamageValue = new PriorityQueue<>();
+    protected static Map<Integer, Integer> losersHighestNumberOfSuccessfulAttackDodges = new HashMap<>();
+    protected static Queue<Integer> topTwoLosersHighestNumberOfSuccessfulAttackDodges = new PriorityQueue<>();
+
+    private int firstHeroFights;
+    private int secondHeroFights;
+    private int firstHeroDamageValue;
+    private int firstHeroBattle;
+    private int secondHeroDamageValue;
+    private int secondHeroBattle;
+    private int rounds;
+
+    private int firstHeroHighestDamageValue;
+    private int secondHeroHighestDamageValue;
+    private int firstHeroHighestNumberOfSuccessfulAttackDodges;
+    private int secondHeroHighestNumberOfSuccessfulAttackDodges;
 
     public FinalStatistics() {
-        firstHeroDamageSum = 0;
-        secondHeroDamageSum = 0;
     }
 
-    public int getNumberOfAllBattles() {
-        return numberOfAllBattles;
+    public int getFirstHeroHighestDamageValue() {
+        return firstHeroHighestDamageValue;
     }
 
-    public void setNumberOfAllBattles(int numberOfAllBattles) {
-        this.numberOfAllBattles = numberOfAllBattles;
+    public int setFirstHeroHighestDamageValue(int firstHeroHighestDamageValue) {
+        this.firstHeroHighestDamageValue = firstHeroHighestDamageValue;
+        return firstHeroHighestDamageValue;
+    }
+
+    public int getSecondHeroHighestDamageValue() {
+        return secondHeroHighestDamageValue;
+    }
+
+    public int setSecondHeroHighestDamageValue(int secondHeroHighestDamageValue) {
+        this.secondHeroHighestDamageValue = secondHeroHighestDamageValue;
+        return secondHeroHighestDamageValue;
+    }
+
+    public int getFirstHeroHighestNumberOfSuccessfulAttackDodges() {
+        return firstHeroHighestNumberOfSuccessfulAttackDodges;
+    }
+
+    public int setFirstHeroHighestNumberOfSuccessfulAttackDodges(int firstHeroHighestNumberOfSuccessfulAttackDodges) {
+        this.firstHeroHighestNumberOfSuccessfulAttackDodges = firstHeroHighestNumberOfSuccessfulAttackDodges;
+        return firstHeroHighestNumberOfSuccessfulAttackDodges;
+    }
+
+    public int getSecondHeroHighestNumberOfSuccessfulAttackDodges() {
+        return secondHeroHighestNumberOfSuccessfulAttackDodges;
+    }
+
+    public int setSecondHeroHighestNumberOfSuccessfulAttackDodges(int secondHeroHighestNumberOfSuccessfulAttackDodges) {
+        this.secondHeroHighestNumberOfSuccessfulAttackDodges = secondHeroHighestNumberOfSuccessfulAttackDodges;
+        return secondHeroHighestNumberOfSuccessfulAttackDodges;
+    }
+
+    public int getFirstHeroDamageValue() {
+        return firstHeroDamageValue;
+    }
+
+    public int setFirstHeroDamageValue(int firstHeroDamageValue) {
+        this.firstHeroDamageValue = firstHeroDamageValue;
+        return firstHeroDamageValue;
+    }
+
+    public int getFirstHeroBattle() {
+        return firstHeroBattle;
+    }
+
+    public int setFirstHeroBattle(int firstHeroBattle) {
+        this.firstHeroBattle = firstHeroBattle;
+        return firstHeroBattle;
+    }
+
+    public int getSecondHeroDamageValue() {
+        return secondHeroDamageValue;
+    }
+
+    public int setSecondHeroDamageValue(int secondHeroDamageValue) {
+        this.secondHeroDamageValue = secondHeroDamageValue;
+        return secondHeroDamageValue;
+    }
+
+    public int getSecondHeroBattle() {
+        return secondHeroBattle;
+    }
+
+    public int setSecondHeroBattle(int secondHeroBattle) {
+        this.secondHeroBattle = secondHeroBattle;
+        return secondHeroBattle;
     }
 
     public int getRounds() {
@@ -43,91 +122,17 @@ public class FinalStatistics {
         return firstHeroFights;
     }
 
-    public void setFirstHeroFights(int firstHeroFights) {
+    public int setFirstHeroFights(int firstHeroFights) {
         this.firstHeroFights = firstHeroFights;
+        return firstHeroFights;
     }
 
     public int getSecondHeroFights() {
         return secondHeroFights;
     }
 
-    public void setSecondHeroFights(int secondHeroFights) {
+    public int setSecondHeroFights(int secondHeroFights) {
         this.secondHeroFights = secondHeroFights;
-    }
-
-    public HashMap<Integer, Integer> getAllHeroesDamageSum() {
-        return allHeroesDamageSum;
-    }
-
-    public void setAllHeroesDamageSum(HashMap<Integer, Integer> allHeroesDamageSum) {
-        this.allHeroesDamageSum = allHeroesDamageSum;
-    }
-
-    public int getSecondHeroDamageSum() {
-        return secondHeroDamageSum;
-    }
-
-    public void setSecondHeroDamageSum(int secondHeroDamageSum) {
-        this.secondHeroDamageSum = secondHeroDamageSum;
-    }
-
-    public int getFirstHeroDamageSum() {
-        return firstHeroDamageSum;
-    }
-
-    public void setFirstHeroDamageSum(int firstHeroDamageSum) {
-        this.firstHeroDamageSum = firstHeroDamageSum;
-    }
-
-    public HashMap<Integer, Hero> getHighestDamageOutput() {
-        return highestDamageOutput;
-    }
-
-    public void setHighestDamageOutput(HashMap<Integer, Hero> highestDamageOutput) {
-        this.highestDamageOutput = highestDamageOutput;
-    }
-
-    public HashMap<Integer, Hero> getHighestNumberOfSuccessfulAttackDodges() {
-        return highestNumberOfSuccessfulAttackDodges;
-    }
-
-    public void setHighestNumberOfSuccessfulAttackDodges(HashMap<Integer, Hero> highestNumberOfSuccessfulAttackDodges) {
-        this.highestNumberOfSuccessfulAttackDodges = highestNumberOfSuccessfulAttackDodges;
-    }
-
-    public HashMap<Integer, Hero> getHighestDamageSurvivedOnASingleFight() {
-        return highestDamageSurvivedOnASingleFight;
-    }
-
-    public void setHighestDamageSurvivedOnASingleFight(HashMap<Integer, Hero> highestDamageSurvivedOnASingleFight) {
-        this.highestDamageSurvivedOnASingleFight = highestDamageSurvivedOnASingleFight;
-    }
-
-    public int getLongestFight() {
-        return longestFight;
-    }
-
-    public void setLongestFight(int longestFight) {
-        this.longestFight = longestFight;
-    }
-
-    @Override
-    public String toString() {
-        return "FinalStats{" +
-                "highestDamageOutput=" + highestDamageOutput +
-                ", highestDamageSurvivedOnASingleFight=" + highestDamageSurvivedOnASingleFight +
-                '}';
-    }
-
-    public Map<Integer, String> getHighestDamageOutput(int damage, Hero firstHero) {
-        Map<Integer, String> map = new HashMap<>();
-        map.put(damage, firstHero.getClassName());
-        return map;
-    }
-
-    public void printHighestDamageOutput(Map<String, Integer> map) {
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            System.out.println("'" + entry.getKey() + "' did the highest damage output of " + entry.getValue());
-        }
+        return secondHeroFights;
     }
 }
