@@ -2,7 +2,6 @@ package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
 public class Monk extends Hero {
 
-
     public Monk(int id) {
         super(id, "Monk");
     }
@@ -14,21 +13,16 @@ public class Monk extends Hero {
     }
 
     @Override
-    public int attack() {
-        return super.attack();
-    }
-
-    @Override
     public int defend() {
-        if (isSpecialDefence(RANDOM_NUMBER_GENERATOR.nextInt(1, 101))) {
+        if (isSpecialDefence(getRANDOM_NUMBER_GENERATOR().nextInt(1, 101))) {
             return Integer.MAX_VALUE;
         } else {
             return super.defend();
         }
     }
 
-    private static boolean isSpecialLocation(String location) {
-        return "Temple".equals(location);
+    private boolean isSpecialLocation(Locations location) {
+        return Locations.TEMPLE.equals(location);
     }
 
     private boolean isSpecialDefence(int specialDefenceNumber) {

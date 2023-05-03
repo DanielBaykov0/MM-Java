@@ -1,13 +1,14 @@
 package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class Locations {
+public enum Locations {
 
-    private static final List<String> locations = new ArrayList<>(List.of("Temple", "Castle", "Battlefield", "Woods"));
+    TEMPLE, CASTLE, BATTLEFIELD, WOODS;
+    private static final Random RANDOM_NUMBER_GENERATOR = new Random();
+    private static final List<Locations> locations = List.of(values());
 
-    public static List<String> getLocations() {
-        return locations;
+    public static Locations getRandomLocation() {
+        return locations.get(RANDOM_NUMBER_GENERATOR.nextInt(locations.size()));
     }
 }

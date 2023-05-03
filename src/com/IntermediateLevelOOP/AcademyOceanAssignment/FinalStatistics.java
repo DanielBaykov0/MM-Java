@@ -1,26 +1,6 @@
 package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
-import java.util.*;
-
 public class FinalStatistics {
-
-    protected static Map<Integer, Hero> heroesHashMapStore = new HashMap<>();
-    protected static Map<Integer, Integer> heroesIDDamageMap = new HashMap<>();
-    protected static Map<Integer, Integer> heroesIDBattlesMap = new HashMap<>();
-    protected static Map<Integer, Integer> heroesIDFightsMap = new HashMap<>();
-    protected static Map<Integer, Integer> heroesIDHighestDamageMap = new HashMap<>();
-    protected static Map<Integer, Integer> heroesIDHighestNumberOfSuccessfulAttackDodgesMap = new HashMap<>();
-
-    protected static List<Hero> finalTwoStanding = new ArrayList<>();
-    protected static Map<Integer, Integer> finalistsIDBattlesMap = new HashMap<>();
-    protected static Map<Integer, Integer> finalistsIDFigthsMap = new HashMap<>();
-    protected static Map<Integer, Integer> finalistsIDDamageMap = new HashMap<>();
-
-    protected static List<Hero> losers = new ArrayList<>();
-    protected static Map<Integer, Integer> losersHighestDamageValue = new HashMap<>();
-    protected static Queue<Integer> topTwoLosersHighestDamageValue = new PriorityQueue<>();
-    protected static Map<Integer, Integer> losersHighestNumberOfSuccessfulAttackDodges = new HashMap<>();
-    protected static Queue<Integer> topTwoLosersHighestNumberOfSuccessfulAttackDodges = new PriorityQueue<>();
 
     private int firstHeroFights;
     private int secondHeroFights;

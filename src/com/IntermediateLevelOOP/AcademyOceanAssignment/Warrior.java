@@ -12,19 +12,10 @@ public class Warrior extends Hero {
                 "It makes you better.";
     }
 
-    protected static boolean isBattlefieldLocation(String location) {
-        return "Battlefield".equals(location);
-    }
-
-    private boolean isSpecialAttackLocation(int specialAttackLocationNumber) {
-        int specialAttackLocationPercent = 10;
-        return specialAttackLocationNumber <= specialAttackLocationPercent;
-    }
-
     @Override
     public int attack() {
         if (isBattlefieldLocation(FightersService.location)) {
-            if (isSpecialAttackLocation(RANDOM_NUMBER_GENERATOR.nextInt(1, 101))) {
+            if (isSpecialAttackLocation(getRANDOM_NUMBER_GENERATOR().nextInt(1, 101))) {
                 return (int) (super.attack() * 1.5);
             }
         }
@@ -32,9 +23,23 @@ public class Warrior extends Hero {
         return super.attack();
     }
 
-    @Override
-    public int defend() {
-        return super.defend();
+    private static boolean isBattlefieldLocation(Locations location) {
+        return Locations.BATTLEFIELD.equals(location);
+    }
+
+    private boolean isSpecialAttackLocation(int specialAttackLocationNumber) {
+        int specialAttackLocationPercent = 10;
+        return specialAttackLocationNumber <= specialAttackLocationPercent;
+    }
+
+    public static void isWarriorHealed(Locations location, Hero firstHero, Hero secondHero, int damage, int damageTook) {
+        if ((Warrior.isBattlefieldLocation(location) && "Warrior".equals(firstHero.getClassName()))) {
+            firstHero.setHealthPoints(firstHero.getHealthPoints() + (int) (damage * 0.05));
+        }
+
+        if ((Warrior.isBattlefieldLocation(location) && "Warrior".equals(secondHero.getClassName()))) {
+            secondHero.setHealthPoints(secondHero.getHealthPoints() + (int) (damageTook * 0.05));
+        }
     }
 
     @Override

@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Assassin extends Hero {
 
-
     public Assassin(int id) {
         super(id, "Assassin");
     }
@@ -18,7 +17,7 @@ public class Assassin extends Hero {
 
     @Override
     public int attack() {
-        int number = RANDOM_NUMBER_GENERATOR.nextInt(1, 101);
+        int number = getRANDOM_NUMBER_GENERATOR().nextInt(1, 101);
         int specialValue = getSpecialValue();
         if (isSpecialLocation(FightersService.location)) {
             if (isSpecialAttack(number, specialValue)) {
@@ -36,18 +35,13 @@ public class Assassin extends Hero {
         return super.attack();
     }
 
-    @Override
-    public int defend() {
-        return super.defend();
-    }
-
-    private static boolean isSpecialLocation(String location) {
-        return "Woods".equals(location);
+    private static boolean isSpecialLocation(Locations location) {
+        return Locations.WOODS.equals(location);
     }
 
     private int getSpecialValue() {
         List<Integer> specialValues = new ArrayList<>(List.of(35, 10));
-        return specialValues.get(RANDOM_NUMBER_GENERATOR.nextInt(specialValues.size()));
+        return specialValues.get(getRANDOM_NUMBER_GENERATOR().nextInt(specialValues.size()));
     }
 
     private boolean isSpecialAttack(int specialAttackNumber, int specialAttackPercent) {
