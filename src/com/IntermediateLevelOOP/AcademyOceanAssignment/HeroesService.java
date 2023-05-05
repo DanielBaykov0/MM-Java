@@ -150,7 +150,7 @@ public class HeroesService {
     public void putFirstHeroIDFightsMap(Hero firstHero, List<Hero> heroes) {
         for (Hero hero : heroes) {
             if (hero.getId() == firstHero.getId()) {
-                heroesIDFightsMap.put(hero.getId(), finalStatistics.setFirstHeroFights(finalStatistics.getFirstHeroFights() + 1));
+                heroesIDFightsMap.put(hero.getId(), finalStatistics.getFirstHeroFights() + 1);
             }
         }
     }
@@ -166,7 +166,7 @@ public class HeroesService {
     public void putSecondHeroIDFightsMap(Hero secondHero, List<Hero> heroes) {
         for (Hero hero : heroes) {
             if (hero.getId() == secondHero.getId()) {
-                heroesIDFightsMap.put(hero.getId(), finalStatistics.setSecondHeroFights(finalStatistics.getSecondHeroFights() + 1));
+                heroesIDFightsMap.put(hero.getId(), finalStatistics.getSecondHeroFights() + 1);
             }
         }
     }

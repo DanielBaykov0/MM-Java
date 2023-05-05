@@ -62,6 +62,8 @@ public class FightersService {
                 Hero firstHero = heroes.get(i);
                 Hero secondHero = heroes.get(i + 1);
                 Hero winner = getHeroWinner(firstHero, secondHero);
+                heroesService.putFirstHeroIDFightsMap(firstHero, heroes);
+                heroesService.putSecondHeroIDFightsMap(secondHero, heroes);
                 lastOneStanding.add(winner);
             }
 
@@ -114,11 +116,9 @@ public class FightersService {
 
             if (secondHero.getHealthPoints() <= 0) {
                 secondHero.isHeroDead();
-                heroesService.putFirstHeroIDFightsMap(firstHero, heroes);
                 return firstHero;
             } else if (firstHero.getHealthPoints() <= 0) {
                 firstHero.isHeroDead();
-                heroesService.putSecondHeroIDFightsMap(secondHero, heroes);
                 return secondHero;
             }
 

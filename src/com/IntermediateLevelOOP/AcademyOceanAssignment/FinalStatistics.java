@@ -102,17 +102,15 @@ public class FinalStatistics {
         return firstHeroFights;
     }
 
-    public int setFirstHeroFights(int firstHeroFights) {
+    public void setFirstHeroFights(int firstHeroFights) {
         this.firstHeroFights = firstHeroFights;
-        return firstHeroFights;
     }
 
     public int getSecondHeroFights() {
         return secondHeroFights;
     }
 
-    public int setSecondHeroFights(int secondHeroFights) {
+    public void setSecondHeroFights(int secondHeroFights) {
         this.secondHeroFights = secondHeroFights;
-        return secondHeroFights;
     }
 }
