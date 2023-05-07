@@ -15,8 +15,6 @@ public class MethodReferenceApp {
                 new Person("Anna", 4),
                 new Person("Anna", 12));
 
-        PersonComparisonProvider comparisonProvider = new PersonComparisonProvider();
-
-        people.stream().sorted(comparisonProvider::compareByNameAndAge).forEach(System.out::println);
+        people.stream().sorted(PersonComparisonProvider::compareByNameAndAge).forEach(System.out::println);
     }
 }
