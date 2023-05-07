@@ -1,6 +1,5 @@
 package com.ExpertLevel.methodreference;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class MethodReferenceApp {
@@ -16,6 +15,8 @@ public class MethodReferenceApp {
                 new Person("Anna", 4),
                 new Person("Anna", 12));
 
-        people.stream().sorted(Comparator.comparing(Person::getAge)).forEach(System.out::println);
+        PersonComparisonProvider comparisonProvider = new PersonComparisonProvider();
+
+        people.stream().sorted(comparisonProvider::compareByNameAndAge).forEach(System.out::println);
     }
 }
