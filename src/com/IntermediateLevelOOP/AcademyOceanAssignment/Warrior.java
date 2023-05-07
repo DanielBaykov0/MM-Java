@@ -2,8 +2,8 @@ package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
 public class Warrior extends Hero {
 
-    public Warrior() {
-        super("Warrior");
+    public Warrior(int id) {
+        super(id, "Warrior");
     }
 
     @Override
@@ -14,12 +14,32 @@ public class Warrior extends Hero {
 
     @Override
     public int attack() {
+        if (isBattlefieldLocation(FightersService.location)) {
+            if (isSpecialAttackLocation(getRANDOM_NUMBER_GENERATOR().nextInt(1, 101))) {
+                return (int) (super.attack() * 1.5);
+            }
+        }
+
         return super.attack();
     }
 
-    @Override
-    public int defend() {
-        return super.defend();
+    private static boolean isBattlefieldLocation(Locations location) {
+        return Locations.BATTLEFIELD.equals(location);
+    }
+
+    private boolean isSpecialAttackLocation(int specialAttackLocationNumber) {
+        int specialAttackLocationPercent = 10;
+        return specialAttackLocationNumber <= specialAttackLocationPercent;
+    }
+
+    public static void isWarriorHealed(Locations location, Hero firstHero, Hero secondHero, int damage, int damageTook) {
+        if ((Warrior.isBattlefieldLocation(location) && "Warrior".equals(firstHero.getClassName()))) {
+            firstHero.setHealthPoints(firstHero.getHealthPoints() + (int) (damage * 0.05));
+        }
+
+        if ((Warrior.isBattlefieldLocation(location) && "Warrior".equals(secondHero.getClassName()))) {
+            secondHero.setHealthPoints(secondHero.getHealthPoints() + (int) (damageTook * 0.05));
+        }
     }
 
     @Override

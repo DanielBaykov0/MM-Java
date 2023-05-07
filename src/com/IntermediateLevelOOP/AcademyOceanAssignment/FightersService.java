@@ -4,152 +4,173 @@ import java.util.*;
 
 public class FightersService {
 
-    private static final Random RANDOM_NUMBER_GENERATOR = new Random();
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static boolean IS_RUNNING = true;
 
-    private static final Warrior WARRIOR = new Warrior();
-    private static final Knight KNIGHT = new Knight();
-    private static final Assassin ASSASSIN = new Assassin();
-    private static final Monk MONK = new Monk();
+    private static int INPUT_NUMBER;
+    protected static Locations location;
 
-    private static Hero FIRST_HERO = getRandomHero();
-    private static Hero SECOND_HERO = getRandomHero();
+    private static final FinalStatistics finalStatistics = new FinalStatistics();
+    private static final HeroesService heroesService = new HeroesService();
+    private static List<Hero> heroes = new ArrayList<>();
+    private static final OutputMessages outputMessages = new OutputMessages();
 
     public static void gameLoop() {
-
         int input = 0;
 
-        printMenu();
-        while (IS_RUNNING) {
-            System.out.println("Please make your choice");
+        outputMessages.printMenu();
+        while (true) {
+            System.out.println("(Number must be even and between 4 and 256)");
+            System.out.println("Please enter a number for the participants:");
             try {
-                input = 0;
                 input = SCANNER.nextInt();
+                INPUT_NUMBER = input;
             } catch (InputMismatchException e) {
                 System.out.println("Wrong input");
             }
             SCANNER.nextLine();
 
-            if (input == 0) {
-                printMenu();
-            } else if (input == 1) {
-                printHeroesInfo();
-            } else if (input == 2) {
+            int n = input;
+            while (n % 2 != 1) {
+                n /= 2;
+            }
+
+            if (input >= 4 && input <= 256 && n == 1) {
+                outputMessages.printMenu();
                 battle();
-            } else if (input == 3) {
-                IS_RUNNING = false;
+                break;
+            } else {
+                System.out.println("Wrong number");
+                outputMessages.printMenu();
             }
         }
     }
 
     private static void battle() {
 
+        heroes = heroesService.generateHeroes(INPUT_NUMBER);
+        heroesService.generateHeroStoreMap(heroes);
+
+        outputMessages.printStartingHeroes(heroes);
+
+        while (heroes.size() > 1) {
+
+            List<Hero> lastOneStanding = new ArrayList<>();
+
+            for (int i = 0; i < heroes.size(); i += 2) {
+                heroesService.isFinal(heroes);
+                finalStatistics.setRounds(finalStatistics.getRounds() + 1);
+                Hero firstHero = heroes.get(i);
+                Hero secondHero = heroes.get(i + 1);
+                Hero winner = getHeroWinner(firstHero, secondHero);
+                heroesService.putFirstHeroIDFightsMap(firstHero, heroes);
+                heroesService.putSecondHeroIDFightsMap(secondHero, heroes);
+                lastOneStanding.add(winner);
+            }
+
+            heroesService.resetHeroStats(lastOneStanding);
+            heroes = lastOneStanding;
+        }
+
+        heroesService.generateLosers();
+        System.out.println("THE LAST HERO REMAINING IS THE " + "'" + heroes.get(0).getClassName() + "'");
+        outputMessages.printSeparator();
+        printFinalInfo();
+    }
+
+    private static Hero getHeroWinner(Hero firstHero, Hero secondHero) {
+
+        location = Locations.getRandomLocation();
+        Knight.isKnightLocation(location, firstHero, secondHero);
+
+        finalStatistics.setFirstHeroDamageValue(0);
+        heroesService.checkFirstHeroDamageValue(firstHero);
+
+        finalStatistics.setFirstHeroBattle(0);
+        heroesService.checkFirstHeroBattles(firstHero);
+
+        finalStatistics.setFirstHeroFights(0);
+        heroesService.checkFirstHeroFights(firstHero);
+
+        finalStatistics.setFirstHeroHighestDamageValue(0);
+        heroesService.checkFirstHeroHighestDamageValue(firstHero);
+
+        finalStatistics.setFirstHeroHighestNumberOfSuccessfulAttackDodges(0);
+        heroesService.checkFirstHeroHighestNumberOfSuccessfulAttackDodges(firstHero);
+
+        finalStatistics.setSecondHeroDamageValue(0);
+        heroesService.checkSecondHeroDamageValue(secondHero);
+
+        finalStatistics.setSecondHeroBattle(0);
+        heroesService.checkSecondHeroBattles(secondHero);
+
+        finalStatistics.setSecondHeroFights(0);
+        heroesService.checkSecondHeroFights(secondHero);
+
+        finalStatistics.setSecondHeroHighestDamageValue(0);
+        heroesService.checkSecondHeroHighestDamageValue(secondHero);
+
+        finalStatistics.setSecondHeroHighestNumberOfSuccessfulAttackDodges(0);
+        heroesService.checkSecondHeroHighestNumberOfSuccessfulAttackDodges(secondHero);
+
         while (true) {
 
-            if (FIRST_HERO.HEALTH_POINTS <= 0) {
-                System.out.println();
-                System.out.println(FIRST_HERO.getClassName() + " died...");
-                System.out.println();
-                resetFirstHeroStats();
-                FIRST_HERO = getRandomHero();
-                printMenu();
-                break;
-            } else if (SECOND_HERO.HEALTH_POINTS <= 0) {
-                System.out.println();
-                System.out.println(SECOND_HERO.getClassName() + " died...");
-                System.out.println();
-                resetSecondHeroStats();
-                SECOND_HERO = getRandomHero();
-                printMenu();
-                break;
+            if (secondHero.getHealthPoints() <= 0) {
+                secondHero.isHeroDead();
+                return firstHero;
+            } else if (firstHero.getHealthPoints() <= 0) {
+                firstHero.isHeroDead();
+                return secondHero;
             }
 
-            int damage = FIRST_HERO.attack() - SECOND_HERO.defend();
-            int damageTook = SECOND_HERO.attack() - FIRST_HERO.defend();
+            int damage = firstHero.getHeroDamage();
+            heroesService.putFirstHeroIDDamageBattlesMap(firstHero, heroes, damage);
+            heroesService.putFirstHeroIDHighestDamageMap(firstHero, heroes, damage);
+            heroesService.putFirstHeroHighestNumberOfSuccessfulAttackDodges(secondHero, heroes, damage);
 
-            if (damage < 0) {
-                damage = 0;
-            }
+            int damageTook = secondHero.getHeroDamage();
+            heroesService.putSecondHeroIDDamageBattleMap(secondHero, heroes, damageTook);
+            heroesService.putSecondHeroIDHighestDamageMap(secondHero, heroes, damageTook);
+            heroesService.putSecondHeroHighestNumberOfSuccessfulAttackDodges(firstHero, heroes, damageTook);
 
-            if (damageTook < 0) {
-                damageTook = 0;
-            }
+            Warrior.isWarriorHealed(location, firstHero, secondHero, damage, damageTook);
 
-            FIRST_HERO.HEALTH_POINTS -= damageTook;
-            SECOND_HERO.HEALTH_POINTS -= damage;
+            firstHero.setHealthPoints(firstHero.getHealthPoints() - damageTook);
+            secondHero.setHealthPoints(secondHero.getHealthPoints() - damage);
 
-            if (FIRST_HERO.HEALTH_POINTS <= 0) {
-                FIRST_HERO.HEALTH_POINTS = 0;
-            }
-
-            if (SECOND_HERO.HEALTH_POINTS <= 0) {
-                SECOND_HERO.HEALTH_POINTS = 0;
-            }
-
-            printSeparator();
-            System.out.println("\t\t\t\tBATTLE");
-            printSeparator();
-            System.out.println(FIRST_HERO.getClassName() + " dealt " + damage + " damage to the " + SECOND_HERO.getClassName());
-            System.out.println(FIRST_HERO.getClassName() + " has " + FIRST_HERO.HEALTH_POINTS + " health points left");
-
-            System.out.println(SECOND_HERO.getClassName() + " dealt " + damageTook + " damage to the " + FIRST_HERO.getClassName());
-            System.out.println(SECOND_HERO.getClassName() + " has " + SECOND_HERO.HEALTH_POINTS + " health points left");
+            firstHero.checkHeroHealthPoints();
+            secondHero.checkHeroHealthPoints();
+            printBattleInfo(firstHero, secondHero, damage, damageTook);
         }
     }
 
-    private static void printMenu() {
-        printSeparator();
-        System.out.println("\tWelcome to Heroes Fighting App");
-        printSeparator();
-        System.out.println("\t0 - Print menu");
-        System.out.println("\t1 - Print Fight Heroes info");
-        System.out.println("\t2 - To attack each other");
-        System.out.println("\t3 - To quit the game");
+    // PRINT BATTLE INFO
+    private static void printBattleInfo(Hero firstHero, Hero secondHero, int damage, int damageTook) {
+        outputMessages.printSeparator();
+        System.out.println("The heroes fighting location: " + location);
+        outputMessages.printSeparator();
+
+        System.out.println("\t\t\t\tBATTLE");
+        outputMessages.printSeparator();
+        System.out.println("ID = " + firstHero.getId() + " " + firstHero.getClassName() + " dealt " + damage + " damage to the " + secondHero.getClassName());
+        System.out.println("ID = " + firstHero.getId() + " " + firstHero.getClassName() + " has " + firstHero.getHealthPoints() + " health points left");
+
+        System.out.println("ID = " + secondHero.getId() + " " + secondHero.getClassName() + " dealt " + damageTook + " damage to the " + firstHero.getClassName());
+        System.out.println("ID = " + secondHero.getId() + " " + secondHero.getClassName() + " has " + secondHero.getHealthPoints() + " health points left");
     }
 
-    private static void randomHeroValidation() {
-        if (FIRST_HERO.getClassName().equals(SECOND_HERO.getClassName())) {
-            FIRST_HERO = getRandomHero();
-            SECOND_HERO = getRandomHero();
-        }
-    }
-
-    private static void printHeroesInfo() {
-        randomHeroValidation();
-        System.out.println(FIRST_HERO.toString());
-        System.out.println(FIRST_HERO.getQuote());
-        printSeparator();
-        System.out.println(SECOND_HERO.toString());
-        System.out.println(SECOND_HERO.getQuote());
+    private static void printFinalInfo() {
+        heroesService.printTwoFinalistsStats();
+        outputMessages.printSeparator();
+        System.out.println("\t\t\t\t\t\tROUNDS = " + finalStatistics.getRounds());
+        heroesService.printFinalistsIDBattleInfo();
         System.out.println();
-    }
-
-    private static void resetFirstHeroStats() {
-        FIRST_HERO.HEALTH_POINTS = 100;
-        FIRST_HERO.ATTACK_POINTS = 25;
-        FIRST_HERO.ARMOR_POINTS = 20;
-    }
-
-    private static void resetSecondHeroStats() {
-        SECOND_HERO.HEALTH_POINTS = 100;
-        SECOND_HERO.ATTACK_POINTS = 25;
-        SECOND_HERO.ARMOR_POINTS = 20;
-    }
-
-    private static void printSeparator() {
-        for (int i = 0; i < 37; i++) {
-            System.out.print("-");
-        }
-
+        heroesService.printFinalistsIDFightsInfo();
         System.out.println();
-    }
-
-    private static Hero getRandomHero() {
-        return getHeroes().get(RANDOM_NUMBER_GENERATOR.nextInt(getHeroes().size()));
-    }
-
-    private static List<Hero> getHeroes() {
-        return new ArrayList<>(List.of(WARRIOR, KNIGHT, ASSASSIN, MONK));
+        heroesService.printFinalistsIDDamageInfo();
+        System.out.println();
+        outputMessages.printSeparator();
+        System.out.println("\t\t\t\t\tHONORABLE MENTIONS");
+        heroesService.printTopTwoLosersHighestDamageValueInfo();
+        heroesService.printTopTwoLosersHighestNumberOfSuccessfulAttackDodgesInfo();
     }
 }

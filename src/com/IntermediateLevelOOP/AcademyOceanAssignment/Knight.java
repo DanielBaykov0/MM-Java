@@ -2,8 +2,8 @@ package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
 public class Knight extends Hero {
 
-    public Knight() {
-        super("Knight");
+    public Knight(int id) {
+        super(id, "Knight");
     }
 
     @Override
@@ -14,7 +14,7 @@ public class Knight extends Hero {
 
     @Override
     public int attack() {
-        if (isSpecialAttack(RANDOM_NUMBER_GENERATOR.nextInt(1, 101))) {
+        if (isSpecialAttack(getRANDOM_NUMBER_GENERATOR().nextInt(1, 101))) {
             return super.attack() * 2;
         } else {
             return super.attack();
@@ -23,8 +23,8 @@ public class Knight extends Hero {
 
     @Override
     public int defend() {
-        if (isSpecialDefence(RANDOM_NUMBER_GENERATOR.nextInt(1, 101))) {
-            return 0;
+        if (isSpecialDefence(getRANDOM_NUMBER_GENERATOR().nextInt(1, 101))) {
+            return Integer.MAX_VALUE;
         } else {
             return super.defend();
         }
@@ -38,5 +38,16 @@ public class Knight extends Hero {
     private boolean isSpecialDefence(int specialDefenceNumber) {
         int specialDefencePercent = 20;
         return specialDefenceNumber <= specialDefencePercent;
+    }
+
+    public static void isKnightLocation(Locations location, Hero firstHero, Hero secondHero) {
+        if (Locations.CASTLE.equals(location) && "Knight".equals(firstHero.getClassName())) {
+            firstHero.setHealthPoints(firstHero.getMaxHealthPoints() + firstHero.getMaxHealthPoints() / 10);
+            firstHero.setArmorPoints(firstHero.getMaxArmorPoints() + firstHero.getMaxArmorPoints() / 10);
+        }
+        if (Locations.CASTLE.equals(location) && "Knight".equals(secondHero.getClassName())) {
+            secondHero.setHealthPoints(secondHero.getMaxHealthPoints() + secondHero.getMaxHealthPoints() / 10);
+            secondHero.setArmorPoints(secondHero.getMaxArmorPoints() + secondHero.getMaxArmorPoints() / 10);
+        }
     }
 }
