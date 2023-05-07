@@ -1,6 +1,6 @@
 package com.ExpertLevel.methodreference;
 
-public class Person {
+public class Person implements Comparable {
 
     private String name;
     private int age;
@@ -24,5 +24,11 @@ public class Person {
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Person person = (Person) o;
+        return this.getAge().compareTo(person.getAge());
     }
 }
