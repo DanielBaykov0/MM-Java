@@ -1,5 +1,7 @@
 package com.ExpertLevel.streams.filtering;
 
+import java.util.Objects;
+
 public class Product {
 
     private final String name;
@@ -28,6 +30,19 @@ public class Product {
 
     public double getRating() {
         return rating;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Double.compare(product.price, price) == 0 && Double.compare(product.rating, rating) == 0 && Objects.equals(name, product.name) && Objects.equals(brand, product.brand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, brand, price, rating);
     }
 
     @Override
