@@ -18,5 +18,20 @@ public class CollectUtilFunctionsApp {
 
         Long numberOfHits = playerDamage.stream().collect(Collectors.counting());
         System.out.println("Number of hits: " + numberOfHits);
+
+        Integer overallDamage = playerDamageDouble.stream()
+                .collect(Collectors.summingInt(Double::intValue));
+        System.out.println("Overall damage: " + overallDamage);
+
+        Double overallDamageDouble = playerDamage.stream()
+                .collect(Collectors.summingDouble(Integer::doubleValue));
+        System.out.println("Overall damage double: " + overallDamageDouble);
+
+        Double averageDamage = playerDamage.stream()
+                .collect(Collectors.averagingInt(Integer::intValue));
+        System.out.println("Average damage: "  + averageDamage);
+
+        System.out.println("Damage statistics: "  + playerDamage.stream()
+                .collect(Collectors.summarizingInt(Integer::intValue)));
     }
 }
