@@ -1,6 +1,11 @@
 package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
+import java.util.Random;
+
 public class Warrior extends Hero {
+
+    private static final double WARRIOR_SPECIAL_ATTACK_MULTIPLIER = 1.5;
+    private static final double WARRIOR_HEALING_MULTIPLIER = 0.05;
 
     public Warrior(int id) {
         super(id, "Warrior");
@@ -13,14 +18,14 @@ public class Warrior extends Hero {
     }
 
     @Override
-    public int attack() {
+    public int attack(Random random) {
         if (isBattlefieldLocation(FightersService.location)) {
-            if (isSpecialAttackLocation(getRANDOM_NUMBER_GENERATOR().nextInt(1, 101))) {
-                return (int) (super.attack() * 1.5);
+            if (isSpecialAttackLocation(random.nextInt(1, 101))) {
+                return (int) (super.attack(new Random()) * WARRIOR_SPECIAL_ATTACK_MULTIPLIER);
             }
         }
 
-        return super.attack();
+        return super.attack(new Random());
     }
 
     private static boolean isBattlefieldLocation(Locations location) {
@@ -33,17 +38,12 @@ public class Warrior extends Hero {
     }
 
     public static void isWarriorHealed(Locations location, Hero firstHero, Hero secondHero, int damage, int damageTook) {
-        if ((Warrior.isBattlefieldLocation(location) && "Warrior".equals(firstHero.getClassName()))) {
-            firstHero.setHealthPoints(firstHero.getHealthPoints() + (int) (damage * 0.05));
+        if ((Warrior.isBattlefieldLocation(location) && "Warrior".equals(firstHero.getSpecializationName()))) {
+            firstHero.setHealthPoints(firstHero.getHealthPoints() + (int) (damage * WARRIOR_HEALING_MULTIPLIER));
         }
 
-        if ((Warrior.isBattlefieldLocation(location) && "Warrior".equals(secondHero.getClassName()))) {
-            secondHero.setHealthPoints(secondHero.getHealthPoints() + (int) (damageTook * 0.05));
+        if ((Warrior.isBattlefieldLocation(location) && "Warrior".equals(secondHero.getSpecializationName()))) {
+            secondHero.setHealthPoints(secondHero.getHealthPoints() + (int) (damageTook * WARRIOR_HEALING_MULTIPLIER));
         }
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }

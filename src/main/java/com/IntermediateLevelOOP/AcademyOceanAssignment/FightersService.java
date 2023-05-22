@@ -72,7 +72,7 @@ public class FightersService {
         }
 
         heroesService.generateLosers();
-        System.out.println("THE LAST HERO REMAINING IS THE " + "'" + heroes.get(0).getClassName() + "'");
+        System.out.println("THE LAST HERO REMAINING IS THE " + "'" + heroes.get(0).getSpecializationName() + "'");
         outputMessages.printSeparator();
         printFinalInfo();
     }
@@ -151,11 +151,11 @@ public class FightersService {
 
         System.out.println("\t\t\t\tBATTLE");
         outputMessages.printSeparator();
-        System.out.println("ID = " + firstHero.getId() + " " + firstHero.getClassName() + " dealt " + damage + " damage to the " + secondHero.getClassName());
-        System.out.println("ID = " + firstHero.getId() + " " + firstHero.getClassName() + " has " + firstHero.getHealthPoints() + " health points left");
+        System.out.println("ID = " + firstHero.getId() + " " + firstHero.getSpecializationName() + " dealt " + damage + " damage to the " + secondHero.getSpecializationName());
+        System.out.println("ID = " + firstHero.getId() + " " + firstHero.getSpecializationName() + " has " + firstHero.getHealthPoints() + " health points left");
 
-        System.out.println("ID = " + secondHero.getId() + " " + secondHero.getClassName() + " dealt " + damageTook + " damage to the " + firstHero.getClassName());
-        System.out.println("ID = " + secondHero.getId() + " " + secondHero.getClassName() + " has " + secondHero.getHealthPoints() + " health points left");
+        System.out.println("ID = " + secondHero.getId() + " " + secondHero.getSpecializationName() + " dealt " + damageTook + " damage to the " + firstHero.getSpecializationName());
+        System.out.println("ID = " + secondHero.getId() + " " + secondHero.getSpecializationName() + " has " + secondHero.getHealthPoints() + " health points left");
     }
 
     private static void printFinalInfo() {

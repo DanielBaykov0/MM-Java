@@ -386,7 +386,7 @@ public class HeroesService {
         for (Map.Entry<Integer, Integer> entry : getHeroesIDDamageMap().entrySet()) {
             for (Map.Entry<Integer, Hero> heroId : getHeroesHashMapStore().entrySet()) {
                 if (heroId.getKey().equals(entry.getKey())) {
-                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getClassName() + " Damage = " + entry.getValue());
+                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getSpecializationName() + " Damage = " + entry.getValue());
                 }
             }
             System.out.println();
@@ -401,7 +401,7 @@ public class HeroesService {
         for (Map.Entry<Integer, Integer> entry : getHeroesIDBattlesMap().entrySet()) {
             for (Map.Entry<Integer, Hero> heroId : getHeroesHashMapStore().entrySet()) {
                 if (heroId.getKey().equals(entry.getKey())) {
-                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getClassName() + " Battles = " + entry.getValue());
+                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getSpecializationName() + " Battles = " + entry.getValue());
                 }
             }
             System.out.println();
@@ -416,7 +416,7 @@ public class HeroesService {
         for (Map.Entry<Integer, Integer> entry : getHeroesIDHighestDamageMap().entrySet()) {
             for (Map.Entry<Integer, Hero> heroId : getHeroesHashMapStore().entrySet()) {
                 if (heroId.getKey().equals(entry.getKey())) {
-                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getClassName() + " Battles = " + entry.getValue());
+                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getSpecializationName() + " Battles = " + entry.getValue());
                 }
             }
             System.out.println();
@@ -431,7 +431,7 @@ public class HeroesService {
         for (Map.Entry<Integer, Integer> entry : getHeroesIDHighestNumberOfSuccessfulAttackDodgesMap().entrySet()) {
             for (Map.Entry<Integer, Hero> heroId : getHeroesHashMapStore().entrySet()) {
                 if (heroId.getKey().equals(entry.getKey())) {
-                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getClassName() + " Highest Number of Successful Dodges = " + entry.getValue());
+                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getSpecializationName() + " Highest Number of Successful Dodges = " + entry.getValue());
                 }
             }
             System.out.println();

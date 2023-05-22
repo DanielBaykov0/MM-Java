@@ -1,5 +1,7 @@
 package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
+import java.util.Random;
+
 public class Monk extends Hero {
 
     public Monk(int id) {
@@ -13,11 +15,11 @@ public class Monk extends Hero {
     }
 
     @Override
-    public int defend() {
-        if (isSpecialDefence(getRANDOM_NUMBER_GENERATOR().nextInt(1, 101))) {
+    public int defend(Random random) {
+        if (isSpecialDefence(random.nextInt(1, 101))) {
             return Integer.MAX_VALUE;
         } else {
-            return super.defend();
+            return super.defend(new Random());
         }
     }
 
