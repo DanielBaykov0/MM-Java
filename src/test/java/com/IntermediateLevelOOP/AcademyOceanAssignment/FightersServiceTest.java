@@ -1,22 +1,18 @@
 package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 class FightersServiceTest {
 
     @Test
-    @Disabled("TODO: Complete this test")
     void testGameLoop() {
-        // TODO: Complete this test.
-        //   Diffblue AI was unable to find a test
-
-        // Arrange and Act
-        // TODO: Populate arranged inputs
+        String input = "4";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
         FightersService.gameLoop();
-
-        // Assert
-        // TODO: Add assertions on result
     }
 }
 

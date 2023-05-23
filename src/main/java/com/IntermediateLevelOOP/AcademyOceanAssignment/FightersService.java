@@ -19,18 +19,16 @@ public class FightersService {
 
         outputMessages.printMenu();
         while (true) {
-            System.out.println("(Number must be even and between 4 and 256)");
-            System.out.println("Please enter a number for the participants:");
+            outputMessages.printStartingText();
             try {
                 input = SCANNER.nextInt();
                 INPUT_NUMBER = input;
-            } catch (InputMismatchException e) {
-                System.out.println("Wrong input");
+            } catch (InputMismatchException ignored) {
             }
             SCANNER.nextLine();
 
             int n = input;
-            while (n % 2 != 1) {
+            while (n != 0 && n % 2 != 1) {
                 n /= 2;
             }
 
