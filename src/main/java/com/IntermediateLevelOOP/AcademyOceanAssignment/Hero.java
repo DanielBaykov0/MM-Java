@@ -8,12 +8,14 @@ public abstract class Hero {
     private static final int HEALTH_POINTS = 100;
     private static final int ATTACK_POINTS = 25;
     private static final int ARMOR_POINTS = 20;
-    private static final Random RANDOM_NUMBER_GENERATOR = new Random();
+    private static final double EIGHTY_PERCENT_BOUND = 0.8;
+    private static final double ONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND = 1.21;
     private final String specializationName;
     private int healthPoints;
     private int attackPoints;
     private int armorPoints;
     private final int id;
+
 
     public Hero(int id, String specializationName) {
         this.specializationName = specializationName;
@@ -69,16 +71,12 @@ public abstract class Hero {
         return specializationName;
     }
 
-    public static Random getRANDOM_NUMBER_GENERATOR() {
-        return RANDOM_NUMBER_GENERATOR;
-    }
-
     public int attack(Random random) {
-        return random.nextInt((int) (attackPoints * 0.8), (int) (attackPoints * 1.21));
+        return random.nextInt((int) (attackPoints * EIGHTY_PERCENT_BOUND), (int) (attackPoints * ONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND));
     }
 
     public int defend(Random random) {
-        return random.nextInt((int) (armorPoints * 0.8), (int) (armorPoints * 1.21));
+        return random.nextInt((int) (armorPoints * EIGHTY_PERCENT_BOUND), (int) (armorPoints * ONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND));
     }
 
     public void checkHeroHealthPoints() {
@@ -87,8 +85,8 @@ public abstract class Hero {
         }
     }
 
-    public int getHeroDamage() {
-        int damage = this.attack(new Random()) - this.defend(new Random());
+    public int getFirstHeroDamage(Hero firstHero, Hero secondHero) {
+        int damage = firstHero.attack(new Random()) - secondHero.defend(new Random());
         if (damage < 0) {
             damage = 0;
         }
@@ -96,7 +94,16 @@ public abstract class Hero {
         return damage;
     }
 
-    public void isHeroDead() {
+    public int getSecondHeroDamage(Hero secondHero, Hero firstHero) {
+        int damage = secondHero.attack(new Random()) - firstHero.defend(new Random());
+        if (damage < 0) {
+            damage = 0;
+        }
+
+        return damage;
+    }
+
+    public void printHeroDied() {
         System.out.println();
         System.out.println(this.getSpecializationName() + " died...");
         System.out.println();

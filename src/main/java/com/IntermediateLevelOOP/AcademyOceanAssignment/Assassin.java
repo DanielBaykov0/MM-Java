@@ -11,9 +11,9 @@ public class Assassin extends Hero {
     private static final double ASSASSIN_SPECIAL_LOCATION_ATTACK_MULTIPLIER = 4.5;
     private static final int ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT = 10;
     private static final int ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT = 35;
-
-    // ASK !!!
-    public static int SPECIAL_VALUE = getSPECIAL_VALUE();
+    private final HeroesService heroesService = new HeroesService();
+    private final List<Integer> specialValues =
+            new ArrayList<>(List.of(ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT, ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT));
 
     public Assassin(int id) {
         super(id, "Assassin");
@@ -27,12 +27,13 @@ public class Assassin extends Hero {
 
     @Override
     public int attack(Random random) {
-        int number = random.nextInt(1, 101);
+        int number = heroesService.getRandomNumberBetweenOneAndOneHundred(random);
         if (isSpecialLocation(FightersService.location)) {
-            if (isSpecialAttack(number, SPECIAL_VALUE)) {
-                if (SPECIAL_VALUE == ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT) {
+            int specialValueNumber = heroesService.getAssassinRandomSpecialAttackValue(random, specialValues);
+            if (isSpecialAttack(number, specialValueNumber)) {
+                if (specialValueNumber == ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT) {
                     return (int) (super.attack(new Random()) * ASSASSIN_SPECIAL_LOCATION_ATTACK_MULTIPLIER);
-                } else if (SPECIAL_VALUE == ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT) {
+                } else if (specialValueNumber == ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT) {
                     return super.attack(new Random()) * ASSASSIN_SPECIAL_ATTACK_MULTIPLIER;
                 }
             }
@@ -46,11 +47,6 @@ public class Assassin extends Hero {
 
     private static boolean isSpecialLocation(Locations location) {
         return Locations.WOODS.equals(location);
-    }
-
-    private static int getSPECIAL_VALUE() {
-        List<Integer> specialValues = new ArrayList<>(List.of(ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT, ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT));
-        return specialValues.get(getRANDOM_NUMBER_GENERATOR().nextInt(specialValues.size()));
     }
 
     private boolean isSpecialAttack(int specialAttackNumber, int specialAttackPercent) {

@@ -4,41 +4,45 @@ import java.util.*;
 
 public class HeroesService {
 
-    private final Random RANDOM_NUMBER_GENERATOR = new Random();
-    private final FinalStatistics finalStatistics = new FinalStatistics();
-    private final OutputMessages outputMessages = new OutputMessages();
+    private final Random RANDOM_NUMBER_GENERATOR;
+    private final FinalStatistics finalStatistics;
 
-    private final Map<Integer, Hero> heroesHashMapStore = new HashMap<>();
-    private final Map<Integer, Integer> heroesIDFightsMap = new HashMap<>();
-    private final Map<Integer, Integer> heroesIDDamageMap = new HashMap<>();
-    private final Map<Integer, Integer> heroesIDBattlesMap = new HashMap<>();
-    private final Map<Integer, Integer> heroesIDHighestDamageMap = new HashMap<>();
-    private final Map<Integer, Integer> heroesIDHighestNumberOfSuccessfulAttackDodgesMap = new HashMap<>();
+    private final Map<Integer, Hero> heroesHashMapStore;
+    private final Map<Integer, Integer> heroesIDFightsMap;
+    private final Map<Integer, Integer> heroesIDDamageMap;
+    private final Map<Integer, Integer> heroesIDBattlesMap;
+    private final Map<Integer, Integer> heroesIDHighestDamageMap;
+    private final Map<Integer, Integer> heroesIDHighestNumberOfSuccessfulAttackDodgesMap;
 
-    private List<Hero> finalTwoStanding = new ArrayList<>();
-    private final Map<Integer, Integer> finalistsIDBattlesMap = new HashMap<>();
-    private final Map<Integer, Integer> finalistsIDFigthsMap = new HashMap<>();
-    private final Map<Integer, Integer> finalistsIDDamageMap = new HashMap<>();
+    private List<Hero> finalTwoStanding;
+    private final Map<Integer, Integer> finalistsIDBattlesMap;
+    private final Map<Integer, Integer> finalistsIDFigthsMap;
+    private final Map<Integer, Integer> finalistsIDDamageMap;
 
-    private final List<Hero> losers = new ArrayList<>();
-    private final Map<Integer, Integer> losersHighestDamageValue = new HashMap<>();
-    private final Queue<Integer> topTwoLosersHighestDamageValue = new PriorityQueue<>();
-    private final Map<Integer, Integer> losersHighestNumberOfSuccessfulAttackDodges = new HashMap<>();
-    private final Queue<Integer> topTwoLosersHighestNumberOfSuccessfulAttackDodges = new PriorityQueue<>();
+    private final List<Hero> losers;
+    private final Queue<Integer> topTwoLosersHighestDamageValue;
+    private final Queue<Integer> topTwoLosersHighestNumberOfSuccessfulAttackDodges;
 
     public HeroesService() {
-    }
-
-    public Map<Integer, Integer> getLosersHighestDamageValue() {
-        return losersHighestDamageValue;
+        RANDOM_NUMBER_GENERATOR = new Random();
+        finalStatistics = new FinalStatistics();
+        heroesHashMapStore = new HashMap<>();
+        heroesIDFightsMap = new HashMap<>();
+        heroesIDDamageMap = new HashMap<>();
+        heroesIDBattlesMap = new HashMap<>();
+        heroesIDHighestDamageMap = new HashMap<>();
+        heroesIDHighestNumberOfSuccessfulAttackDodgesMap = new HashMap<>();
+        finalTwoStanding = new ArrayList<>();
+        finalistsIDBattlesMap = new HashMap<>();
+        finalistsIDFigthsMap = new HashMap<>();
+        finalistsIDDamageMap = new HashMap<>();
+        losers = new ArrayList<>();
+        topTwoLosersHighestDamageValue = new PriorityQueue<>();
+        topTwoLosersHighestNumberOfSuccessfulAttackDodges = new PriorityQueue<>();
     }
 
     public Queue<Integer> getTopTwoLosersHighestDamageValue() {
         return topTwoLosersHighestDamageValue;
-    }
-
-    public Map<Integer, Integer> getLosersHighestNumberOfSuccessfulAttackDodges() {
-        return losersHighestNumberOfSuccessfulAttackDodges;
     }
 
     public Queue<Integer> getTopTwoLosersHighestNumberOfSuccessfulAttackDodges() {
@@ -91,6 +95,14 @@ public class HeroesService {
 
     public Map<Integer, Integer> getHeroesIDHighestNumberOfSuccessfulAttackDodgesMap() {
         return heroesIDHighestNumberOfSuccessfulAttackDodgesMap;
+    }
+
+    public int getRandomNumberBetweenOneAndOneHundred(Random random) {
+        return random.nextInt(1, 101);
+    }
+
+    public int getAssassinRandomSpecialAttackValue(Random random, List<Integer> specialValues) {
+        return specialValues.get(random.nextInt(specialValues.size()));
     }
 
     public void resetHeroStats(List<Hero> heroes) {
@@ -375,96 +387,6 @@ public class HeroesService {
 
         for (Integer integer : getTopTwoLosersHighestNumberOfSuccessfulAttackDodges()) {
             System.out.println("\t\t Highest Number of Successful Dodges = " + integer);
-        }
-    }
-
-    // not used at the moment
-    public void printAllHeroesIDDamageInfo() {
-        outputMessages.printSeparator();
-        System.out.println("\t\tDAMAGE SUMMARY");
-        outputMessages.printSeparator();
-        for (Map.Entry<Integer, Integer> entry : getHeroesIDDamageMap().entrySet()) {
-            for (Map.Entry<Integer, Hero> heroId : getHeroesHashMapStore().entrySet()) {
-                if (heroId.getKey().equals(entry.getKey())) {
-                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getSpecializationName() + " Damage = " + entry.getValue());
-                }
-            }
-            System.out.println();
-        }
-    }
-
-    // not used at the moment
-    public void printAllHeroesIDBattlesInfo() {
-        outputMessages.printSeparator();
-        System.out.println("\t\tBATTLES SUMMARY");
-        outputMessages.printSeparator();
-        for (Map.Entry<Integer, Integer> entry : getHeroesIDBattlesMap().entrySet()) {
-            for (Map.Entry<Integer, Hero> heroId : getHeroesHashMapStore().entrySet()) {
-                if (heroId.getKey().equals(entry.getKey())) {
-                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getSpecializationName() + " Battles = " + entry.getValue());
-                }
-            }
-            System.out.println();
-        }
-    }
-
-    // not used at the moment
-    public void printAllHeroesIDHighestDamageValueInfo() {
-        outputMessages.printSeparator();
-        System.out.println("\t\tHIGHEST DAMAGE VALUE SUMMARY");
-        outputMessages.printSeparator();
-        for (Map.Entry<Integer, Integer> entry : getHeroesIDHighestDamageMap().entrySet()) {
-            for (Map.Entry<Integer, Hero> heroId : getHeroesHashMapStore().entrySet()) {
-                if (heroId.getKey().equals(entry.getKey())) {
-                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getSpecializationName() + " Battles = " + entry.getValue());
-                }
-            }
-            System.out.println();
-        }
-    }
-
-    // not used at the moment
-    public void printAllHeroesIDHighestNumberOfSuccessfulAttackDodgesInfo() {
-        outputMessages.printSeparator();
-        System.out.println("\t\tHIGHEST DAMAGE VALUE SUMMARY");
-        outputMessages.printSeparator();
-        for (Map.Entry<Integer, Integer> entry : getHeroesIDHighestNumberOfSuccessfulAttackDodgesMap().entrySet()) {
-            for (Map.Entry<Integer, Hero> heroId : getHeroesHashMapStore().entrySet()) {
-                if (heroId.getKey().equals(entry.getKey())) {
-                    System.out.print("ID = " + entry.getKey() + " Hero " + heroId.getValue().getSpecializationName() + " Highest Number of Successful Dodges = " + entry.getValue());
-                }
-            }
-            System.out.println();
-        }
-    }
-
-    // not used at the moment
-    public void printLosersIDHighestDamageValueInfo() {
-        for (Map.Entry<Integer, Integer> entry : getHeroesIDHighestDamageMap().entrySet()) {
-            for (Hero hero : getLosers()) {
-                if (entry.getKey().equals(hero.getId())) {
-                    getLosersHighestDamageValue().put(entry.getKey(), entry.getValue());
-                }
-            }
-        }
-
-        for (Map.Entry<Integer, Integer> entry : getLosersHighestDamageValue().entrySet()) {
-            System.out.println("\t\tID = " + entry.getKey() + " Highest Damage Value = " + entry.getValue());
-        }
-    }
-
-    // not used at the moment
-    public void printLosersIDHighestNumberOfSuccessfulAttackDodgesInfo() {
-        for (Map.Entry<Integer, Integer> entry : getHeroesIDHighestNumberOfSuccessfulAttackDodgesMap().entrySet()) {
-            for (Hero hero : getLosers()) {
-                if (entry.getKey().equals(hero.getId())) {
-                    getLosersHighestNumberOfSuccessfulAttackDodges().put(entry.getKey(), entry.getValue());
-                }
-            }
-        }
-
-        for (Map.Entry<Integer, Integer> entry : getLosersHighestNumberOfSuccessfulAttackDodges().entrySet()) {
-            System.out.println("\t\tID = " + entry.getKey() + " Highest Number of Successful Dodges = " + entry.getValue());
         }
     }
 }

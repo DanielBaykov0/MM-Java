@@ -6,6 +6,7 @@ public class Warrior extends Hero {
 
     private static final double WARRIOR_SPECIAL_ATTACK_MULTIPLIER = 1.5;
     private static final double WARRIOR_HEALING_MULTIPLIER = 0.05;
+    private final HeroesService heroesService = new HeroesService();
 
     public Warrior(int id) {
         super(id, "Warrior");
@@ -20,7 +21,7 @@ public class Warrior extends Hero {
     @Override
     public int attack(Random random) {
         if (isBattlefieldLocation(FightersService.location)) {
-            if (isSpecialAttackLocation(random.nextInt(1, 101))) {
+            if (isSpecialAttackLocation(heroesService.getRandomNumberBetweenOneAndOneHundred(random))) {
                 return (int) (super.attack(new Random()) * WARRIOR_SPECIAL_ATTACK_MULTIPLIER);
             }
         }

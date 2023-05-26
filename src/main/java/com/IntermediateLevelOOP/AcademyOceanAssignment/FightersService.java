@@ -77,7 +77,8 @@ public class FightersService {
 
     private static Hero getHeroWinner(Hero firstHero, Hero secondHero) {
 
-        location = Locations.getRandomLocation();
+//        location = Locations.getRandomLocation();
+        location = Locations.WOODS;
         Knight.isKnightLocation(location, firstHero, secondHero);
 
         finalStatistics.setFirstHeroDamageValue(0);
@@ -113,19 +114,19 @@ public class FightersService {
         while (true) {
 
             if (secondHero.getHealthPoints() <= 0) {
-                secondHero.isHeroDead();
+                secondHero.printHeroDied();
                 return firstHero;
             } else if (firstHero.getHealthPoints() <= 0) {
-                firstHero.isHeroDead();
+                firstHero.printHeroDied();
                 return secondHero;
             }
 
-            int damage = firstHero.getHeroDamage();
+            int damage = firstHero.getFirstHeroDamage(firstHero, secondHero);
             heroesService.putFirstHeroIDDamageBattlesMap(firstHero, heroes, damage);
             heroesService.putFirstHeroIDHighestDamageMap(firstHero, heroes, damage);
             heroesService.putFirstHeroHighestNumberOfSuccessfulAttackDodges(secondHero, heroes, damage);
 
-            int damageTook = secondHero.getHeroDamage();
+            int damageTook = secondHero.getSecondHeroDamage(secondHero, firstHero);
             heroesService.putSecondHeroIDDamageBattleMap(secondHero, heroes, damageTook);
             heroesService.putSecondHeroIDHighestDamageMap(secondHero, heroes, damageTook);
             heroesService.putSecondHeroHighestNumberOfSuccessfulAttackDodges(firstHero, heroes, damageTook);

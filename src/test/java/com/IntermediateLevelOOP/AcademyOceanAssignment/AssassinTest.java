@@ -1,8 +1,10 @@
 package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,10 +14,12 @@ import static org.mockito.Mockito.*;
 class AssassinTest {
 
     Assassin assassin;
+    HeroesService heroesService;
 
     @BeforeEach
     void setAssassin() {
         assassin = new Assassin(0);
+        heroesService = new HeroesService();
     }
 
     @Test
@@ -36,29 +40,33 @@ class AssassinTest {
     void testAssassinSpecialAttack() {
         assassin.setAttackPoints(10);
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
-        when(randomMock.nextInt(1, 101)).thenReturn(40);
+        when(randomMock.nextInt(1, 101)).thenReturn(30);
         int damage = assassin.attack(randomMock);
-        assertTrue(damage >= 8 && damage <= 12);
+        assertTrue(damage >= 24 && damage <= 36);
     }
 
     @Test
     void testAssassinSpecialLocationHigherAttack() {
         FightersService.location = Locations.WOODS;
         assassin.setAttackPoints(10);
-        Assassin.SPECIAL_VALUE = 10;
+        List<Integer> specialValues = List.of(35, 10);
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
         when(randomMock.nextInt(1, 101)).thenReturn(10);
         int damage = assassin.attack(randomMock);
         assertTrue(damage >= 36 && damage <= 54);
     }
 
-    @Test
+    @RepeatedTest(10)
     void testAssassinSpecialLocationLowerAttack() {
         FightersService.location = Locations.WOODS;
         assassin.setAttackPoints(10);
-        Assassin.SPECIAL_VALUE = 35;
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
         when(randomMock.nextInt(1, 101)).thenReturn(35);
+        List<Integer> specialValues = List.of(35, 10);
+
+        HeroesService mockHeroService = mock(HeroesService.class);
+        when(mockHeroService.getAssassinRandomSpecialAttackValue(randomMock, specialValues)).thenReturn(35);
+
         int damage = assassin.attack(randomMock);
         assertTrue(damage >= 24 && damage <= 36);
     }

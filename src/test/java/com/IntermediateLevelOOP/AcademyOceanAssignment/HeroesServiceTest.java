@@ -280,8 +280,8 @@ class HeroesServiceTest {
     void testPrintFinalistsIDDamageInfo() {
         Monk firstHero = new Monk(1);
         Warrior secondHero = new Warrior(2);
-        heroesService.getFinalistsIDDamageMap().put(firstHero.getId(), firstHero.getHeroDamage());
-        heroesService.getFinalistsIDDamageMap().put(secondHero.getId(), secondHero.getHeroDamage());
+        heroesService.getFinalistsIDDamageMap().put(firstHero.getId(), firstHero.getFirstHeroDamage(firstHero, secondHero));
+        heroesService.getFinalistsIDDamageMap().put(secondHero.getId(), secondHero.getSecondHeroDamage(secondHero, firstHero));
         heroesService.printFinalistsIDDamageInfo();
         assertFalse(heroesService.getFinalistsIDDamageMap().isEmpty());
         assertEquals(2, heroesService.getFinalistsIDDamageMap().size());
@@ -328,47 +328,5 @@ class HeroesServiceTest {
         assertFalse(heroesService.getTopTwoLosersHighestNumberOfSuccessfulAttackDodges().isEmpty());
         assertEquals(2, heroesService.getTopTwoLosersHighestNumberOfSuccessfulAttackDodges().size());
     }
-
-//    @Test
-//    void testPrintAllHeroesIDDamageInfo() {
-//        HeroesService heroesService = new HeroesService();
-//        heroesService.printAllHeroesIDDamageInfo();
-//        assertTrue(heroesService.getFinalTwoStanding().isEmpty());
-//    }
-
-//    @Test
-//    void testPrintAllHeroesIDBattlesInfo() {
-//        HeroesService heroesService = new HeroesService();
-//        heroesService.printAllHeroesIDBattlesInfo();
-//        assertTrue(heroesService.getFinalTwoStanding().isEmpty());
-//    }
-
-//    @Test
-//    void testPrintAllHeroesIDHighestDamageValueInfo() {
-//        HeroesService heroesService = new HeroesService();
-//        heroesService.printAllHeroesIDHighestDamageValueInfo();
-//        assertTrue(heroesService.getFinalTwoStanding().isEmpty());
-//    }
-
-//    @Test
-//    void testPrintAllHeroesIDHighestNumberOfSuccessfulAttackDodgesInfo() {
-//        HeroesService heroesService = new HeroesService();
-//        heroesService.printAllHeroesIDHighestNumberOfSuccessfulAttackDodgesInfo();
-//        assertTrue(heroesService.getFinalTwoStanding().isEmpty());
-//    }
-
-//    @Test
-//    void testPrintLosersIDHighestDamageValueInfo() {
-//        HeroesService heroesService = new HeroesService();
-//        heroesService.printLosersIDHighestDamageValueInfo();
-//        assertTrue(heroesService.getFinalTwoStanding().isEmpty());
-//    }
-
-//    @Test
-//    void testPrintLosersIDHighestNumberOfSuccessfulAttackDodgesInfo() {
-//        HeroesService heroesService = new HeroesService();
-//        heroesService.printLosersIDHighestNumberOfSuccessfulAttackDodgesInfo();
-//        assertTrue(heroesService.getFinalTwoStanding().isEmpty());
-//    }
 }
 

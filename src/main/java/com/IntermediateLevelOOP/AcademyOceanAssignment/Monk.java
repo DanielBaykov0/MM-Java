@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class Monk extends Hero {
 
+    private final HeroesService heroesService = new HeroesService();
+
     public Monk(int id) {
         super(id, "Monk");
     }
@@ -16,7 +18,7 @@ public class Monk extends Hero {
 
     @Override
     public int defend(Random random) {
-        if (isSpecialDefence(random.nextInt(1, 101))) {
+        if (isSpecialDefence(heroesService.getRandomNumberBetweenOneAndOneHundred(random))) {
             return Integer.MAX_VALUE;
         } else {
             return super.defend(new Random());
