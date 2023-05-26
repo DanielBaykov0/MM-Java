@@ -22,7 +22,12 @@ class OutputMessagesTest {
         ArrayList<Hero> heroes = new ArrayList<>();
         heroes.add(new Assassin(1));
         heroes.add(new Warrior(2));
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
         outputMessages.printStartingHeroes(heroes);
+        String expectedOutput = "ID=1 Hero: 'Assassin', healthPoints=100, attackPoints=25, armorPoints=20\r\nID=2 Hero: 'Warrior', healthPoints=100, attackPoints=25, armorPoints=20\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
