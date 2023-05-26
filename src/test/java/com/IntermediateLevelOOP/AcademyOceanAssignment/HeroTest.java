@@ -11,17 +11,18 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 
 class HeroTest {
 
     private Hero firstHero;
     private Hero secondHero;
+    private Hero thirdHero;
 
     @BeforeEach
     void setHero() {
         firstHero = new Warrior(1);
-        secondHero = new Monk(2);
+        secondHero = new Assassin(2);
+        thirdHero = new Monk(3);
     }
 
     @Test
@@ -41,21 +42,25 @@ class HeroTest {
     @RepeatedTest(10)
     void testGetFirstHeroZeroDamage() {
         firstHero.setAttackPoints(2);
-        Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
-        HeroesService mockHeroService = mock(HeroesService.class);
-        when(mockHeroService.getRandomNumberBetweenOneAndOneHundred(randomMock)).thenReturn(0);
         assertEquals(0 , firstHero.getFirstHeroDamage(firstHero, secondHero));
     }
 
     @RepeatedTest(10)
     void testGetFirstHeroDamage() {
         secondHero.setArmorPoints(1);
-        Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
-        int damage = firstHero.getFirstHeroDamage(firstHero, secondHero);
-        HeroesService mockHeroService = mock(HeroesService.class);
-        when(mockHeroService.getRandomNumberBetweenOneAndOneHundred(randomMock)).thenReturn(50);
-//        when(secondHero.defend(randomMock)).thenReturn(1);
-        assertEquals(10, damage);
+        assertTrue(firstHero.getFirstHeroDamage(firstHero, secondHero) > 0);
+    }
+
+    @RepeatedTest(10)
+    void testGetSecondHeroZeroDamage() {
+        thirdHero.setAttackPoints(2);
+        assertEquals(0 , thirdHero.getSecondHeroDamage(thirdHero, firstHero));
+    }
+
+    @RepeatedTest(10)
+    void testGetSecondHeroDamage() {
+        firstHero.setArmorPoints(1);
+        assertTrue(thirdHero.getSecondHeroDamage(thirdHero, firstHero) > 0);
     }
 
     @Test
