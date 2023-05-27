@@ -28,6 +28,8 @@ public class HeroesService {
     private final List<Integer> specialValues =
             new ArrayList<>(List.of(ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT, ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT));
 
+    private static final double WARRIOR_HEALING_MULTIPLIER = 0.05;
+
     public HeroesService() {
         RANDOM_NUMBER_GENERATOR = new Random();
         finalStatistics = new FinalStatistics();
@@ -126,6 +128,16 @@ public class HeroesService {
         if (Locations.CASTLE.equals(location) && "Knight".equals(secondHero.getSpecializationName())) {
             secondHero.setHealthPoints(secondHero.getHealthPoints() + secondHero.getHealthPoints() / 10);
             secondHero.setArmorPoints(secondHero.getArmorPoints() + secondHero.getArmorPoints() / 10);
+        }
+    }
+
+    public void isWarriorHealed(Locations location, Hero firstHero, Hero secondHero, int damage, int damageTook) {
+        if ((Locations.BATTLEFIELD.equals(location) && "Warrior".equals(firstHero.getSpecializationName()))) {
+            firstHero.setHealthPoints(firstHero.getHealthPoints() + (int) (damage * WARRIOR_HEALING_MULTIPLIER));
+        }
+
+        if ((Locations.BATTLEFIELD.equals(location) && "Warrior".equals(secondHero.getSpecializationName()))) {
+            secondHero.setHealthPoints(secondHero.getHealthPoints() + (int) (damageTook * WARRIOR_HEALING_MULTIPLIER));
         }
     }
 

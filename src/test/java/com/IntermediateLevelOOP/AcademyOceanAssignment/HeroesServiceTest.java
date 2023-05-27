@@ -14,12 +14,14 @@ class HeroesServiceTest {
     HeroesService heroesService;
     FinalStatistics finalStatistics;
     Hero knight;
+    Hero warrior;
 
     @BeforeEach
     void setHeroesService() {
         heroesService = new HeroesService();
         finalStatistics = new FinalStatistics();
         knight = new Knight(1);
+        warrior = new Warrior(2);
     }
 
     @Test
@@ -70,6 +72,20 @@ class HeroesServiceTest {
         heroesService.isKnightLocation(FightersService.location = Locations.CASTLE, assassin, knight);
         assertEquals(110, knight.getHealthPoints());
         assertEquals(11, knight.getArmorPoints());
+    }
+
+    @Test
+    void testIsFirstWarriorHealed() {
+        Assassin assassin = new Assassin(1);
+        heroesService.isWarriorHealed(FightersService.location = Locations.BATTLEFIELD, warrior, assassin, 100, 0);
+        assertEquals(105, warrior.getHealthPoints());
+    }
+
+    @Test
+    void testIsSecondWarriorHealed() {
+        Assassin assassin = new Assassin(1);
+        heroesService.isWarriorHealed(FightersService.location = Locations.BATTLEFIELD, assassin, warrior, 0, 100);
+        assertEquals(105, warrior.getHealthPoints());
     }
 
 

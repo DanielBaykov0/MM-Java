@@ -137,7 +137,7 @@ public class FightersService {
             heroesService.putSecondHeroIDHighestDamageMap(secondHero, heroes, damageTook);
             heroesService.putSecondHeroHighestNumberOfSuccessfulAttackDodges(firstHero, heroes, damageTook);
 
-            Warrior.isWarriorHealed(location, firstHero, secondHero, damage, damageTook);
+            heroesService.isWarriorHealed(location, firstHero, secondHero, damage, damageTook);
 
             firstHero.setHealthPoints(firstHero.getHealthPoints() - damageTook);
             secondHero.setHealthPoints(secondHero.getHealthPoints() - damage);

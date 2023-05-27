@@ -47,19 +47,5 @@ class WarriorTest {
         warrior.setArmorPoints(20);
         assertTrue(warrior.defend(new Random()) >= 16 && warrior.defend(new Random()) <= 24);
     }
-
-    @Test
-    void testIsFirstWarriorHealed() {
-        Assassin assassin = new Assassin(1);
-        Warrior.isWarriorHealed(FightersService.location = Locations.BATTLEFIELD, warrior, assassin, 100, 0);
-        assertEquals(105, warrior.getHealthPoints());
-    }
-
-    @Test
-    void testIsSecondWarriorHealed() {
-        Assassin assassin = new Assassin(1);
-        Warrior.isWarriorHealed(FightersService.location = Locations.BATTLEFIELD, assassin, warrior, 0, 100);
-        assertEquals(105, warrior.getHealthPoints());
-    }
 }
 
