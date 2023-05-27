@@ -14,12 +14,12 @@ import static org.mockito.Mockito.*;
 class AssassinTest {
 
     Assassin assassin;
-    HeroesService heroesService;
+    AssassinMock assassinMock;
 
     @BeforeEach
     void setAssassin() {
         assassin = new Assassin(0);
-        heroesService = new HeroesService();
+        assassinMock = new AssassinMock(1);
     }
 
     @Test
@@ -45,29 +45,29 @@ class AssassinTest {
         assertTrue(damage >= 24 && damage <= 36);
     }
 
-    @Test
+    @RepeatedTest(10)
     void testAssassinSpecialLocationHigherAttack() {
         FightersService.location = Locations.WOODS;
-        assassin.setAttackPoints(10);
+        assassinMock.setAttackPoints(10);
         List<Integer> specialValues = List.of(35, 10);
+
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
-        when(randomMock.nextInt(1, 101)).thenReturn(10);
-        int damage = assassin.attack(randomMock);
+        when(randomMock.nextInt(specialValues.size())).thenReturn(1);
+
+        int damage = assassinMock.attackHigherValue(randomMock);
         assertTrue(damage >= 36 && damage <= 54);
     }
 
     @RepeatedTest(10)
     void testAssassinSpecialLocationLowerAttack() {
         FightersService.location = Locations.WOODS;
-        assassin.setAttackPoints(10);
-        Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
-        when(randomMock.nextInt(1, 101)).thenReturn(35);
+        assassinMock.setAttackPoints(10);
         List<Integer> specialValues = List.of(35, 10);
 
-        HeroesService mockHeroService = mock(HeroesService.class);
-        when(mockHeroService.getAssassinRandomSpecialAttackValue(randomMock, specialValues)).thenReturn(35);
+        Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
+        when(randomMock.nextInt(specialValues.size())).thenReturn(0);
 
-        int damage = assassin.attack(randomMock);
+        int damage = assassinMock.attackLowerValue(randomMock);
         assertTrue(damage >= 24 && damage <= 36);
     }
 

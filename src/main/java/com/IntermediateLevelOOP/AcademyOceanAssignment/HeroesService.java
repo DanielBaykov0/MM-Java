@@ -23,6 +23,11 @@ public class HeroesService {
     private final Queue<Integer> topTwoLosersHighestDamageValue;
     private final Queue<Integer> topTwoLosersHighestNumberOfSuccessfulAttackDodges;
 
+    private final int ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT = 10;
+    private final int ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT = 35;
+    private final List<Integer> specialValues =
+            new ArrayList<>(List.of(ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT, ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT));
+
     public HeroesService() {
         RANDOM_NUMBER_GENERATOR = new Random();
         finalStatistics = new FinalStatistics();
@@ -39,6 +44,14 @@ public class HeroesService {
         losers = new ArrayList<>();
         topTwoLosersHighestDamageValue = new PriorityQueue<>();
         topTwoLosersHighestNumberOfSuccessfulAttackDodges = new PriorityQueue<>();
+    }
+
+    public int getASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT() {
+        return ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT;
+    }
+
+    public int getASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT() {
+        return ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT;
     }
 
     public Queue<Integer> getTopTwoLosersHighestDamageValue() {
@@ -98,11 +111,13 @@ public class HeroesService {
     }
 
     public int getRandomNumberBetweenOneAndOneHundred(Random random) {
-        return random.nextInt(1, 101);
+        int number = random.nextInt(1, 101);
+        return number;
     }
 
-    public int getAssassinRandomSpecialAttackValue(Random random, List<Integer> specialValues) {
-        return specialValues.get(random.nextInt(specialValues.size()));
+    public int getAssassinRandomSpecialAttackValue(Random random) {
+        int value = specialValues.get(random.nextInt(specialValues.size()));
+        return value;
     }
 
     public void resetHeroStats(List<Hero> heroes) {

@@ -4,8 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class HeroesServiceTest {
 
@@ -29,6 +31,23 @@ class HeroesServiceTest {
         assertEquals(100, warrior.getHealthPoints());
         assertEquals(25, warrior.getAttackPoints());
         assertEquals(20, warrior.getArmorPoints());
+    }
+
+    @Test
+    void testGetRandomNumberBetweenOneAndOneHundred() {
+        Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
+        when(randomMock.nextInt(1, 101)).thenReturn(10);
+        int number = heroesService.getRandomNumberBetweenOneAndOneHundred(randomMock);
+        assertEquals(10, number);
+    }
+
+    @Test
+    void testGetAssassinRandomSpecialAttackValue() {
+        List<Integer> specialValues = List.of(35, 10);
+        Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
+        when(randomMock.nextInt(specialValues.size())).thenReturn(1);
+        int number = heroesService.getAssassinRandomSpecialAttackValue(randomMock);
+        assertEquals(10, number);
     }
 
     @Test

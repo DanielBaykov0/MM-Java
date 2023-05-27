@@ -2,14 +2,13 @@ package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
 import java.util.Random;
 
-public class Assassin extends Hero {
+public class AssassinMock extends Hero {
 
-    private static final int ASSASSIN_SPECIAL_ATTACK_MULTIPLIER = 3;
-    private static final int ASSASSIN_SPECIAL_ATTACK_PERCENT = 30;
-    private static final double ASSASSIN_SPECIAL_LOCATION_ATTACK_MULTIPLIER = 4.5;
     private final HeroesService heroesService = new HeroesService();
+    private static final double ASSASSIN_SPECIAL_LOCATION_ATTACK_MULTIPLIER = 4.5;
+    private static final int ASSASSIN_SPECIAL_ATTACK_MULTIPLIER = 3;
 
-    public Assassin(int id) {
+    public AssassinMock(int id) {
         super(id, "Assassin");
     }
 
@@ -19,21 +18,29 @@ public class Assassin extends Hero {
                 "one is a conqueror; one kills everybody, one is a god.";
     }
 
-    @Override
-    public int attack(Random random) {
-        int number = heroesService.getRandomNumberBetweenOneAndOneHundred(random);
+    public int attackHigherValue(Random random) {
+        int number = 10;
         if (isSpecialLocation(FightersService.location)) {
-            int specialValueNumber = heroesService.getAssassinRandomSpecialAttackValue(new Random());
+            int specialValueNumber = heroesService.getAssassinRandomSpecialAttackValue(random);
             if (isSpecialAttack(number, specialValueNumber)) {
                 if (specialValueNumber == heroesService.getASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT()) {
                     return (int) (super.attack(new Random()) * ASSASSIN_SPECIAL_LOCATION_ATTACK_MULTIPLIER);
-                } else if (specialValueNumber == heroesService.getASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT()) {
-                    return super.attack(new Random()) * ASSASSIN_SPECIAL_ATTACK_MULTIPLIER;
                 }
             }
         }
-        if (isSpecialAttack(number, ASSASSIN_SPECIAL_ATTACK_PERCENT)) {
-            return super.attack(new Random()) * ASSASSIN_SPECIAL_ATTACK_MULTIPLIER;
+
+        return super.attack(new Random());
+    }
+
+    public int attackLowerValue(Random random) {
+        int number = 35;
+        if (isSpecialLocation(FightersService.location)) {
+            int specialValueNumber = heroesService.getAssassinRandomSpecialAttackValue(random);
+            if (isSpecialAttack(number, specialValueNumber)) {
+                if (specialValueNumber == heroesService.getASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT()) {
+                    return super.attack(new Random()) * ASSASSIN_SPECIAL_ATTACK_MULTIPLIER;
+                }
+            }
         }
 
         return super.attack(new Random());
