@@ -4,8 +4,6 @@ import java.util.Random;
 
 public class Knight extends Hero {
 
-    private final HeroesService heroesService = new HeroesService();
-
     public Knight(int id) {
         super(id, "Knight");
     }
@@ -17,20 +15,20 @@ public class Knight extends Hero {
     }
 
     @Override
-    public int attack(Random random) {
+    public int attack(Random random, HeroesService heroesService) {
         if (isSpecialAttack(heroesService.getRandomNumberBetweenOneAndOneHundred(random))) {
-            return super.attack(new Random()) * 2;
+            return super.attack(new Random(), heroesService) * 2;
         } else {
-            return super.attack(new Random());
+            return super.attack(new Random(), heroesService);
         }
     }
 
     @Override
-    public int defend(Random random) {
+    public int defend(Random random, HeroesService heroesService) {
         if (isSpecialDefence(heroesService.getRandomNumberBetweenOneAndOneHundred(random))) {
             return Integer.MAX_VALUE;
         } else {
-            return super.defend(new Random());
+            return super.defend(new Random(), heroesService);
         }
     }
 

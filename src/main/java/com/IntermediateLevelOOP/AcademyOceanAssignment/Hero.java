@@ -8,8 +8,6 @@ public abstract class Hero {
     private static final int HEALTH_POINTS = 100;
     private static final int ATTACK_POINTS = 25;
     private static final int ARMOR_POINTS = 20;
-    private static final double EIGHTY_PERCENT_BOUND = 0.8;
-    private static final double ONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND = 1.21;
     private final String specializationName;
     private int healthPoints;
     private int attackPoints;
@@ -71,12 +69,12 @@ public abstract class Hero {
         return specializationName;
     }
 
-    public int attack(Random random) {
-        return random.nextInt((int) (attackPoints * EIGHTY_PERCENT_BOUND), (int) (attackPoints * ONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND));
+    public int attack(Random random, HeroesService heroesService) {
+        return random.nextInt((int) (attackPoints * heroesService.getEIGHTY_PERCENT_BOUND()), (int) (attackPoints * heroesService.getONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND()));
     }
 
-    public int defend(Random random) {
-        return random.nextInt((int) (armorPoints * EIGHTY_PERCENT_BOUND), (int) (armorPoints * ONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND));
+    public int defend(Random random, HeroesService heroesService) {
+        return random.nextInt((int) (armorPoints * heroesService.getEIGHTY_PERCENT_BOUND()), (int) (armorPoints * heroesService.getONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND()));
     }
 
     public void checkHeroHealthPoints() {
@@ -86,7 +84,7 @@ public abstract class Hero {
     }
 
     public int getFirstHeroDamage(Hero firstHero, Hero secondHero) {
-        int damage = firstHero.attack(new Random()) - secondHero.defend(new Random());
+        int damage = firstHero.attack(new Random(), new HeroesService()) - secondHero.defend(new Random(), new HeroesService());
         if (damage < 0) {
             damage = 0;
         }
@@ -95,7 +93,7 @@ public abstract class Hero {
     }
 
     public int getSecondHeroDamage(Hero secondHero, Hero firstHero) {
-        int damage = secondHero.attack(new Random()) - firstHero.defend(new Random());
+        int damage = secondHero.attack(new Random(), new HeroesService()) - firstHero.defend(new Random(), new HeroesService());
         if (damage < 0) {
             damage = 0;
         }

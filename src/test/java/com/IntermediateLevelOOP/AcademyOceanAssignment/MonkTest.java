@@ -12,10 +12,12 @@ import static org.mockito.Mockito.*;
 class MonkTest {
 
     Monk monk;
+    HeroesService heroesService;
 
     @BeforeEach
     void setMonk() {
         monk = new Monk(0);
+        heroesService = new HeroesService();
     }
 
     @Test
@@ -27,7 +29,7 @@ class MonkTest {
     @Test
     void testMonkNormalAttack() {
         monk.setAttackPoints(10);
-        assertTrue(monk.attack(new Random()) >= 8 && monk.attack(new Random()) <= 12);
+        assertTrue(monk.attack(new Random(), heroesService) >= 8 && monk.attack(new Random(), heroesService) <= 12);
     }
 
     @Test
@@ -35,7 +37,7 @@ class MonkTest {
         monk.setArmorPoints(10);
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
         when(randomMock.nextInt(1, 101)).thenReturn(50);
-        assertTrue(monk.defend(randomMock) >= 8 && monk.defend(randomMock) <= 12);
+        assertTrue(monk.defend(randomMock, heroesService) >= 8 && monk.defend(randomMock, heroesService) <= 12);
     }
 
     @Test
@@ -43,7 +45,7 @@ class MonkTest {
         FightersService.location = Locations.WOODS;
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
         when(randomMock.nextInt(1, 101)).thenReturn(30);
-        assertEquals(Integer.MAX_VALUE, monk.defend(randomMock));
+        assertEquals(Integer.MAX_VALUE, monk.defend(randomMock, heroesService));
     }
 
     @Test
@@ -51,7 +53,7 @@ class MonkTest {
         FightersService.location = Locations.TEMPLE;
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
         when(randomMock.nextInt(1, 101)).thenReturn(40);
-        assertEquals(Integer.MAX_VALUE, monk.defend(randomMock));
+        assertEquals(Integer.MAX_VALUE, monk.defend(randomMock, heroesService));
     }
 }
 

@@ -12,11 +12,13 @@ class WarriorTest {
 
     Warrior warrior;
     FightersService fightersService;
+    HeroesService heroesService;
 
     @BeforeEach
     void setWarrior() {
         warrior = new Warrior(0);
         fightersService = new FightersService();
+        heroesService = new HeroesService();
     }
 
     @Test
@@ -31,7 +33,7 @@ class WarriorTest {
     void testWarriorNormalAttack() {
         warrior.setAttackPoints(20);
         FightersService.location = Locations.TEMPLE;
-        assertTrue(warrior.attack(new Random()) >= 16 && warrior.attack(new Random()) <= 24);
+        assertTrue(warrior.attack(new Random(), heroesService) >= 16 && warrior.attack(new Random(), heroesService) <= 24);
     }
 
     @Test
@@ -40,14 +42,14 @@ class WarriorTest {
         warrior.setAttackPoints(10);
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
         when(randomMock.nextInt(1, 101)).thenReturn(10);
-        int damage = warrior.attack(randomMock);
+        int damage = warrior.attack(randomMock, heroesService);
         assertFalse(damage < 12 || damage > 18);
     }
 
     @Test
     void testWarriorNormalDefence() {
         warrior.setArmorPoints(20);
-        assertTrue(warrior.defend(new Random()) >= 16 && warrior.defend(new Random()) <= 24);
+        assertTrue(warrior.defend(new Random(), heroesService) >= 16 && warrior.defend(new Random(), heroesService) <= 24);
     }
 }
 

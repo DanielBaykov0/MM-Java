@@ -28,7 +28,9 @@ public class HeroesService {
     private final List<Integer> specialValues =
             new ArrayList<>(List.of(ASSASSIN_SPECIAL_LOCATION_HIGHER_ATTACK_PERCENT, ASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT));
 
-    private static final double WARRIOR_HEALING_MULTIPLIER = 0.05;
+    private final double WARRIOR_HEALING_MULTIPLIER = 0.05;
+    private final double EIGHTY_PERCENT_BOUND = 0.8;
+    private final double ONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND = 1.21;
 
     public HeroesService() {
         RANDOM_NUMBER_GENERATOR = new Random();
@@ -46,6 +48,18 @@ public class HeroesService {
         losers = new ArrayList<>();
         topTwoLosersHighestDamageValue = new PriorityQueue<>();
         topTwoLosersHighestNumberOfSuccessfulAttackDodges = new PriorityQueue<>();
+    }
+
+    public double getWARRIOR_HEALING_MULTIPLIER() {
+        return WARRIOR_HEALING_MULTIPLIER;
+    }
+
+    public double getEIGHTY_PERCENT_BOUND() {
+        return EIGHTY_PERCENT_BOUND;
+    }
+
+    public double getONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND() {
+        return ONE_HUNDRED_AND_TWENTY_ONE_PERCENT_BOUND;
     }
 
     public int getASSASSIN_SPECIAL_LOCATION_LOWER_ATTACK_PERCENT() {
@@ -133,11 +147,11 @@ public class HeroesService {
 
     public void isWarriorHealed(Locations location, Hero firstHero, Hero secondHero, int damage, int damageTook) {
         if ((Locations.BATTLEFIELD.equals(location) && "Warrior".equals(firstHero.getSpecializationName()))) {
-            firstHero.setHealthPoints(firstHero.getHealthPoints() + (int) (damage * WARRIOR_HEALING_MULTIPLIER));
+            firstHero.setHealthPoints(firstHero.getHealthPoints() + (int) (damage * getWARRIOR_HEALING_MULTIPLIER()));
         }
 
         if ((Locations.BATTLEFIELD.equals(location) && "Warrior".equals(secondHero.getSpecializationName()))) {
-            secondHero.setHealthPoints(secondHero.getHealthPoints() + (int) (damageTook * WARRIOR_HEALING_MULTIPLIER));
+            secondHero.setHealthPoints(secondHero.getHealthPoints() + (int) (damageTook * getWARRIOR_HEALING_MULTIPLIER()));
         }
     }
 

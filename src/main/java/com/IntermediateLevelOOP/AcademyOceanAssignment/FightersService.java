@@ -85,7 +85,8 @@ public class FightersService {
 
     private Hero getHeroWinner(Hero firstHero, Hero secondHero) {
 
-        location = Locations.getRandomLocation();
+//        location = Locations.getRandomLocation();
+        location = Locations.WOODS;
         heroesService.isKnightLocation(location, firstHero, secondHero);
 
         finalStatistics.setFirstHeroDamageValue(0);

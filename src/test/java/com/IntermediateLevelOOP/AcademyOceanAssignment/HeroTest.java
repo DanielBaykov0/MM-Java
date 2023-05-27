@@ -17,18 +17,20 @@ class HeroTest {
     private Hero firstHero;
     private Hero secondHero;
     private Hero thirdHero;
+    HeroesService heroesService;
 
     @BeforeEach
     void setHero() {
         firstHero = new Warrior(1);
         secondHero = new Assassin(2);
         thirdHero = new Monk(3);
+        heroesService = new HeroesService();
     }
 
     @Test
     void testHeroAttack() {
         firstHero.setAttackPoints(10);
-        int attackNumber = firstHero.attack(new Random());
+        int attackNumber = firstHero.attack(new Random(), heroesService);
         assertTrue(attackNumber >= 8 && attackNumber <= 12);
     }
 

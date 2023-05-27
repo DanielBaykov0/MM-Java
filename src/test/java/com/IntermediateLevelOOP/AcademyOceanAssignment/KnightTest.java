@@ -12,10 +12,12 @@ import static org.mockito.Mockito.*;
 class KnightTest {
 
     Knight knight;
+    HeroesService heroesService;
 
     @BeforeEach
     void setKnight() {
         knight = new Knight(0);
+        heroesService = new HeroesService();
     }
 
     @Test
@@ -29,7 +31,7 @@ class KnightTest {
         knight.setAttackPoints(10);
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
         when(randomMock.nextInt(1, 101)).thenReturn(20);
-        assertTrue(knight.attack(randomMock) >= 8 && knight.attack(randomMock) <= 12);
+        assertTrue(knight.attack(randomMock, heroesService) >= 8 && knight.attack(randomMock, heroesService) <= 12);
     }
 
     @Test
@@ -37,7 +39,7 @@ class KnightTest {
         knight.setAttackPoints(10);
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
         when(randomMock.nextInt(1, 101)).thenReturn(10);
-        assertTrue(knight.attack(randomMock) >= 16 && knight.attack(randomMock) <= 24);
+        assertTrue(knight.attack(randomMock, heroesService) >= 16 && knight.attack(randomMock, heroesService) <= 24);
     }
 
     @Test
@@ -45,7 +47,7 @@ class KnightTest {
        knight.setArmorPoints(10);
        Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
        when(randomMock.nextInt(1, 101)).thenReturn(30);
-       assertTrue(knight.defend(randomMock) >= 8 && knight.defend(randomMock) <= 12);
+       assertTrue(knight.defend(randomMock, heroesService) >= 8 && knight.defend(randomMock, heroesService) <= 12);
     }
 
     @Test
@@ -53,7 +55,7 @@ class KnightTest {
         knight.setArmorPoints(10);
         Random randomMock = mock(Random.class, withSettings().withoutAnnotations());
         when(randomMock.nextInt(1, 101)).thenReturn(18);
-        assertEquals(Integer.MAX_VALUE, knight.defend(randomMock));
+        assertEquals(Integer.MAX_VALUE, knight.defend(randomMock, heroesService));
     }
 }
 

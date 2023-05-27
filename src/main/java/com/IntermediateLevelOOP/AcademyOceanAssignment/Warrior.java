@@ -5,7 +5,6 @@ import java.util.Random;
 public class Warrior extends Hero {
 
     private static final double WARRIOR_SPECIAL_ATTACK_MULTIPLIER = 1.5;
-    private final HeroesService heroesService = new HeroesService();
 
     public Warrior(int id) {
         super(id, "Warrior");
@@ -18,14 +17,14 @@ public class Warrior extends Hero {
     }
 
     @Override
-    public int attack(Random random) {
+    public int attack(Random random, HeroesService heroesService) {
         if (isBattlefieldLocation(FightersService.location)) {
             if (isSpecialAttackLocation(heroesService.getRandomNumberBetweenOneAndOneHundred(random))) {
-                return (int) (super.attack(new Random()) * WARRIOR_SPECIAL_ATTACK_MULTIPLIER);
+                return (int) (super.attack(new Random(), heroesService) * WARRIOR_SPECIAL_ATTACK_MULTIPLIER);
             }
         }
 
-        return super.attack(new Random());
+        return super.attack(new Random(), heroesService);
     }
 
     private static boolean isBattlefieldLocation(Locations location) {
