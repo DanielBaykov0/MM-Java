@@ -111,13 +111,11 @@ public class HeroesService {
     }
 
     public int getRandomNumberBetweenOneAndOneHundred(Random random) {
-        int number = random.nextInt(1, 101);
-        return number;
+        return random.nextInt(1, 101);
     }
 
     public int getAssassinRandomSpecialAttackValue(Random random) {
-        int value = specialValues.get(random.nextInt(specialValues.size()));
-        return value;
+        return specialValues.get(random.nextInt(specialValues.size()));
     }
 
     public void resetHeroStats(List<Hero> heroes) {
