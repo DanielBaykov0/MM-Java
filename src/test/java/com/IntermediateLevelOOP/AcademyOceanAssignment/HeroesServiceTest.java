@@ -13,11 +13,13 @@ class HeroesServiceTest {
 
     HeroesService heroesService;
     FinalStatistics finalStatistics;
+    Hero knight;
 
     @BeforeEach
     void setHeroesService() {
         heroesService = new HeroesService();
         finalStatistics = new FinalStatistics();
+        knight = new Knight(1);
     }
 
     @Test
@@ -49,6 +51,27 @@ class HeroesServiceTest {
         int number = heroesService.getAssassinRandomSpecialAttackValue(randomMock);
         assertEquals(10, number);
     }
+
+    @Test
+    void testIsFirstKnightLocation() {
+        knight.setHealthPoints(100);
+        knight.setArmorPoints(10);
+        Assassin assassin = new Assassin(1);
+        heroesService.isKnightLocation(FightersService.location = Locations.CASTLE, knight, assassin);
+        assertEquals(110, knight.getHealthPoints());
+        assertEquals(11, knight.getArmorPoints());
+    }
+
+    @Test
+    void testIsSecondKnightLocation() {
+        knight.setHealthPoints(100);
+        knight.setArmorPoints(10);
+        Assassin assassin = new Assassin(1);
+        heroesService.isKnightLocation(FightersService.location = Locations.CASTLE, assassin, knight);
+        assertEquals(110, knight.getHealthPoints());
+        assertEquals(11, knight.getArmorPoints());
+    }
+
 
     @Test
     void testGenerateHeroes() {

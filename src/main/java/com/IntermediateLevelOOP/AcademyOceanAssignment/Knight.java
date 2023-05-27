@@ -43,15 +43,4 @@ public class Knight extends Hero {
         int specialDefencePercent = 20;
         return specialDefenceNumber <= specialDefencePercent;
     }
-
-    public static void isKnightLocation(Locations location, Hero firstHero, Hero secondHero) {
-        if (Locations.CASTLE.equals(location) && "Knight".equals(firstHero.getSpecializationName())) {
-            firstHero.setHealthPoints(firstHero.getHealthPoints() + firstHero.getHealthPoints() / 10);
-            firstHero.setArmorPoints(firstHero.getArmorPoints() + firstHero.getArmorPoints() / 10);
-        }
-        if (Locations.CASTLE.equals(location) && "Knight".equals(secondHero.getSpecializationName())) {
-            secondHero.setHealthPoints(secondHero.getHealthPoints() + secondHero.getHealthPoints() / 10);
-            secondHero.setArmorPoints(secondHero.getArmorPoints() + secondHero.getArmorPoints() / 10);
-        }
-    }
 }

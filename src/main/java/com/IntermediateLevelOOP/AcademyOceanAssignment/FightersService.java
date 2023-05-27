@@ -9,12 +9,19 @@ public class FightersService {
     private static int INPUT_NUMBER;
     protected static Locations location;
 
-    private static final FinalStatistics finalStatistics = new FinalStatistics();
-    private static final HeroesService heroesService = new HeroesService();
-    private static List<Hero> heroes = new ArrayList<>();
-    private static final OutputMessages outputMessages = new OutputMessages();
+    private final FinalStatistics finalStatistics;
+    private final HeroesService heroesService;
+    private List<Hero> heroes;
+    private final OutputMessages outputMessages;
 
-    public static void gameLoop() {
+    public FightersService() {
+        finalStatistics = new FinalStatistics();
+        heroesService = new HeroesService();
+        heroes = new ArrayList<>();
+        outputMessages = new OutputMessages();
+    }
+
+    public void gameLoop() {
         int input = 0;
 
         outputMessages.printMenu();
@@ -43,7 +50,7 @@ public class FightersService {
         }
     }
 
-    private static void battle() {
+    private void battle() {
 
         heroes = heroesService.generateHeroes(INPUT_NUMBER);
         heroesService.generateHeroStoreMap(heroes);
@@ -75,11 +82,10 @@ public class FightersService {
         printFinalInfo();
     }
 
-    private static Hero getHeroWinner(Hero firstHero, Hero secondHero) {
+    private Hero getHeroWinner(Hero firstHero, Hero secondHero) {
 
-//        location = Locations.getRandomLocation();
-        location = Locations.WOODS;
-        Knight.isKnightLocation(location, firstHero, secondHero);
+        location = Locations.getRandomLocation();
+        heroesService.isKnightLocation(location, firstHero, secondHero);
 
         finalStatistics.setFirstHeroDamageValue(0);
         heroesService.checkFirstHeroDamageValue(firstHero);
@@ -143,7 +149,7 @@ public class FightersService {
     }
 
     // PRINT BATTLE INFO
-    private static void printBattleInfo(Hero firstHero, Hero secondHero, int damage, int damageTook) {
+    private void printBattleInfo(Hero firstHero, Hero secondHero, int damage, int damageTook) {
         outputMessages.printSeparator();
         System.out.println("The heroes fighting location: " + location);
         outputMessages.printSeparator();
@@ -157,7 +163,7 @@ public class FightersService {
         System.out.println("ID = " + secondHero.getId() + " " + secondHero.getSpecializationName() + " has " + secondHero.getHealthPoints() + " health points left");
     }
 
-    private static void printFinalInfo() {
+    private void printFinalInfo() {
         heroesService.printTwoFinalistsStats();
         outputMessages.printSeparator();
         System.out.println("\t\t\t\t\t\tROUNDS = " + finalStatistics.getRounds());

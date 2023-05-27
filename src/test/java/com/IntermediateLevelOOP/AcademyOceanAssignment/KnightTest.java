@@ -55,25 +55,5 @@ class KnightTest {
         when(randomMock.nextInt(1, 101)).thenReturn(18);
         assertEquals(Integer.MAX_VALUE, knight.defend(randomMock));
     }
-
-    @Test
-    void testIsFirstKnightLocation() {
-        knight.setHealthPoints(100);
-        knight.setArmorPoints(10);
-        Assassin assassin = new Assassin(1);
-        Knight.isKnightLocation(FightersService.location = Locations.CASTLE, knight, assassin);
-        assertEquals(110, knight.getHealthPoints());
-        assertEquals(11, knight.getArmorPoints());
-    }
-
-    @Test
-    void testIsSecondKnightLocation() {
-        knight.setHealthPoints(100);
-        knight.setArmorPoints(10);
-        Assassin assassin = new Assassin(1);
-        Knight.isKnightLocation(FightersService.location = Locations.CASTLE, assassin, knight);
-        assertEquals(110, knight.getHealthPoints());
-        assertEquals(11, knight.getArmorPoints());
-    }
 }
 
