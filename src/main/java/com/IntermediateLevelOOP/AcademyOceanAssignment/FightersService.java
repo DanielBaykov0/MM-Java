@@ -14,12 +14,12 @@ public class FightersService {
     private List<Hero> heroes;
     private final OutputMessages outputMessages;
 
-    public FightersService() {
-        SCANNER = new Scanner(System.in);
-        finalStatistics = new FinalStatistics();
-        heroesService = new HeroesService();
-        heroes = new ArrayList<>();
-        outputMessages = new OutputMessages();
+    public FightersService(FinalStatistics finalStatistics, HeroesService heroesService, OutputMessages outputMessages) {
+        this.SCANNER = new Scanner(System.in);
+        this.finalStatistics = finalStatistics;
+        this.heroesService = heroesService;
+        this.heroes = new ArrayList<>();
+        this.outputMessages = outputMessages;
     }
 
     public void gameLoop() {
@@ -85,8 +85,8 @@ public class FightersService {
 
     private Hero getHeroWinner(Hero firstHero, Hero secondHero) {
 
-//        location = Locations.getRandomLocation();
-        location = Locations.WOODS;
+        location = Locations.getRandomLocation();
+//        location = Locations.WOODS;
         heroesService.isKnightLocation(location, firstHero, secondHero);
 
         finalStatistics.setFirstHeroDamageValue(0);
