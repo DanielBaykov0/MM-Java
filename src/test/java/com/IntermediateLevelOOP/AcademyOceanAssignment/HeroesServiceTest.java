@@ -249,8 +249,8 @@ class HeroesServiceTest {
     void testPutSecondHeroIDDamageBattlesMap() {
         Knight secondHero = new Knight(1);
         List<Hero> heroes = List.of(new Knight(1));
-        heroesService.putFirstHeroIDDamageBattlesMap(secondHero, heroes, finalStatistics.getSecondHeroDamageValue());
-        heroesService.putFirstHeroIDDamageBattlesMap(secondHero, heroes, finalStatistics.getSecondHeroBattle());
+        heroesService.putSecondHeroIDDamageBattleMap(secondHero, heroes, finalStatistics.getSecondHeroDamageValue());
+        heroesService.putSecondHeroIDDamageBattleMap(secondHero, heroes, finalStatistics.getSecondHeroBattle());
 
         assertEquals(1, heroesService.getHeroesIDDamageMap().size());
         assertFalse(heroesService.getHeroesIDDamageMap().isEmpty());
@@ -308,7 +308,7 @@ class HeroesServiceTest {
         Warrior firstHero = new Warrior(1);
         List<Hero> heroes = List.of(new Warrior(1));
         finalStatistics.setFirstHeroDamageValue(0);
-        heroesService.putFirstHeroHighestNumberOfSuccessfulAttackDodges(firstHero, heroes, finalStatistics.getFirstHeroDamageValue());
+        heroesService.putSecondHeroHighestNumberOfSuccessfulAttackDodges(firstHero, heroes, finalStatistics.getFirstHeroDamageValue());
         assertEquals(1, heroesService.getHeroesIDHighestNumberOfSuccessfulAttackDodgesMap().size());
         assertFalse(heroesService.getHeroesIDHighestNumberOfSuccessfulAttackDodgesMap().isEmpty());
         assertTrue(heroesService.getHeroesIDHighestNumberOfSuccessfulAttackDodgesMap().containsKey(firstHero.getId()));
