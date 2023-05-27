@@ -75,6 +75,14 @@ class HeroTest {
     }
 
     @Test
+    void testHashCode() {
+        Warrior warrior1 = new Warrior(7);
+        Warrior warrior2 = new Warrior(7);
+        assertTrue(warrior1.equals(warrior2) && warrior2.equals(warrior1));
+        assertEquals(warrior1.hashCode(), warrior2.hashCode());
+    }
+
+    @Test
     void testToString() {
         assertEquals("ID=1 Hero: 'Warrior', healthPoints=100, attackPoints=25, armorPoints=20",
                 firstHero.toString());
