@@ -26,7 +26,10 @@ class OutputMessagesTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         outputMessages.printStartingHeroes(heroes);
-        String expectedOutput = "ID=1 Hero: 'Assassin', healthPoints=100, attackPoints=25, armorPoints=20\r\nID=2 Hero: 'Warrior', healthPoints=100, attackPoints=25, armorPoints=20\r\n";
+        String expectedOutput = """
+                ID=1 Hero: 'Assassin', healthPoints=100, attackPoints=25, armorPoints=20\r
+                ID=2 Hero: 'Warrior', healthPoints=100, attackPoints=25, armorPoints=20\r
+                """;
         Assertions.assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -35,7 +38,10 @@ class OutputMessagesTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         outputMessages.printStartingText();
-        String expectedOutput = "(Number must be even and between 4 and 256)\r\nPlease enter a number for the participants:\r\n";
+        String expectedOutput = """
+                (Number must be even and between 4 and 256)\r
+                Please enter a number for the participants:\r
+                """;
         Assertions.assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -44,7 +50,11 @@ class OutputMessagesTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         outputMessages.printMenu();
-        String expectedOutput = "---------------------------------------------\r\n\tWelcome to Heroes Fighting App\r\n---------------------------------------------\r\n";
+        String expectedOutput = """
+                ---------------------------------------------\r
+                \tWelcome to Heroes Fighting App\r
+                ---------------------------------------------\r
+                """;
         Assertions.assertEquals(expectedOutput, outContent.toString());
     }
 

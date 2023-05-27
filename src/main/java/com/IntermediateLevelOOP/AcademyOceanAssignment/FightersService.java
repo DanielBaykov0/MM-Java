@@ -4,7 +4,7 @@ import java.util.*;
 
 public class FightersService {
 
-    private static final Scanner SCANNER = new Scanner(System.in);
+    private final Scanner SCANNER;
 
     private static int INPUT_NUMBER;
     protected static Locations location;
@@ -15,6 +15,7 @@ public class FightersService {
     private final OutputMessages outputMessages;
 
     public FightersService() {
+        SCANNER = new Scanner(System.in);
         finalStatistics = new FinalStatistics();
         heroesService = new HeroesService();
         heroes = new ArrayList<>();

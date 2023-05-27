@@ -11,10 +11,12 @@ import static org.mockito.Mockito.*;
 class WarriorTest {
 
     Warrior warrior;
+    FightersService fightersService;
 
     @BeforeEach
     void setWarrior() {
         warrior = new Warrior(0);
+        fightersService = new FightersService();
     }
 
     @Test
