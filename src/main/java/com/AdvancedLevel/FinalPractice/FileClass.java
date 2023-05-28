@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class FileClass {
 
@@ -71,8 +72,20 @@ public class FileClass {
     private void isCorrectFileName(String file, File fileName) {
         if (fileName.exists()) {
             System.out.println("Correct file name");
-            System.out.println("Please enter a word to write it to the txt file: ");
-            String word = SCANNER.nextLine();
+            String word = "";
+            String digitsRegex = "\\d*.\\d*";
+            Pattern pattern = Pattern.compile(digitsRegex);
+
+            while (true) {
+                System.out.println("Please enter a word to write it to the txt file: ");
+                word = SCANNER.nextLine();
+                if (!pattern.matcher(word).matches()) {
+                    System.out.println("word added: " + word);
+                    break;
+                } else {
+                    System.out.println("Please use only letters!");
+                }
+            }
 
             try (PrintWriter printWriter = new PrintWriter(new FileWriter(getFINAL_PRACTICE_DIRECTORY_PATH() + file, true))) {
                 printWriter.println(word);

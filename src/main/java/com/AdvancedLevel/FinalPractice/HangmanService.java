@@ -84,8 +84,6 @@ public class HangmanService {
                 for (int i = 0; i < randomWordArray.length; i++) {
                     if (letter == randomWordArray[i]) {
                         guessingArray[i] = letter;
-                        // if you enter the same letter over and over again, numberOfCounts--
-                        randomWordArray[i] = ' ';
                         isRightGuess = true;
                     }
                 }
@@ -145,7 +143,6 @@ public class HangmanService {
 
         return true;
     }
-
 
     private static void printInstructions() {
         System.out.println("Press:");
