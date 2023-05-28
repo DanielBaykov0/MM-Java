@@ -1,11 +1,13 @@
 package com.AdvancedLevel.FinalPractice;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class HangmanApp {
 
     public static void main(String[] args) throws IOException {
 
-        HangmanService.startGame();
+        HangmanService hangmanService = new HangmanService(new Scanner(System.in), new FileClass(new Scanner(System.in)));
+        hangmanService.startGame();
     }
 }
