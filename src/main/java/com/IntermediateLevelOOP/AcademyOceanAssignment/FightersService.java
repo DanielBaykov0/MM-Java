@@ -4,7 +4,7 @@ import java.util.*;
 
 public class FightersService {
 
-    private final Scanner SCANNER;
+    private final Scanner scanner;
 
     private static int INPUT_NUMBER;
     protected static Locations location;
@@ -14,12 +14,12 @@ public class FightersService {
     private List<Hero> heroes;
     private final OutputMessages outputMessages;
 
-    public FightersService(FinalStatistics finalStatistics, HeroesService heroesService, OutputMessages outputMessages) {
-        this.SCANNER = new Scanner(System.in);
+    public FightersService(Scanner scanner, FinalStatistics finalStatistics, HeroesService heroesService) {
+        this.scanner = scanner;
         this.finalStatistics = finalStatistics;
         this.heroesService = heroesService;
         this.heroes = new ArrayList<>();
-        this.outputMessages = outputMessages;
+        this.outputMessages = new OutputMessages();
     }
 
     public void gameLoop() {
@@ -29,11 +29,11 @@ public class FightersService {
         while (true) {
             outputMessages.printStartingText();
             try {
-                input = SCANNER.nextInt();
+                input = scanner.nextInt();
                 INPUT_NUMBER = input;
             } catch (InputMismatchException ignored) {
             }
-            SCANNER.nextLine();
+            scanner.nextLine();
 
             int n = input;
             while (n != 0 && n % 2 != 1) {
@@ -86,7 +86,6 @@ public class FightersService {
     private Hero getHeroWinner(Hero firstHero, Hero secondHero) {
 
         location = Locations.getRandomLocation();
-//        location = Locations.WOODS;
         heroesService.isKnightLocation(location, firstHero, secondHero);
 
         finalStatistics.setFirstHeroDamageValue(0);
