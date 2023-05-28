@@ -41,9 +41,9 @@ public class HangmanService {
 
             switch (choice) {
                 case 0 -> printInstructions();
-                case 1 -> fileClass.createNewFile();
-                case 2 -> fileClass.listAllFiles();
-                case 3 -> fileClass.writeWordsToFile();
+                case 1 -> fileClass.createNewFile(fileClass.getWordsFile());
+                case 2 -> fileClass.listAllFiles(fileClass.getFileSet());
+                case 3 -> fileClass.writeWordsToFile(SCANNER);
                 case 4 -> start();
                 case 5 -> quit = true;
             }
@@ -124,7 +124,7 @@ public class HangmanService {
     private List<String> getWords() throws FileNotFoundException {
         List<String> words = new ArrayList<>();
 
-        File wordsFile = new File(fileClass.getFINAL_PRACTICE_DIRECTORY_PATH() + fileClass.chooseFile());
+        File wordsFile = new File(fileClass.getFINAL_PRACTICE_DIRECTORY_PATH() + fileClass.chooseFile(SCANNER));
 
         Scanner scanner = new Scanner(wordsFile);
         while (scanner.hasNextLine()) {
