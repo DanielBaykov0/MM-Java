@@ -6,11 +6,11 @@ public class OutputMessages {
     }
 
     public void enterUsername() {
-        System.out.println("Please enter your username: ");
+        System.out.println("Please enter a username: ");
     }
 
     public void enterPassword() {
-        System.out.println("Please enter your password: ");
+        System.out.println("Please enter a password between 8 and 20 symbols: ");
     }
 
     public void enterName() {
@@ -22,7 +22,7 @@ public class OutputMessages {
     }
 
     public void enterUserGender() {
-        System.out.println("Please enter your gender: ");
+        System.out.println("Please enter your gender(male/female): ");
     }
 
     public void enterUserAddress() {
@@ -41,10 +41,15 @@ public class OutputMessages {
         System.out.println("Please enter your email: ");
     }
 
+    public void printUserCreated(User user) {
+        System.out.println("User created successfully!");
+        System.out.println(user);
+    }
+
     public void askGDPR() {
         System.out.println("Before proceeding please review our privacy policy.");
         System.out.println("It describes how we collect, store and protect your data.");
-        System.out.println("Please enter " + "'yes'" + "if you agree or " + "'no'" + "if you don't!");
+        System.out.println("Please enter " + "'yes'" + " if you agree or " + "'no'" + " if you don't!");
     }
 
     public void printMenu() {
