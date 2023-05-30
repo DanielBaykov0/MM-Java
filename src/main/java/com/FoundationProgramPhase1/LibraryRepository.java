@@ -1,0 +1,28 @@
+package com.FoundationProgramPhase1;
+
+import java.util.List;
+
+public class LibraryRepository {
+
+    private final List<PaperBook> paperBooks;
+    private final List<EBook> eBooks;
+    private final List<Author> authors;
+
+    public LibraryRepository() {
+        paperBooks = PaperBookRepository.getPaperBooks();
+        eBooks = EBookRepository.getEBooks();
+        authors = AuthorRepository.getAuthors();
+    }
+
+    public List<PaperBook> getPaperBooks() {
+        return paperBooks;
+    }
+
+    public List<EBook> getEBooks() {
+        return eBooks;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+}

@@ -4,17 +4,18 @@ import java.util.Objects;
 
 public class User {
 
-    private final String username;
-    private final String password;
-    private final String name;
-    private final int userAge;
-    private final String userGender;
-    private final String userAddress;
-    private final String userCity;
-    private final String userCounty;
-    private final String userEmail;
+    private String username;
+    private String password;
+    private String name;
+    private int userAge;
+    private String userGender;
+    private String userAddress;
+    private String userCity;
+    private String userCounty;
+    private String userEmail;
+    private final boolean GDPR;
 
-    public User(String username, String password, String name, int userAge, String userGender, String userAddress, String userCity, String userCounty, String userEmail) {
+    public User(String username, String password, String name, int userAge, String userGender, String userAddress, String userCity, String userCounty, String userEmail, boolean GDPR) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -24,6 +25,7 @@ public class User {
         this.userCity = userCity;
         this.userCounty = userCounty;
         this.userEmail = userEmail;
+        this.GDPR = GDPR;
     }
 
     public String getUsername() {
@@ -60,6 +62,46 @@ public class User {
 
     public String getUserEmail() {
         return userEmail;
+    }
+
+    public boolean isGDPR() {
+        return GDPR;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUserAge(int userAge) {
+        this.userAge = userAge;
+    }
+
+    public void setUserGender(String userGender) {
+        this.userGender = userGender;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public void setUserCity(String userCity) {
+        this.userCity = userCity;
+    }
+
+    public void setUserCounty(String userCounty) {
+        this.userCounty = userCounty;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     @Override

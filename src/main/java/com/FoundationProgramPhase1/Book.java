@@ -5,12 +5,12 @@ import java.util.Random;
 
 public class Book {
 
-    private BookType bookType;
-    private String bookTitle;
-    private String bookAuthor;
-    private String bookGenre;
-    private String bookDescription;
-    private long ISBN;
+    private final BookType bookType;
+    private final String bookTitle;
+    private final String bookAuthor;
+    private final String bookGenre;
+    private final String bookDescription;
+    private final long ISBN;
 
     public Book(BookType bookType, String bookTitle, String bookAuthor, String bookGenre, String bookDescription) {
         this.bookType = bookType;
