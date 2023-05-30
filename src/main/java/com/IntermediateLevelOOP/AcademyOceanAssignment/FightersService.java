@@ -31,7 +31,7 @@ public class FightersService {
             try {
                 input = scanner.nextInt();
                 INPUT_NUMBER = input;
-            } catch (InputMismatchException ignored) {
+            } catch (NoSuchElementException ignored) {
             }
             scanner.nextLine();
 

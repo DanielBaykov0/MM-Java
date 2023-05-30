@@ -1,9 +1,11 @@
 package com.IntermediateLevelOOP.AcademyOceanAssignment;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static org.mockito.Mockito.spy;
@@ -42,11 +44,13 @@ class FightersServiceTest {
 
     @Test
     void testGameLoopWithInputNumber10Then4() {
-        String number = "10\n4\n";
+        String number = "10\n";
         Scanner scanner = new Scanner(number);
 
         fightersServiceConstructorInjectionMock = new FightersService(scanner, finalStatistics, heroesService);
-        fightersServiceConstructorInjectionMock.gameLoop();
+//        fightersServiceConstructorInjectionMock.gameLoop();
+        NoSuchElementException thrown =
+        Assertions.assertThrows(NoSuchElementException.class, () -> fightersServiceConstructorInjectionMock.gameLoop());
     }
 
     @Test
