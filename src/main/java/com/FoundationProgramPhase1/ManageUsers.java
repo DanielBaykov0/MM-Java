@@ -1,5 +1,7 @@
 package com.FoundationProgramPhase1;
 
+import com.FoundationProgramPhase1.utils.UserUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

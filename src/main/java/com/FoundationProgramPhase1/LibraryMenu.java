@@ -1,5 +1,7 @@
 package com.FoundationProgramPhase1;
 
+import com.FoundationProgramPhase1.repositories.LibraryRepository;
+
 import java.util.Scanner;
 
 public class LibraryMenu {

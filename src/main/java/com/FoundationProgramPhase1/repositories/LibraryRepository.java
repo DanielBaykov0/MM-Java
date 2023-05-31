@@ -1,4 +1,8 @@
-package com.FoundationProgramPhase1;
+package com.FoundationProgramPhase1.repositories;
+
+import com.FoundationProgramPhase1.Author;
+import com.FoundationProgramPhase1.EBook;
+import com.FoundationProgramPhase1.PaperBook;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package com.FoundationProgramPhase1;
 public class PaperBook extends Book {
 
     private int paperBookNumberOfCopiesAvailable;
-    private int paperBookNumberOfCopiesTotal;
+    private final int paperBookNumberOfCopiesTotal;
 
     public PaperBook(BookType bookType, String bookTitle, String bookAuthor, String bookGenre, String bookDescription, int paperBookNumberOfCopiesTotal) {
         super(bookType, bookTitle, bookAuthor, bookGenre, bookDescription);
@@ -20,9 +20,5 @@ public class PaperBook extends Book {
 
     public void setPaperBookNumberOfCopiesAvailable(int paperBookNumberOfCopiesAvailable) {
         this.paperBookNumberOfCopiesAvailable = paperBookNumberOfCopiesAvailable;
-    }
-
-    public void setPaperBookNumberOfCopiesTotal(int paperBookNumberOfCopiesTotal) {
-        this.paperBookNumberOfCopiesTotal = paperBookNumberOfCopiesTotal;
     }
 }

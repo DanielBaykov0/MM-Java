@@ -1,4 +1,7 @@
-package com.FoundationProgramPhase1;
+package com.FoundationProgramPhase1.app;
+
+import com.FoundationProgramPhase1.ManageUsers;
+import com.FoundationProgramPhase1.User;
 
 import java.util.ArrayList;
 import java.util.List;

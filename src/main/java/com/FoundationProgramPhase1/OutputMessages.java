@@ -41,6 +41,10 @@ public class OutputMessages {
         System.out.println("Please enter your email: ");
     }
 
+    public void enterPostponeDays() {
+        System.out.println("Please enter how many days do you want to postpone the final date with: ");
+    }
+
     public void printUserCreated(User user) {
         System.out.println("User created successfully!");
         System.out.println(user);

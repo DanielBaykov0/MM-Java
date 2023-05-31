@@ -1,4 +1,7 @@
-package com.FoundationProgramPhase1;
+package com.FoundationProgramPhase1.repositories;
+
+import com.FoundationProgramPhase1.BookType;
+import com.FoundationProgramPhase1.PaperBook;
 
 import java.util.ArrayList;
 import java.util.List;

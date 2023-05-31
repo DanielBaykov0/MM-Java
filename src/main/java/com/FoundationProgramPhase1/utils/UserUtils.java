@@ -1,10 +1,12 @@
-package com.FoundationProgramPhase1;
+package com.FoundationProgramPhase1.utils;
+
+import com.FoundationProgramPhase1.OutputMessages;
 
 import java.util.Scanner;
 
 public class UserUtils {
 
-    OutputMessages outputMessages = new OutputMessages();
+    private final OutputMessages outputMessages = new OutputMessages();
 
     public UserUtils() {
     }
@@ -145,5 +147,19 @@ public class UserUtils {
         }
 
         return true;
+    }
+
+    public int returnCorrectPostponeDays(Scanner scanner) {
+        String delayDays = "";
+        do {
+            outputMessages.enterPostponeDays();
+            try {
+                delayDays = scanner.nextLine();
+            } catch (Exception e) {
+                System.out.println("Invalid input");
+            }
+        } while (!delayDays.equals("[0-9]+") && (Integer.parseInt(delayDays) < 1 && Integer.parseInt(delayDays) > 14));
+
+        return Integer.parseInt(delayDays);
     }
 }

@@ -5,22 +5,28 @@ import java.util.Objects;
 
 public class Author {
 
-    private final String authorName;
+    private final String authorFirstName;
+    private final String authorLastName;
     private final String authorCountryBorn;
     private final LocalDate authorBirthDate;
     private final boolean isAuthorAlive;
     private final LocalDate authorDeathDate;
 
-    public Author(String authorName, String authorCountryBorn, LocalDate authorBirthDate, boolean isAuthorAlive, LocalDate authorDeathDate) {
-        this.authorName = authorName;
+    public Author(String authorFirstName, String authorLastName, String authorCountryBorn, LocalDate authorBirthDate, boolean isAuthorAlive, LocalDate authorDeathDate) {
+        this.authorFirstName = authorFirstName;
+        this.authorLastName = authorLastName;
         this.authorCountryBorn = authorCountryBorn;
         this.authorBirthDate = authorBirthDate;
         this.isAuthorAlive = isAuthorAlive;
         this.authorDeathDate = authorDeathDate;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public String getAuthorFirstName() {
+        return authorFirstName;
+    }
+
+    public String getAuthorLastName() {
+        return authorLastName;
     }
 
     public String getAuthorCountryBorn() {
@@ -44,18 +50,19 @@ public class Author {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return isAuthorAlive == author.isAuthorAlive && Objects.equals(authorName, author.authorName) && Objects.equals(authorCountryBorn, author.authorCountryBorn) && Objects.equals(authorBirthDate, author.authorBirthDate) && Objects.equals(authorDeathDate, author.authorDeathDate);
+        return isAuthorAlive == author.isAuthorAlive && Objects.equals(authorFirstName, author.authorFirstName) && Objects.equals(authorLastName, author.authorLastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(authorName, authorCountryBorn, authorBirthDate, isAuthorAlive, authorDeathDate);
+        return Objects.hash(authorFirstName, authorLastName, isAuthorAlive);
     }
 
     @Override
     public String toString() {
         return "Author{" +
-                "authorName='" + authorName + '\'' +
+                "authorFirstName='" + authorFirstName + '\'' +
+                ", authorLastName='" + authorLastName + '\'' +
                 ", authorCountryBorn='" + authorCountryBorn + '\'' +
                 ", authorBirthDate=" + authorBirthDate +
                 ", isAuthorAlive=" + isAuthorAlive +
