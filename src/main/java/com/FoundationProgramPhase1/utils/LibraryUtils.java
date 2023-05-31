@@ -1,5 +1,8 @@
 package com.FoundationProgramPhase1.utils;
 
+import com.FoundationProgramPhase1.core.PaperBook;
+import com.FoundationProgramPhase1.repositories.PaperBookRepository;
+
 import java.util.Scanner;
 
 public class LibraryUtils {
@@ -18,7 +21,7 @@ public class LibraryUtils {
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }
-        } while (!username.matches("[a-zA-Z_]+"));
+        } while (!username.matches("[a-zA-Z\\s]*$"));
 
         return username;
     }
@@ -32,7 +35,7 @@ public class LibraryUtils {
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }
-        } while (!username.matches("[a-zA-Z_]+"));
+        } while (!username.matches("[a-zA-Z\\s]*$"));
 
         return username;
     }
@@ -46,7 +49,7 @@ public class LibraryUtils {
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }
-        } while (!username.matches("[a-zA-Z_]+"));
+        } while (!username.matches("[a-zA-Z\\s]*$"));
 
         return username;
     }
@@ -60,7 +63,7 @@ public class LibraryUtils {
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }
-        } while (!username.matches("[a-zA-Z_]+"));
+        } while (!username.matches("[a-zA-Z\\s]*$"));
 
         return username;
     }
@@ -74,8 +77,19 @@ public class LibraryUtils {
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }
-        } while (!username.matches("[a-zA-Z_]+"));
+        } while (!username.matches("[a-zA-Z\\s]*$"));
 
         return username;
+    }
+
+    public PaperBook returnPaperBookByTitle(String title) {
+        PaperBook returnPaperBook = null;
+        for (PaperBook paperBook : PaperBookRepository.getPaperBooks()) {
+            if (paperBook.getBookTitle().equals(title)) {
+                returnPaperBook = paperBook;
+            }
+        }
+
+        return returnPaperBook;
     }
 }

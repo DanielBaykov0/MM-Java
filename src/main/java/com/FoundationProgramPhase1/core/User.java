@@ -64,7 +64,7 @@ public class User {
         return userEmail;
     }
 
-    public boolean isGDPR() {
+    public boolean getGDPR() {
         return GDPR;
     }
 
@@ -122,13 +122,14 @@ public class User {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", userName='" + name + '\'' +
+                ", name='" + name + '\'' +
                 ", userAge=" + userAge +
                 ", userGender='" + userGender + '\'' +
                 ", userAddress='" + userAddress + '\'' +
                 ", userCity='" + userCity + '\'' +
                 ", userCounty='" + userCounty + '\'' +
                 ", userEmail='" + userEmail + '\'' +
+                ", GDPR=" + GDPR +
                 '}';
     }
 }

@@ -128,21 +128,28 @@ public class OutputMessages {
         System.out.println("\t 1 - List all paper books.");
         System.out.println("\t 2 - Search a paper book by name.");
         System.out.println("\t 3 - Search a paper book by genre.");
-        System.out.println("\t 4 - Search a paper book by tag.");
+        System.out.println("\t 4 - Search a paper book by description.");
         System.out.println("\t 5 - Search a paper book by author first name.");
         System.out.println("\t 6 - Search a paper book by author last name.");
-        System.out.println("\t 7 - List all Ebooks.");
-        System.out.println("\t 8 - Choose an ebook to read online.");
-        System.out.println("\t 9 - Choose an ebook to download.");
-        System.out.println("\t 10 - Go back to main menu.");
+        System.out.println("\t 7 - Choose a book to borrow.");
+        System.out.println("\t 8 - Go back to main menu.");
+    }
+
+    public void printEBookMenu() {
+        System.out.println("Welcome to the EBooks Paradise!");
+        System.out.println("Choose:");
+        System.out.println("\t 1 - List all Ebooks.");
+        System.out.println("\t 2 - Choose an ebook to read online.");
+        System.out.println("\t 3 - Choose an ebook to download.");
+        System.out.println("\t 4 - Go back to main menu.");
     }
 
     public void printUsersMenu() {
         System.out.println("Welcome!");
         System.out.println("Choose:");
-        System.out.println("\t 1 - Register to become a library user.");
-        System.out.println("\t 2 - List all library users.");
-        System.out.println("\t 3 - Go to the library.");
+        System.out.println("\t 1 - List all library users.");
+        System.out.println("\t 2 - Go to the library.");
+        System.out.println("\t 3 - Go to the ebook heaven.");
         System.out.println("\t 4 - Quit.");
     }
 }

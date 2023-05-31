@@ -1,11 +1,11 @@
 package com.FoundationProgramPhase1;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import com.FoundationProgramPhase1.core.User;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class UserTest {
     /**
@@ -31,7 +31,7 @@ class UserTest {
      *   <li>{@link User#getUserEmail()}
      *   <li>{@link User#getUserGender()}
      *   <li>{@link User#getUsername()}
-     *   <li>{@link User#isGDPR()}
+     *   <li>{@link User#getGDPR()}
      *   <li>{@link User#toString()}
      * </ul>
      */
@@ -91,7 +91,7 @@ class UserTest {
         String actualUserEmail = actualUser.getUserEmail();
         String actualUserGender = actualUser.getUserGender();
         String actualUsername = actualUser.getUsername();
-        boolean actualIsGDPRResult = actualUser.isGDPR();
+        boolean actualIsGDPRResult = actualUser.getGDPR();
         String actualToStringResult = actualUser.toString();
 
         // Assert
