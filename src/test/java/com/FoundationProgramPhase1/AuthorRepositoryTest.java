@@ -2,6 +2,7 @@ package com.FoundationProgramPhase1;
 
 import java.util.List;
 
+import com.FoundationProgramPhase1.core.Author;
 import com.FoundationProgramPhase1.repositories.AuthorRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

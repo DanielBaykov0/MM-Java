@@ -3,6 +3,8 @@ package com.FoundationProgramPhase1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import com.FoundationProgramPhase1.core.Book;
+import com.FoundationProgramPhase1.core.BookType;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

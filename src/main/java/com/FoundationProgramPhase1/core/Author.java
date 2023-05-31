@@ -1,4 +1,4 @@
-package com.FoundationProgramPhase1;
+package com.FoundationProgramPhase1.core;
 
 import java.time.LocalDate;
 import java.util.Objects;

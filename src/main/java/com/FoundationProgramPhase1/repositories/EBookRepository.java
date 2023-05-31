@@ -1,7 +1,7 @@
 package com.FoundationProgramPhase1.repositories;
 
-import com.FoundationProgramPhase1.BookType;
-import com.FoundationProgramPhase1.EBook;
+import com.FoundationProgramPhase1.core.BookType;
+import com.FoundationProgramPhase1.core.EBook;
 
 import java.util.ArrayList;
 import java.util.List;

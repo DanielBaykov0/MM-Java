@@ -1,7 +1,5 @@
 package com.FoundationProgramPhase1.utils;
 
-import com.FoundationProgramPhase1.OutputMessages;
-
 import java.util.Scanner;
 
 public class UserUtils {

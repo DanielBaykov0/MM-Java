@@ -1,6 +1,6 @@
 package com.FoundationProgramPhase1.repositories;
 
-import com.FoundationProgramPhase1.Author;
+import com.FoundationProgramPhase1.core.Author;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

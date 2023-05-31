@@ -1,5 +1,7 @@
 package com.FoundationProgramPhase1;
 
+import com.FoundationProgramPhase1.core.BookType;
+import com.FoundationProgramPhase1.core.PaperBook;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

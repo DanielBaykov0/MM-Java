@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.LocalDate;
 
+import com.FoundationProgramPhase1.core.Author;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

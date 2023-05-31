@@ -1,4 +1,4 @@
-package com.FoundationProgramPhase1;
+package com.FoundationProgramPhase1.core;
 
 public class EBook extends Book {
 

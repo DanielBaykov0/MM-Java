@@ -1,18 +1,20 @@
-package com.FoundationProgramPhase1;
+package com.FoundationProgramPhase1.service;
 
+import com.FoundationProgramPhase1.core.User;
+import com.FoundationProgramPhase1.utils.OutputMessages;
 import com.FoundationProgramPhase1.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ManageUsers {
+public class UsersService {
 
     private List<User> users;
     private final OutputMessages outputMessages = new OutputMessages();
     private final UserUtils userUtils = new UserUtils();
 
-    public ManageUsers() {
+    public UsersService() {
         this.users = new ArrayList<>();
     }
 
