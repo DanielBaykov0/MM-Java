@@ -18,51 +18,93 @@ public class LibraryService {
     private final UserUtils userUtils = new UserUtils();
     private final OutputMessages outputMessages = new OutputMessages();
     private final LibraryUtils libraryUtils = new LibraryUtils();
+    private Map<Map<User, PaperBook>, LocalDate> borrowedBook;
+    private Map<User, PaperBook> userPaperBookMap;
+    private LocalDate returnDate = LocalDate.now();
 
     public LibraryService() {
+        borrowedBook = new HashMap<>();
+        userPaperBookMap = new HashMap<>();
     }
 
-    public Map<User, PaperBook> borrowPaperBook(Scanner scanner, User user, List<PaperBook> paperBooks) {
+    public void borrowPaperBook(User user, PaperBook paperBook) {
+        Scanner scanner = new Scanner(System.in);
+        outputMessages.printWouldYouBorrowBook();
+        String input = scanner.nextLine();
+
+        switch (input) {
+            case "yes" -> {
+                paperBook.setPaperBookNumberOfCopiesAvailable(paperBook.getPaperBookNumberOfCopiesAvailable() - 1);
+                userPaperBookMap.put(user, paperBook);
+                borrowedBook.put(userPaperBookMap, returnDate);
+                System.out.println("You borrowed the book: " + paperBook.getBookTitle());
+            }
+
+            case "no" -> {
+            }
+        }
+    }
+
+    public void printBorrowedBooks(Map<Map<User, PaperBook>, LocalDate> borrowedBook) {
+        for (Map.Entry<Map<User, PaperBook>, LocalDate> entry : borrowedBook.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+    }
+
+//    public Map<User, EBook> readEBook(Scanner scanner, User user, List<EBook> eBooks) {
+//        String title = libraryUtils.returnCorrectBookTitle(scanner);
+//
+//        Map<User, EBook> userEBookMap = new HashMap<>();
+//        if (eBooks.contains(eBook)) {
+//            userEBookMap.put(user, eBook);
+//        }
+//
+//        return userEBookMap;
+//    }
+
+    public Map<User, EBook> downloadEBook(Scanner scanner, User user, List<EBook> eBooks) {
         String title = libraryUtils.returnCorrectBookTitle(scanner);
-        PaperBook paperBook = libraryUtils.returnPaperBookByTitle(title);
-//        Map<LocalDate, Map<User, PaperBook>> localDateMap = new HashMap<>();
-        Map<User, PaperBook> userPaperBookMap = new HashMap<>();
-
-        userPaperBookMap.put(user, paperBook);
-//        localDateMap.put(LocalDate.now(), userPaperBookMap);
-        paperBook.setPaperBookNumberOfCopiesAvailable(paperBook.getPaperBookNumberOfCopiesTotal() - 1);
-
-        System.out.println("You borrowed the book: " + paperBook.getBookTitle());
-        return userPaperBookMap;
-    }
-
-    public Map<User, EBook> readEBook(User user, EBook eBook, List<EBook> eBooks) {
-        Map<User, EBook> userEBookMap = new HashMap<>();
-        if (eBooks.contains(eBook)) {
-            userEBookMap.put(user, eBook);
+        EBook newEBook = null;
+        for (EBook eBook : eBooks) {
+            if (eBook.getBookTitle().equals(title)) {
+                newEBook = eBook;
+            }
         }
 
+        Map<User, EBook> userEBookMap = new HashMap<>();
+        if (eBooks.contains(newEBook)) {
+            assert newEBook != null;
+            if (!"Not downloadable for free".equals(newEBook.getEBookDownloadLink())) {
+                userEBookMap.put(user, newEBook);
+            }
+        }
+        System.out.println("You downloaded: " + newEBook);
         return userEBookMap;
     }
 
-    public Map<User, EBook> downloadEBook(User user, EBook eBook, List<EBook> eBooks) {
-        Map<User, EBook> userEBookMap = new HashMap<>();
-        if (eBooks.contains(eBook) && !"Not downloadable for free".equals(eBook.getEBookDownloadLink())) {
-            userEBookMap.put(user, eBook);
-        }
-
-        return userEBookMap;
-    }
-
-    public LocalDate askForPostpone(Scanner scanner, Map<LocalDate, Map<User, PaperBook>> localDateMapMap) {
+    public void askForPostpone(Scanner scanner, User user) {
         int numberOfDays = userUtils.returnCorrectPostponeDays(scanner);
-        LocalDate returnDate = null;
-        for (Map.Entry<LocalDate, Map<User, PaperBook>> entry : localDateMapMap.entrySet()) {
-            returnDate = entry.getKey().plusDays(numberOfDays);
-        }
+        for (Map.Entry<Map<User, PaperBook>, LocalDate> entry : borrowedBook.entrySet()) {
+            LocalDate newLocalDate = entry.getValue().plusDays(numberOfDays);
+            for (Map.Entry<User, PaperBook> paperBookEntry : entry.getKey().entrySet()) {
+                if (paperBookEntry.getKey().equals(user)) {
+                    borrowedBook.put(userPaperBookMap, newLocalDate);
+                }
+            }
 
-        return returnDate;
+            System.out.println(getBorrowedBook());
+            System.out.println(newLocalDate);
+        }
     }
+
+//    public LocalDate getReturnDate(LocalDate localDate, Map<LocalDate, Map<User, PaperBook>> localDateMapMap, Map<User, PaperBook> userPaperBookMap) {
+//        LocalDate returnDate = null;
+//        for (Map.Entry<LocalDate, Map<User, PaperBook>> entry : localDateMapMap.entrySet()) {
+//            returnDate = entry.getKey();
+//        }
+//
+//        return returnDate;
+//    }
 
     public LocalDate getLastReturnDatePaperBook(Map<LocalDate, Map<User, PaperBook>> localDateMapMap) {
         LocalDate finalReturnDate = null;
@@ -73,49 +115,70 @@ public class LibraryService {
         return finalReturnDate;
     }
 
-    public void searchBookByTitle(Scanner scanner, List<PaperBook> paperBooks) {
+    public boolean searchBookByTitle(Scanner scanner, User user, List<PaperBook> paperBooks) {
         String bookName = libraryUtils.returnCorrectBookTitle(scanner);
         for (PaperBook paperBook : paperBooks) {
             if (paperBook.getBookTitle().equals(bookName)) {
                 System.out.println(paperBook);
+                if (paperBook.getPaperBookNumberOfCopiesAvailable() > 0) {
+                    borrowPaperBook(user, paperBook);
+                    return true;
+                } else {
+                    outputMessages.printBookNotAvailable();
+                    return false;
+                }
             }
         }
+
+        return false;
     }
 
-    public void searchBookByGenre(Scanner scanner, List<PaperBook> paperBooks) {
+    public boolean searchBookByGenre(Scanner scanner, User user, List<PaperBook> paperBooks) {
         String bookGenre = libraryUtils.returnCorrectBookGenre(scanner);
         for (PaperBook paperBook : paperBooks) {
-            if (paperBook.getBookGenre().equals(bookGenre)) {
+            if (paperBook.getBookGenre().contains(bookGenre)) {
                 System.out.println(paperBook);
+                return true;
             }
         }
+
+        return false;
     }
 
-    public void searchBookByDescription(Scanner scanner, List<PaperBook> paperBooks) {
+    public boolean searchBookByDescription(Scanner scanner, User user, List<PaperBook> paperBooks) {
         String bookDesc = libraryUtils.returnCorrectBookDescription(scanner);
         for (PaperBook paperBook : paperBooks) {
             if (paperBook.getBookDescription().contains(bookDesc)) {
                 System.out.println(paperBook);
+                return true;
             }
         }
+
+        return false;
     }
 
-    public void searchBookByAuthorFirstName(Scanner scanner, List<PaperBook> paperBooks) {
+    public boolean searchBookByAuthorFirstName(Scanner scanner, User user, List<PaperBook> paperBooks) {
         String authorFirstName = libraryUtils.returnCorrectAuthorFirstName(scanner);
         for (PaperBook paperBook : paperBooks) {
             if (paperBook.getBookAuthor().contains(authorFirstName)) {
                 System.out.println(paperBook);
+                return true;
             }
         }
+
+        return false;
     }
 
-    public void searchBookByAuthorLastName(Scanner scanner, List<PaperBook> paperBooks) {
+    public boolean searchBookByAuthorLastName(Scanner scanner, User user, List<PaperBook> paperBooks) {
         String authorLastName = libraryUtils.returnCorrectAuthorLastName(scanner);
         for (PaperBook paperBook : paperBooks) {
             if (paperBook.getBookAuthor().contains(authorLastName)) {
                 System.out.println(paperBook);
+                return true;
             }
         }
+
+        return false;
     }
 
     public void listPaperBooks(List<PaperBook> paperBooks) {
@@ -128,5 +191,21 @@ public class LibraryService {
         for (EBook EBook : eBooks) {
             System.out.println(EBook);
         }
+    }
+
+    public Map<Map<User, PaperBook>, LocalDate> getBorrowedBook() {
+        return borrowedBook;
+    }
+
+    public Map<User, PaperBook> getUserPaperBookMap() {
+        return userPaperBookMap;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
     }
 }

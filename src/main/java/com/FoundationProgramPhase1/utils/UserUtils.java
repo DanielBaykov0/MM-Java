@@ -156,7 +156,7 @@ public class UserUtils {
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }
-        } while (!delayDays.equals("[0-9]+") && (Integer.parseInt(delayDays) < 1 && Integer.parseInt(delayDays) > 14));
+        } while (!delayDays.matches("[0-9]+") && (Integer.parseInt(delayDays) < 1 && Integer.parseInt(delayDays) > 14));
 
         return Integer.parseInt(delayDays);
     }

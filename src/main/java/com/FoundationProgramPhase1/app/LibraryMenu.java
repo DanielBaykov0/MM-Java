@@ -1,6 +1,5 @@
 package com.FoundationProgramPhase1.app;
 
-import com.FoundationProgramPhase1.core.PaperBook;
 import com.FoundationProgramPhase1.core.User;
 import com.FoundationProgramPhase1.repositories.EBookRepository;
 import com.FoundationProgramPhase1.repositories.PaperBookRepository;
@@ -9,10 +8,7 @@ import com.FoundationProgramPhase1.service.LibraryService;
 import com.FoundationProgramPhase1.service.UsersService;
 import com.FoundationProgramPhase1.utils.OutputMessages;
 
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Map;
 import java.util.Scanner;
 
 public class LibraryMenu {
@@ -22,7 +18,6 @@ public class LibraryMenu {
     private final UsersService usersService;
     private final LibraryService libraryService;
     private final OutputMessages outputMessages;
-    private Map<LocalDate, Map<User, PaperBook>> borrowedBook = new HashMap<>();
 
     public LibraryMenu(Scanner scanner, UsersService usersService, LibraryService libraryService, OutputMessages outputMessages) {
         this.scanner = scanner;
@@ -42,6 +37,7 @@ public class LibraryMenu {
                 choice = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Wrong input");
+                outputMessages.printUsersMenu();
             }
             scanner.nextLine();
 
@@ -83,6 +79,7 @@ public class LibraryMenu {
                 choice = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Wrong input");
+                outputMessages.printLibraryMenu();
             }
             scanner.nextLine();
 
@@ -92,30 +89,45 @@ public class LibraryMenu {
                     outputMessages.printLibraryMenu();
                 }
                 case 2 -> {
-                    libraryService.searchBookByTitle(scanner, PaperBookRepository.getPaperBooks());
+                    if (!libraryService.searchBookByTitle(scanner, user, PaperBookRepository.getPaperBooks())) {
+                        outputMessages.printInvalidBookTitle();
+                    }
                     outputMessages.printLibraryMenu();
                 }
                 case 3 -> {
-                    libraryService.searchBookByGenre(scanner, PaperBookRepository.getPaperBooks());
+                    if (!libraryService.searchBookByGenre(scanner, user, PaperBookRepository.getPaperBooks())) {
+                        outputMessages.printInvalidBookGenre();
+                    }
                     outputMessages.printLibraryMenu();
                 }
                 case 4 -> {
-                    libraryService.searchBookByDescription(scanner, PaperBookRepository.getPaperBooks());
+                    if (!libraryService.searchBookByDescription(scanner, user, PaperBookRepository.getPaperBooks())) {
+                        outputMessages.printInvalidBookDescription();
+                    }
                     outputMessages.printLibraryMenu();
                 }
                 case 5 -> {
-                    libraryService.searchBookByAuthorFirstName(scanner, PaperBookRepository.getPaperBooks());
+                    if (!libraryService.searchBookByAuthorFirstName(scanner, user, PaperBookRepository.getPaperBooks())) {
+                        outputMessages.printInvalidAuthorFirstName();
+                    }
                     outputMessages.printLibraryMenu();
                 }
                 case 6 -> {
-                    libraryService.searchBookByAuthorLastName(scanner, PaperBookRepository.getPaperBooks());
+                    if (!libraryService.searchBookByAuthorLastName(scanner, user, PaperBookRepository.getPaperBooks())) {
+                        outputMessages.printInvalidAuthorLastName();
+                    }
                     outputMessages.printLibraryMenu();
                 }
                 case 7 -> {
-                    borrowedBook.put(LocalDate.now(), libraryService.borrowPaperBook(scanner, user, PaperBookRepository.getPaperBooks()));
-                    System.out.println(borrowedBook);
+                    libraryService.printBorrowedBooks(libraryService.getBorrowedBook());
+                    outputMessages.printLibraryMenu();
                 }
                 case 8 -> {
+                    libraryService.askForPostpone(scanner, user);
+                    outputMessages.printLibraryMenu();
+                }
+
+                case 9 -> {
                     isRunning = false;
                     outputMessages.printUsersMenu();
                 }
@@ -135,6 +147,7 @@ public class LibraryMenu {
                 choice = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Wrong input");
+                outputMessages.printEBookMenu();
             }
             scanner.nextLine();
 
@@ -147,10 +160,10 @@ public class LibraryMenu {
 //                    libraryService.readEBook(scanner, PaperBookRepository.getPaperBooks());
 //                    outputMessages.printEBookMenu();
 //                }
-//                case 3 -> {
-//                    libraryService.downloadEBook(scanner, PaperBookRepository.getPaperBooks());
-//                    outputMessages.printEBookMenu();
-//                }
+                case 3 -> {
+                    System.out.println(libraryService.downloadEBook(scanner, user, EBookRepository.getEBooks()));
+                    outputMessages.printEBookMenu();
+                }
                 case 4 -> {
                     isRunning = false;
                     outputMessages.printUsersMenu();

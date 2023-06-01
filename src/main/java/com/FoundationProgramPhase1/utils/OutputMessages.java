@@ -122,17 +122,42 @@ public class OutputMessages {
         System.out.println("Sorry this book is not available");
     }
 
+    public void printInvalidAuthorFirstName() {
+        System.out.println("Invalid author first name");
+    }
+
+    public void printInvalidAuthorLastName() {
+        System.out.println("Invalid author last name");
+    }
+
+    public void printInvalidBookTitle() {
+        System.out.println("Invalid book title");
+    }
+
+    public void printInvalidBookGenre() {
+        System.out.println("Invalid book genre");
+    }
+
+    public void printInvalidBookDescription() {
+        System.out.println("Invalid book description");
+    }
+
+    public void printWouldYouBorrowBook() {
+        System.out.println("Would you like to borrow this book?(yes/no)");
+    }
+
     public void printLibraryMenu() {
         System.out.println("Welcome to the Library!");
         System.out.println("Choose:");
         System.out.println("\t 1 - List all paper books.");
-        System.out.println("\t 2 - Search a paper book by name.");
+        System.out.println("\t 2 - Search a paper book by title.");
         System.out.println("\t 3 - Search a paper book by genre.");
         System.out.println("\t 4 - Search a paper book by description.");
         System.out.println("\t 5 - Search a paper book by author first name.");
         System.out.println("\t 6 - Search a paper book by author last name.");
-        System.out.println("\t 7 - Choose a book to borrow.");
-        System.out.println("\t 8 - Go back to main menu.");
+        System.out.println("\t 7 - Print all books you borrowed.");
+        System.out.println("\t 8 - Ask for postpone.");
+        System.out.println("\t 9 - Go back to main menu.");
     }
 
     public void printEBookMenu() {

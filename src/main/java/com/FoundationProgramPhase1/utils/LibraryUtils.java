@@ -1,8 +1,5 @@
 package com.FoundationProgramPhase1.utils;
 
-import com.FoundationProgramPhase1.core.PaperBook;
-import com.FoundationProgramPhase1.repositories.PaperBookRepository;
-
 import java.util.Scanner;
 
 public class LibraryUtils {
@@ -13,17 +10,17 @@ public class LibraryUtils {
     }
 
     public String returnCorrectBookTitle(Scanner scanner) {
-        String username = "";
+        String title = "";
         do {
             outputMessages.enterBookTitle();
             try {
-                username = scanner.nextLine();
+                title = scanner.nextLine();
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }
-        } while (!username.matches("[a-zA-Z\\s]*$"));
+        } while (!title.matches("[a-zA-Z\\s]*$"));
 
-        return username;
+        return title;
     }
 
     public String returnCorrectBookGenre(Scanner scanner) {
@@ -80,16 +77,5 @@ public class LibraryUtils {
         } while (!username.matches("[a-zA-Z\\s]*$"));
 
         return username;
-    }
-
-    public PaperBook returnPaperBookByTitle(String title) {
-        PaperBook returnPaperBook = null;
-        for (PaperBook paperBook : PaperBookRepository.getPaperBooks()) {
-            if (paperBook.getBookTitle().equals(title)) {
-                returnPaperBook = paperBook;
-            }
-        }
-
-        return returnPaperBook;
     }
 }
