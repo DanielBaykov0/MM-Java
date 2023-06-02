@@ -1,81 +1,73 @@
-//package com.FoundationProgramPhase1;
-//
-//import com.FoundationProgramPhase1.core.BookType;
-//import com.FoundationProgramPhase1.core.PaperBook;
-//import org.junit.jupiter.api.Disabled;
-//import org.junit.jupiter.api.Test;
-//
-//class PaperBookTest {
-//    /**
-//     * Method under test: {@link PaperBook#PaperBook(BookType, String, String, String, String, int)}
-//     */
-//    @Test
-//    @Disabled("TODO: Complete this test")
-//    void testConstructor() {
-//        // TODO: Complete this test.
-//        //   Reason: R006 Static initializer failed.
-//        //   The static initializer of
-//        //   org.mockito.Mockito
-//        //   threw java.lang.NoClassDefFoundError while trying to load it.
-//        //   Make sure the static initializer of Mockito
-//        //   can be executed without throwing exceptions.
-//        //   Exception: java.lang.NoClassDefFoundError: Could not initialize class org.mockito.Mockito
-//        //       at java.util.Collections$SingletonList.forEach(Collections.java:4966)
-//
-//        // Arrange
-//        // TODO: Populate arranged inputs
-//        BookType bookType = BookType.PAPER;
-//        String bookTitle = "";
-//        String bookAuthor = "";
-//        String bookGenre = "";
-//        String bookDescription = "";
-//        int paperBookNumberOfCopiesTotal = 0;
-//
-//        // Act
-//        PaperBook actualPaperBook = new PaperBook(bookType, bookTitle, bookAuthor, bookGenre, bookDescription,
-//                paperBookNumberOfCopiesTotal);
-//
-//        // Assert
-//        // TODO: Add assertions on result
-//    }
-//
-//    /**
-//     * Methods under test:
-//     *
-//     * <ul>
-//     *   <li>{@link PaperBook#setPaperBookNumberOfCopiesAvailable(int)}
-//     *   <li>{@link PaperBook#setPaperBookNumberOfCopiesTotal(int)}
-//     *   <li>{@link PaperBook#getPaperBookNumberOfCopiesAvailable()}
-//     *   <li>{@link PaperBook#getPaperBookNumberOfCopiesTotal()}
-//     * </ul>
-//     */
-//    @Test
-//    @Disabled("TODO: Complete this test")
-//    void testSetPaperBookNumberOfCopiesAvailable() {
-//        // TODO: Complete this test.
-//        //   Reason: R006 Static initializer failed.
-//        //   The static initializer of
-//        //   org.mockito.Mockito
-//        //   threw java.lang.NoClassDefFoundError while trying to load it.
-//        //   Make sure the static initializer of Mockito
-//        //   can be executed without throwing exceptions.
-//        //   Exception: java.lang.NoClassDefFoundError: Could not initialize class org.mockito.Mockito
-//        //       at java.util.ArrayList.forEach(ArrayList.java:1511)
-//
-//        // Arrange
-//        // TODO: Populate arranged inputs
-//        PaperBook paperBook = null;
-//        int paperBookNumberOfCopiesAvailable = 0;
-//
-//        // Act
-//        paperBook.setPaperBookNumberOfCopiesAvailable(paperBookNumberOfCopiesAvailable);
-//        int paperBookNumberOfCopiesTotal = 0;
-//        paperBook.setPaperBookNumberOfCopiesTotal(paperBookNumberOfCopiesTotal);
-//        int actualPaperBookNumberOfCopiesAvailable = paperBook.getPaperBookNumberOfCopiesAvailable();
-//        int actualPaperBookNumberOfCopiesTotal = paperBook.getPaperBookNumberOfCopiesTotal();
-//
-//        // Assert
-//        // TODO: Add assertions on result
-//    }
-//}
-//
+package com.FoundationProgramPhase1.core;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class PaperBookTest {
+
+    @Test
+    void testConstructor() {
+        BookType bookType = BookType.PAPER;
+        String bookTitle = "";
+        String bookAuthor = "";
+        String bookGenre = "";
+        String bookDescription = "";
+        int ISBN = 0;
+        int paperBookNumberOfCopiesTotal = 0;
+        int paperBookNumberOfCopiesAvailable= 0;
+
+        PaperBook actualPaperBook = new PaperBook(bookType, bookTitle, bookAuthor, bookGenre, bookDescription,
+                ISBN, paperBookNumberOfCopiesTotal, paperBookNumberOfCopiesAvailable, null);
+
+        assertEquals(bookType, actualPaperBook.getBookType());
+        assertEquals(bookTitle, actualPaperBook.getBookTitle());
+        assertEquals(bookAuthor, actualPaperBook.getBookAuthor());
+        assertEquals(bookGenre, actualPaperBook.getBookGenre());
+        assertEquals(bookDescription, actualPaperBook.getBookDescription());
+        assertEquals(ISBN, actualPaperBook.getISBN());
+        assertEquals(paperBookNumberOfCopiesTotal, actualPaperBook.getPaperBookNumberOfCopiesTotal());
+        assertEquals(paperBookNumberOfCopiesAvailable, actualPaperBook.getPaperBookNumberOfCopiesAvailable());
+        assertNull(actualPaperBook.getBorrowedDate());
+    }
+
+    @Test
+    void testPaperBookEquals() {
+        PaperBook paperBook1 = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
+        PaperBook paperBook2 = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
+        assertNotEquals(paperBook1, null);
+        assertEquals(paperBook1, paperBook2);
+    }
+
+    @Test
+    void testPaperBookNotEquals() {
+        PaperBook paperBook1 = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
+        PaperBook paperBook2 = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, LocalDate.now());
+        assertNotEquals(paperBook1, paperBook2);
+    }
+
+    @Test
+    void testPaperBookHashcode() {
+        PaperBook paperBook1 = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
+        PaperBook paperBook2 = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
+        assertTrue(paperBook1.equals(paperBook2) && paperBook2.equals(paperBook1));
+        assertEquals(paperBook1.hashCode(), paperBook2.hashCode());
+    }
+
+    @Test
+    void testPaperBookToString() {
+        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        System.out.println(paperBook);
+        String expectedOutput = "Book{bookType=PAPER, bookTitle='Avatar', bookAuthor='James Cameron', bookGenre='Fantasy', bookDescription='Imaginary world', ISBN=2, paperBookNumberOfCopiesAvailable=4, paperBookNumberOfCopiesTotal=4, \n" +
+                "borrowedDate=null}\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+}
+

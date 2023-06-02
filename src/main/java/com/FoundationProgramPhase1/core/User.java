@@ -105,12 +105,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(userAddress, user.userAddress) && Objects.equals(userEmail, user.userEmail);
+        return GDPR == user.GDPR && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(userAddress, user.userAddress) && Objects.equals(userEmail, user.userEmail) && Objects.equals(paperBookList, user.paperBookList) && Objects.equals(eBookReadList, user.eBookReadList) && Objects.equals(eBookDownloadedList, user.eBookDownloadedList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password, userAddress, userEmail);
+        return Objects.hash(username, password, userAddress, userEmail, GDPR, paperBookList, eBookReadList, eBookDownloadedList);
     }
 
     @Override

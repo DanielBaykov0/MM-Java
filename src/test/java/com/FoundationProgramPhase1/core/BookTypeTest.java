@@ -1,37 +1,25 @@
 package com.FoundationProgramPhase1.core;
 
-import java.util.List;
-
-import com.FoundationProgramPhase1.core.BookType;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class BookTypeTest {
-    /**
-     * Method under test: {@link BookType#getBookTypes()}
-     */
+
     @Test
-    @Disabled("TODO: Complete this test")
-    void testGetBookTypes() {
-        // TODO: Complete this test.
-        //   Reason: R006 Static initializer failed.
-        //   The static initializer of
-        //   org.mockito.Mockito
-        //   threw java.lang.NoClassDefFoundError while trying to load it.
-        //   Make sure the static initializer of Mockito
-        //   can be executed without throwing exceptions.
-        //   Exception: java.lang.NoClassDefFoundError: Could not initialize class org.mockito.Mockito
-        //       at java.util.Collections$SingletonList.forEach(Collections.java:4966)
+    void testBookPaperType() {
+        List<BookType> bookTypeList = List.of(BookType.values());
+        BookType bookTypePaper = BookType.PAPER;
+        assertTrue(bookTypeList.contains(bookTypePaper));
+    }
 
-        // Arrange
-        // TODO: Populate arranged inputs
-        BookType bookType = BookType.PAPER;
-
-        // Act
-        List<BookType> actualBookTypes = bookType.getBookTypes();
-
-        // Assert
-        // TODO: Add assertions on result
+    @Test
+    void testBookEBookType() {
+        List<BookType> bookTypeList = List.of(BookType.values());
+        BookType bookTypePaper = BookType.EBOOK;
+        assertTrue(bookTypeList.contains(bookTypePaper));
     }
 }
 
