@@ -1,5 +1,8 @@
 package com.FoundationProgramPhase1.utils;
 
+import com.FoundationProgramPhase1.core.PaperBook;
+import com.FoundationProgramPhase1.core.User;
+
 import java.util.Scanner;
 
 public class LibraryUtils {
@@ -77,5 +80,18 @@ public class LibraryUtils {
         } while (!username.matches("[a-zA-Z\\s]*$"));
 
         return username;
+    }
+
+    public int askForBookISBN(Scanner scanner, User user) {
+        outputMessages.enterBookISBN();
+        int input = scanner.nextInt();
+
+        for (PaperBook paperBook : user.getPaperBookList()) {
+            if (paperBook.getISBN() == input) {
+                return paperBook.getISBN();
+            }
+        }
+
+        return 0;
     }
 }

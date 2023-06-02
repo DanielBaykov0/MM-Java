@@ -1,9 +1,7 @@
 package com.FoundationProgramPhase1.app;
 
 import com.FoundationProgramPhase1.core.User;
-import com.FoundationProgramPhase1.repositories.EBookRepository;
-import com.FoundationProgramPhase1.repositories.PaperBookRepository;
-import com.FoundationProgramPhase1.repositories.UserRepository;
+import com.FoundationProgramPhase1.repositories.*;
 import com.FoundationProgramPhase1.service.LibraryService;
 import com.FoundationProgramPhase1.service.UsersService;
 import com.FoundationProgramPhase1.utils.OutputMessages;
@@ -18,6 +16,7 @@ public class LibraryMenu {
     private final UsersService usersService;
     private final LibraryService libraryService;
     private final OutputMessages outputMessages;
+    private final LibraryRepository libraryRepository = new LibraryRepository();
 
     public LibraryMenu(Scanner scanner, UsersService usersService, LibraryService libraryService, OutputMessages outputMessages) {
         this.scanner = scanner;
@@ -47,19 +46,21 @@ public class LibraryMenu {
                     outputMessages.printUsersMenu();
                 }
                 case 2 -> {
-                    User user = usersService.returnCorrectUser(scanner, UserRepository.getUsers());
+                    User user = usersService.returnCorrectUser(scanner, libraryRepository.getUsers());
                     if (usersService.loginAsLibraryUser(user)) {
                         libraryLoop(user);
                     } else {
                         System.out.println("User doesn't exist");
+                        outputMessages.printUsersMenu();
                     }
                 }
                 case 3 -> {
-                    User user = usersService.returnCorrectUser(scanner, UserRepository.getUsers());
+                    User user = usersService.returnCorrectUser(scanner, libraryRepository.getUsers());
                     if (usersService.loginAsLibraryUser(user)) {
                         EBookLoop(user);
                     } else {
                         System.out.println("User doesn't exist");
+                        outputMessages.printUsersMenu();
                     }
                 }
                 case 4 -> isRunning = false;
@@ -85,49 +86,50 @@ public class LibraryMenu {
 
             switch (choice) {
                 case 1 -> {
-                    libraryService.listPaperBooks(PaperBookRepository.getPaperBooks());
+                    libraryService.listPaperBooks(libraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 2 -> {
-                    if (!libraryService.searchBookByTitle(scanner, user, PaperBookRepository.getPaperBooks())) {
+                    if (!libraryService.searchPaperBookByTitle(scanner, user, libraryRepository.getPaperBooks())) {
                         outputMessages.printInvalidBookTitle();
                     }
                     outputMessages.printLibraryMenu();
                 }
                 case 3 -> {
-                    if (!libraryService.searchBookByGenre(scanner, user, PaperBookRepository.getPaperBooks())) {
-                        outputMessages.printInvalidBookGenre();
-                    }
+                    libraryService.searchBookByGenre(scanner, libraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 4 -> {
-                    if (!libraryService.searchBookByDescription(scanner, user, PaperBookRepository.getPaperBooks())) {
-                        outputMessages.printInvalidBookDescription();
-                    }
+                    libraryService.searchBookByDescription(scanner, libraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 5 -> {
-                    if (!libraryService.searchBookByAuthorFirstName(scanner, user, PaperBookRepository.getPaperBooks())) {
-                        outputMessages.printInvalidAuthorFirstName();
-                    }
+                    libraryService.searchBookByAuthorFirstName(scanner, libraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 6 -> {
-                    if (!libraryService.searchBookByAuthorLastName(scanner, user, PaperBookRepository.getPaperBooks())) {
-                        outputMessages.printInvalidAuthorLastName();
-                    }
+                    libraryService.searchBookByAuthorLastName(scanner, libraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 7 -> {
-                    libraryService.printBorrowedBooks(libraryService.getBorrowedBook());
+                    libraryService.printBooks(libraryService.getBorrowedBook());
                     outputMessages.printLibraryMenu();
                 }
                 case 8 -> {
-                    libraryService.askForPostpone(scanner, user);
-                    outputMessages.printLibraryMenu();
+                    if (libraryService.askForPostpone(scanner, user)) {
+                        outputMessages.printLibraryMenu();
+                    } else {
+                        outputMessages.printBookNotAvailableOrPostponeDateTooLong();
+                        outputMessages.printLibraryMenu();
+                    }
                 }
 
                 case 9 -> {
+                    libraryService.listAuthors(libraryRepository.getAuthors());
+                    outputMessages.printLibraryMenu();
+                }
+
+                case 10 -> {
                     isRunning = false;
                     outputMessages.printUsersMenu();
                 }
@@ -153,18 +155,37 @@ public class LibraryMenu {
 
             switch (choice) {
                 case 1 -> {
-                    libraryService.listEBooks(EBookRepository.getEBooks());
+                    libraryService.listEBooks(libraryRepository.getEBooks());
                     outputMessages.printEBookMenu();
                 }
-//                case 2 -> {
-//                    libraryService.readEBook(scanner, PaperBookRepository.getPaperBooks());
-//                    outputMessages.printEBookMenu();
-//                }
+                case 2 -> {
+                    libraryService.listReadableEBooks(libraryRepository.getEBooks());
+                    outputMessages.printEBookMenu();
+                }
+
                 case 3 -> {
-                    System.out.println(libraryService.downloadEBook(scanner, user, EBookRepository.getEBooks()));
+                    libraryService.listDownloadableEBooks(libraryRepository.getEBooks());
                     outputMessages.printEBookMenu();
                 }
+
                 case 4 -> {
+                    if (!libraryService.searchReadEBookByTitle(scanner, user, libraryRepository.getEBooks())) {
+                        outputMessages.printInvalidBookTitle();
+                    }
+                    outputMessages.printEBookMenu();
+                }
+
+                case 5 -> {
+                    if (!libraryService.searchDownloadEBookByTitle(scanner, user, libraryRepository.getEBooks())) {
+                        outputMessages.printInvalidBookTitle();
+                    }
+                    outputMessages.printEBookMenu();
+                }
+                case 6 -> {
+                    libraryService.printBooks(libraryService.getUserEBooksReadList());
+                    outputMessages.printEBookMenu();
+                }
+                case 7 -> {
                     isRunning = false;
                     outputMessages.printUsersMenu();
                 }

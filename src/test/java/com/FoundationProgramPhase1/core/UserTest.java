@@ -1,4 +1,4 @@
-package com.FoundationProgramPhase1;
+package com.FoundationProgramPhase1.core;
 
 import com.FoundationProgramPhase1.core.User;
 import org.junit.jupiter.api.Disabled;

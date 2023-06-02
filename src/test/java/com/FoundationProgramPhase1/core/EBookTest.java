@@ -1,4 +1,4 @@
-package com.FoundationProgramPhase1;
+package com.FoundationProgramPhase1.core;
 
 import com.FoundationProgramPhase1.core.BookType;
 import com.FoundationProgramPhase1.core.EBook;

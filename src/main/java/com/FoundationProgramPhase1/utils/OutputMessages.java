@@ -1,73 +1,20 @@
 package com.FoundationProgramPhase1.utils;
 
-import com.FoundationProgramPhase1.core.User;
-
 public class OutputMessages {
 
     public OutputMessages() {
-    }
-
-    public void enterUsername() {
-        System.out.println("Please enter a username: ");
-    }
-
-    public void enterPassword() {
-        System.out.println("Please enter a password between 8 and 20 symbols: ");
     }
 
     public void enterName() {
         System.out.println("Please enter your full name: ");
     }
 
-    public void enterUserAge() {
-        System.out.println("Please enter your age: ");
-    }
-
-    public void enterUserGender() {
-        System.out.println("Please enter your gender(male/female): ");
-    }
-
-    public void enterUserAddress() {
-        System.out.println("Please enter your address: ");
-    }
-
-    public void enterUserCity() {
-        System.out.println("Please enter the city that you live in: ");
-    }
-
-    public void enterUserCountry() {
-        System.out.println("Please enter the country that you live in: ");
-    }
-
-    public void enterUserEmail() {
-        System.out.println("Please enter your email: ");
-    }
-
     public void enterPostponeDays() {
         System.out.println("Please enter how many days do you want to postpone the final date with: ");
     }
 
-    public void printUserCreated(User user) {
-        System.out.println("User created successfully!");
-        System.out.println(user);
-    }
-
-    public void askGDPR() {
-        System.out.println("Before proceeding please review our privacy policy.");
-        System.out.println("It describes how we collect, store and protect your data.");
-        System.out.println("Please enter " + "'yes'" + " if you agree or " + "'no'" + " if you don't!");
-    }
-
-    public void enterBookType() {
-        System.out.println("Please enter book type(paper book/ebook): ");
-    }
-
     public void enterBookTitle() {
         System.out.println("Please enter book title: ");
-    }
-
-    public void enterBookAuthor() {
-        System.out.println("Please enter book author: ");
     }
 
     public void enterBookGenre() {
@@ -78,22 +25,6 @@ public class OutputMessages {
         System.out.println("Please enter book description: ");
     }
 
-    public void enterBookISBN() {
-        System.out.println("Please enter book ISBN: ");
-    }
-
-    public void enterPaperBookTotalNumberOfCopies() {
-        System.out.println("Please enter paper book total number of copies: ");
-    }
-
-    public void enterEBookReadLink() {
-        System.out.println("Please enter Ebook online read link: ");
-    }
-
-    public void enterEBookDownloadLink() {
-        System.out.println("Please enter Ebook online download link: ");
-    }
-
     public void enterAuthorFirstName() {
         System.out.println("Please enter author's first name: ");
     }
@@ -102,48 +33,40 @@ public class OutputMessages {
         System.out.println("Please enter author's last name: ");
     }
 
-    public void enterAuthorCountryBorn() {
-        System.out.println("Please enter author's country born: ");
-    }
-
-    public void enterAuthorBirthDate() {
-        System.out.println("Please enter author's birth date: ");
-    }
-
-    public void enterAuthorIsAlive() {
-        System.out.println("Please enter 'yes' if author is alive or 'no' if dead: ");
-    }
-
-    public void enterAuthorDeathDate() {
-        System.out.println("Please enter author's death date: ");
+    public void enterBookISBN() {
+        System.out.println("Please enter paper book ISBN: ");
     }
 
     public void printBookNotAvailable() {
         System.out.println("Sorry this book is not available");
     }
 
-    public void printInvalidAuthorFirstName() {
-        System.out.println("Invalid author first name");
-    }
-
-    public void printInvalidAuthorLastName() {
-        System.out.println("Invalid author last name");
-    }
-
     public void printInvalidBookTitle() {
         System.out.println("Invalid book title");
     }
 
-    public void printInvalidBookGenre() {
-        System.out.println("Invalid book genre");
-    }
-
-    public void printInvalidBookDescription() {
-        System.out.println("Invalid book description");
+    public void printInvalidPostponeDays() {
+        System.out.println("You can only postpone up to 14 days max");
     }
 
     public void printWouldYouBorrowBook() {
         System.out.println("Would you like to borrow this book?(yes/no)");
+    }
+
+    public void printWouldYouReadBook() {
+        System.out.println("Would you like to read this book?(yes/no)");
+    }
+
+    public void printWouldYouDownloadBook() {
+        System.out.println("Would you like to download this book?(yes/no)");
+    }
+
+    public void printCantAddBook() {
+        System.out.println("Can not add this book");
+    }
+
+    public void printBookNotAvailableOrPostponeDateTooLong() {
+        System.out.println("This book is not available or the postpone date is incorrect(up to 14 days)");
     }
 
     public void printLibraryMenu() {
@@ -155,18 +78,22 @@ public class OutputMessages {
         System.out.println("\t 4 - Search a paper book by description.");
         System.out.println("\t 5 - Search a paper book by author first name.");
         System.out.println("\t 6 - Search a paper book by author last name.");
-        System.out.println("\t 7 - Print all books you borrowed.");
+        System.out.println("\t 7 - Print all your books.");
         System.out.println("\t 8 - Ask for postpone.");
-        System.out.println("\t 9 - Go back to main menu.");
+        System.out.println("\t 9 - Print all authors.");
+        System.out.println("\t 10 - Go back to main menu.");
     }
 
     public void printEBookMenu() {
         System.out.println("Welcome to the EBooks Paradise!");
         System.out.println("Choose:");
         System.out.println("\t 1 - List all Ebooks.");
-        System.out.println("\t 2 - Choose an ebook to read online.");
-        System.out.println("\t 3 - Choose an ebook to download.");
-        System.out.println("\t 4 - Go back to main menu.");
+        System.out.println("\t 2 - Print all readable Ebooks.");
+        System.out.println("\t 3 - Print all downloadable Ebooks.");
+        System.out.println("\t 4 - Choose an ebook to read online.");
+        System.out.println("\t 5 - Choose an ebook to download.");
+        System.out.println("\t 6 - Print all your books.");
+        System.out.println("\t 7 - Go back to main menu.");
     }
 
     public void printUsersMenu() {

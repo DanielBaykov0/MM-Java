@@ -1,19 +1,24 @@
 package com.FoundationProgramPhase1.core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class User {
 
-    private String username;
-    private String password;
-    private String name;
-    private int userAge;
-    private String userGender;
-    private String userAddress;
-    private String userCity;
-    private String userCounty;
-    private String userEmail;
+    private final String username;
+    private final String password;
+    private final String name;
+    private final int userAge;
+    private final String userGender;
+    private final String userAddress;
+    private final String userCity;
+    private final String userCounty;
+    private final String userEmail;
     private final boolean GDPR;
+    private List<PaperBook> paperBookList;
+    private List<EBook> eBookReadList;
+    private List<EBook> eBookDownloadedList;
 
     public User(String username, String password, String name, int userAge, String userGender, String userAddress, String userCity, String userCounty, String userEmail, boolean GDPR) {
         this.username = username;
@@ -26,6 +31,9 @@ public class User {
         this.userCounty = userCounty;
         this.userEmail = userEmail;
         this.GDPR = GDPR;
+        this.paperBookList = new ArrayList<>();
+        this.eBookReadList = new ArrayList<>();
+        this.eBookDownloadedList = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -68,40 +76,28 @@ public class User {
         return GDPR;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public List<PaperBook> getPaperBookList() {
+        return paperBookList;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPaperBookList(List<PaperBook> paperBookList) {
+        this.paperBookList = paperBookList;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<EBook> geteBookReadList() {
+        return eBookReadList;
     }
 
-    public void setUserAge(int userAge) {
-        this.userAge = userAge;
+    public void setEBookReadList(List<EBook> eBookReadList) {
+        this.eBookReadList = eBookReadList;
     }
 
-    public void setUserGender(String userGender) {
-        this.userGender = userGender;
+    public List<EBook> geteBookDownloadedList() {
+        return eBookDownloadedList;
     }
 
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
-    }
-
-    public void setUserCity(String userCity) {
-        this.userCity = userCity;
-    }
-
-    public void setUserCounty(String userCounty) {
-        this.userCounty = userCounty;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setEBookDownloadedList(List<EBook> eBookDownloadedList) {
+        this.eBookDownloadedList = eBookDownloadedList;
     }
 
     @Override
@@ -130,6 +126,9 @@ public class User {
                 ", userCounty='" + userCounty + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", GDPR=" + GDPR +
+                ",\n paperBookList=" + paperBookList +
+                ",\n eBookReadList=" + eBookReadList +
+                ",\n eBookDownloadedList=" + eBookDownloadedList +
                 '}';
     }
 }
