@@ -42,12 +42,12 @@ public class LibraryMenu {
 
             switch (choice) {
                 case 1 -> {
-                    usersService.listAllUsers();
+                    usersService.listAllUsers(libraryRepository.getUsers());
                     outputMessages.printUsersMenu();
                 }
                 case 2 -> {
                     User user = usersService.returnCorrectUser(scanner, libraryRepository.getUsers());
-                    if (usersService.loginAsLibraryUser(user)) {
+                    if (usersService.loginAsLibraryUser(user, libraryRepository.getUsers())) {
                         libraryLoop(user);
                     } else {
                         System.out.println("User doesn't exist");
@@ -56,7 +56,7 @@ public class LibraryMenu {
                 }
                 case 3 -> {
                     User user = usersService.returnCorrectUser(scanner, libraryRepository.getUsers());
-                    if (usersService.loginAsLibraryUser(user)) {
+                    if (usersService.loginAsLibraryUser(user, libraryRepository.getUsers())) {
                         EBookLoop(user);
                     } else {
                         System.out.println("User doesn't exist");

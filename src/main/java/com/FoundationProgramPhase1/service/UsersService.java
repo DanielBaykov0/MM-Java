@@ -1,25 +1,19 @@
 package com.FoundationProgramPhase1.service;
 
 import com.FoundationProgramPhase1.core.User;
-import com.FoundationProgramPhase1.repositories.UserRepository;
 import com.FoundationProgramPhase1.utils.OutputMessages;
-import com.FoundationProgramPhase1.utils.UserUtils;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class UsersService {
 
-    private List<User> users;
     private final OutputMessages outputMessages = new OutputMessages();
-    private final UserUtils userUtils = new UserUtils();
 
     public UsersService() {
-        UserRepository userRepository = new UserRepository();
-        this.users = userRepository.getUsers();
     }
 
-    public void listAllUsers() {
+    public void listAllUsers(List<User> users) {
         for (User user : users) {
             System.out.println(user);
         }
@@ -46,7 +40,7 @@ public class UsersService {
         return returnUser;
     }
 
-    public boolean loginAsLibraryUser(User inputUser) {
+    public boolean loginAsLibraryUser(User inputUser, List<User> users) {
         for (User user : users) {
             if (user.equals(inputUser) && user.getGDPR()) {
                 return true;

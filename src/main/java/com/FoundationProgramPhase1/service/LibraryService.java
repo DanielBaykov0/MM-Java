@@ -246,8 +246,4 @@ public class LibraryService {
     public List<User> getUserEBooksReadList() {
         return userEBooksReadList;
     }
-
-    public List<User> getUserEBooksDownloadedList() {
-        return userEBooksDownloadedList;
-    }
 }
