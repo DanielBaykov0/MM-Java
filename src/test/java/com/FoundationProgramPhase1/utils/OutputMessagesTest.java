@@ -116,6 +116,42 @@ class OutputMessagesTest {
     }
 
     @Test
+    void testPrintWouldYouReadBook() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        outputMessages.printWouldYouReadBook();
+        String expectedOutput = "Would you like to read this book?(yes/no)\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void testPrintWouldYouDownloadBook() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        outputMessages.printWouldYouDownloadBook();
+        String expectedOutput = "Would you like to download this book?(yes/no)\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void testPrintCantAddBook() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        outputMessages.printCantAddBook();
+        String expectedOutput = "Can not add this book\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void testPrintBookNotAvailableOrPostponeDateTooLong() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        outputMessages.printBookNotAvailableOrPostponeDateTooLong();
+        String expectedOutput = "This book is not available or the postpone date is incorrect(up to 14 days)\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
     void testPrintLibraryMenu() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
@@ -128,9 +164,10 @@ class OutputMessagesTest {
                 "\t 4 - Search a paper book by description.\r\n" +
                 "\t 5 - Search a paper book by author first name.\r\n" +
                 "\t 6 - Search a paper book by author last name.\r\n" +
-                "\t 7 - Print all books you borrowed.\r\n" +
+                "\t 7 - Print all your books.\r\n" +
                 "\t 8 - Ask for postpone.\r\n" +
-                "\t 9 - Go back to main menu.\r\n";
+                "\t 9 - Print all authors.\r\n" +
+                "\t 10 - Go back to main menu.\r\n";
         Assertions.assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -146,7 +183,8 @@ class OutputMessagesTest {
                 "\t 3 - Print all downloadable Ebooks.\r\n" +
                 "\t 4 - Choose an ebook to read online.\r\n" +
                 "\t 5 - Choose an ebook to download.\r\n" +
-                "\t 6 - Go back to main menu.\r\n";
+                "\t 6 - Print all your books.\r\n" +
+                "\t 7 - Go back to main menu.\r\n";
         Assertions.assertEquals(expectedOutput, outContent.toString());
     }
 

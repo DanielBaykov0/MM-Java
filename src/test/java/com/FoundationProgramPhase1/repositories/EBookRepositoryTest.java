@@ -14,7 +14,7 @@ class EBookRepositoryTest {
         EBook eBook = new EBook(BookType.EBOOK, "The Great Gatsby", "Stella Gibbons", "Novel", "The adventures of a noble man", 23,"https://openlibrary.org/read/TheGreatGatsby", "https://openlibrary.org/download/TheGreatGatsby");
         List<EBook> actualEBooks = EBookRepository.getEBooks();
         Assertions.assertTrue(actualEBooks.contains(eBook));
-        Assertions.assertEquals(38, actualEBooks.size());
+        Assertions.assertEquals(21, actualEBooks.size());
     }
 }
 
