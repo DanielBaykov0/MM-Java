@@ -1,9 +1,8 @@
 package com.FoundationProgramPhase1.app;
 
 import com.FoundationProgramPhase1.core.User;
-import com.FoundationProgramPhase1.repositories.*;
+import com.FoundationProgramPhase1.repositories.LibraryRepository;
 import com.FoundationProgramPhase1.service.LibraryService;
-import com.FoundationProgramPhase1.service.UsersService;
 import com.FoundationProgramPhase1.utils.LibraryUtils;
 import com.FoundationProgramPhase1.utils.OutputMessages;
 
@@ -14,60 +13,15 @@ public class LibraryMenu {
 
     private final Scanner scanner;
 
-    private final UsersService usersService;
     private final LibraryService libraryService;
     private final OutputMessages outputMessages;
     private final LibraryRepository libraryRepository = new LibraryRepository();
     private final LibraryUtils libraryUtils = new LibraryUtils();
 
-    public LibraryMenu(Scanner scanner, UsersService usersService, LibraryService libraryService, OutputMessages outputMessages) {
+    public LibraryMenu(Scanner scanner, LibraryService libraryService, OutputMessages outputMessages) {
         this.scanner = scanner;
-        this.usersService = usersService;
         this.libraryService = libraryService;
         this.outputMessages = outputMessages;
-    }
-
-    public void userLoop() {
-        boolean isRunning = true;
-        int choice = 0;
-
-        outputMessages.printUsersMenu();
-        while (isRunning) {
-            try {
-                choice = 0;
-                choice = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Wrong input");
-                outputMessages.printUsersMenu();
-            }
-            scanner.nextLine();
-
-            switch (choice) {
-                case 1 -> {
-                    usersService.listAllUsers(libraryRepository.getUsers());
-                    outputMessages.printUsersMenu();
-                }
-                case 2 -> {
-                    User user = usersService.returnCorrectUser(scanner, libraryRepository.getUsers());
-                    if (usersService.loginAsLibraryUser(user, libraryRepository.getUsers())) {
-                        libraryLoop(user);
-                    } else {
-                        System.out.println("User doesn't exist");
-                        outputMessages.printUsersMenu();
-                    }
-                }
-                case 3 -> {
-                    User user = usersService.returnCorrectUser(scanner, libraryRepository.getUsers());
-                    if (usersService.loginAsLibraryUser(user, libraryRepository.getUsers())) {
-                        EBookLoop(user);
-                    } else {
-                        System.out.println("User doesn't exist");
-                        outputMessages.printUsersMenu();
-                    }
-                }
-                case 4 -> isRunning = false;
-            }
-        }
     }
 
     public void libraryLoop(User user) {

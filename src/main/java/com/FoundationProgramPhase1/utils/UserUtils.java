@@ -32,7 +32,7 @@ public class UserUtils {
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }
-        } while (!delayDays.matches("[0-9]+") || (Integer.parseInt(delayDays) < 1 || Integer.parseInt(delayDays) > 14));
+        } while (!delayDays.matches("[0-9]+") || (Integer.parseInt(delayDays) < 1 || Integer.parseInt(delayDays) > 15));
 
         return Integer.parseInt(delayDays);
     }
