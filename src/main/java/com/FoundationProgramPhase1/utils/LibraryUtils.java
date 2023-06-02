@@ -37,7 +37,7 @@ public class LibraryUtils {
     public boolean searchDownloadEBookByTitle(Scanner scanner, User user, List<EBook> eBooks) {
         String bookName = libraryHelper.returnCorrectBookTitle(scanner);
         for (EBook eBook : eBooks) {
-            if (eBook.getBookTitle().equals(bookName) && !(eBook.getEBookReadOnlineLink().equals("Not downloadable for free"))) {
+            if (eBook.getBookTitle().equals(bookName) && !(eBook.getEBookDownloadLink().equals("Not downloadable for free"))) {
                 System.out.println(eBook);
                 libraryService.downloadEBook(scanner, user, eBook, user.geteBookReadList());
                 return true;
@@ -47,21 +47,19 @@ public class LibraryUtils {
         return false;
     }
 
-    public boolean askForPostpone(Scanner scanner, User user) {
+    public boolean askForPostpone(Scanner scanner, User user, List<PaperBook> paperBooks) {
         int bookISBN = libraryHelper.askForBookISBN(scanner, user);
-        for (User user1 : libraryService.getBorrowedBook()) {
-            for (PaperBook paperBook : user1.getPaperBookList()) {
-                if (paperBook.getISBN() == bookISBN) {
-                    int numberOfDays = userUtils.returnCorrectPostponeDays(scanner);
+        for (PaperBook paperBook : paperBooks) {
+            if (paperBook.getISBN() == bookISBN) {
+                int numberOfDays = userUtils.returnCorrectPostponeDays(scanner);
 
-                    LocalDate newLocalDate = paperBook.getBorrowedDate().plusDays(numberOfDays);
-                    if (returnDate.plusDays(14).isAfter(newLocalDate)) {
-                        paperBook.setBorrowedDate(newLocalDate);
-                        System.out.println(paperBook.getBorrowedDate());
-                        return true;
-                    } else {
-                        return false;
-                    }
+                LocalDate newLocalDate = paperBook.getBorrowedDate().plusDays(numberOfDays);
+                if (returnDate.plusDays(14).isAfter(newLocalDate)) {
+                    paperBook.setBorrowedDate(newLocalDate);
+                    System.out.println(paperBook.getBorrowedDate());
+                    return true;
+                } else {
+                    return false;
                 }
             }
         }

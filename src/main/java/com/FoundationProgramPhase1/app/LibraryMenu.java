@@ -118,7 +118,7 @@ public class LibraryMenu {
                     outputMessages.printLibraryMenu();
                 }
                 case 8 -> {
-                    if (libraryUtils.askForPostpone(scanner, user)) {
+                    if (libraryUtils.askForPostpone(scanner, user, user.getPaperBookList())) {
                         outputMessages.printLibraryMenu();
                     } else {
                         outputMessages.printBookNotAvailableOrPostponeDateTooLong();
