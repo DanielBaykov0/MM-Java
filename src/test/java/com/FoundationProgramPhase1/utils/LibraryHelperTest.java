@@ -11,43 +11,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class LibraryUtilsTest {
+class LibraryHelperTest {
 
-    LibraryUtils libraryUtils;
+    LibraryHelper libraryHelper;
 
     @BeforeEach
     void setLibraryUtils() {
-        libraryUtils = new LibraryUtils();
+        libraryHelper = new LibraryHelper();
     }
 
     @Test
     void testReturnCorrectBookTitle() {
         Scanner scanner = new Scanner("My man");
-        Assertions.assertEquals("My man", libraryUtils.returnCorrectBookTitle(scanner));
+        Assertions.assertEquals("My man", libraryHelper.returnCorrectBookTitle(scanner));
     }
 
     @Test
     void testReturnCorrectBookGenre() {
         Scanner scanner = new Scanner("Fantasy");
-        Assertions.assertEquals("Fantasy", libraryUtils.returnCorrectBookGenre(scanner));
+        Assertions.assertEquals("Fantasy", libraryHelper.returnCorrectBookGenre(scanner));
     }
 
     @Test
     void testReturnCorrectBookDescription() {
         Scanner scanner = new Scanner("Amazing book");
-        Assertions.assertEquals("Amazing book", libraryUtils.returnCorrectBookDescription(scanner));
+        Assertions.assertEquals("Amazing book", libraryHelper.returnCorrectBookDescription(scanner));
     }
 
     @Test
     void testReturnCorrectAuthorFirstName() {
         Scanner scanner = new Scanner("Daniel");
-        Assertions.assertEquals("Daniel", libraryUtils.returnCorrectAuthorFirstName(scanner));
+        Assertions.assertEquals("Daniel", libraryHelper.returnCorrectAuthorFirstName(scanner));
     }
 
     @Test
     void testReturnCorrectAuthorLastName() {
         Scanner scanner = new Scanner("Georgiev");
-        Assertions.assertEquals("Georgiev", libraryUtils.returnCorrectAuthorLastName(scanner));
+        Assertions.assertEquals("Georgiev", libraryHelper.returnCorrectAuthorLastName(scanner));
     }
 
     @Test
@@ -58,14 +58,14 @@ class LibraryUtilsTest {
         paperBooks.add(paperBook);
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", false);
         user.setPaperBookList(paperBooks);
-        Assertions.assertEquals(2, libraryUtils.askForBookISBN(scanner, user));
+        Assertions.assertEquals(2, libraryHelper.askForBookISBN(scanner, user));
     }
 
     @Test
     void testAskForBookISBN_ReturnZero() {
         Scanner scanner = new Scanner(String.valueOf(2));
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", false);
-        Assertions.assertEquals(0, libraryUtils.askForBookISBN(scanner, user));
+        Assertions.assertEquals(0, libraryHelper.askForBookISBN(scanner, user));
     }
 }
 

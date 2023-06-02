@@ -4,23 +4,20 @@ import com.FoundationProgramPhase1.core.Author;
 import com.FoundationProgramPhase1.core.EBook;
 import com.FoundationProgramPhase1.core.PaperBook;
 import com.FoundationProgramPhase1.core.User;
-import com.FoundationProgramPhase1.utils.LibraryUtils;
 import com.FoundationProgramPhase1.utils.OutputMessages;
-import com.FoundationProgramPhase1.utils.UserUtils;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class LibraryService {
 
-    private final UserUtils userUtils = new UserUtils();
     private final OutputMessages outputMessages = new OutputMessages();
-    private final LibraryUtils libraryUtils = new LibraryUtils();
-    private final List<User> borrowedBook;
-    private final LocalDate returnDate = LocalDate.now();
+    private static List<User> borrowedBook;
 
-    private final List<User> userEBooksReadList;
-    private final List<User> userEBooksDownloadedList;
+    private static List<User> userEBooksReadList;
+    private static List<User> userEBooksDownloadedList;
 
     public LibraryService() {
         borrowedBook = new ArrayList<>();
@@ -28,7 +25,7 @@ public class LibraryService {
         userEBooksDownloadedList = new ArrayList<>();
     }
 
-    private void borrowPaperBook(Scanner scanner, User user, PaperBook paperBook, List<PaperBook> bookList) {
+    public void borrowPaperBook(Scanner scanner, User user, PaperBook paperBook, List<PaperBook> bookList) {
         outputMessages.printWouldYouBorrowBook();
         String input = scanner.nextLine();
         LocalDate localDate = LocalDate.now();
@@ -38,8 +35,9 @@ public class LibraryService {
                 bookList.add(paperBook);
                 user.setPaperBookList(bookList);
                 paperBook.setBorrowedDate(localDate);
-                if (!borrowedBook.contains(user)) {
-                    borrowedBook.add(user);
+                if (!getBorrowedBook().contains(user)) {
+                    getBorrowedBook().add(user);
+                    setBorrowedBook(getBorrowedBook());
                 }
                 paperBook.setPaperBookNumberOfCopiesAvailable(paperBook.getPaperBookNumberOfCopiesAvailable() - 1);
                 System.out.println("You borrowed the book: " + paperBook.getBookTitle());
@@ -51,7 +49,7 @@ public class LibraryService {
         }
     }
 
-    private void readEBook(Scanner scanner, User user, EBook eBook, List<EBook> eBooks) {
+    public void readEBook(Scanner scanner, User user, EBook eBook, List<EBook> eBooks) {
         outputMessages.printWouldYouReadBook();
         String input = scanner.nextLine();
 
@@ -64,8 +62,9 @@ public class LibraryService {
                 } else {
                     outputMessages.printCantAddBook();
                 }
-                if (!userEBooksReadList.contains(user)) {
-                    userEBooksReadList.add(user);
+                if (!getUserEBooksReadList().contains(user)) {
+                    getUserEBooksReadList().add(user);
+                    setUserEBooksReadList(getUserEBooksReadList());
                 }
             }
 
@@ -74,20 +73,7 @@ public class LibraryService {
         }
     }
 
-    public boolean searchReadEBookByTitle(Scanner scanner, User user, List<EBook> eBooks) {
-        String bookName = libraryUtils.returnCorrectBookTitle(scanner);
-        for (EBook eBook : eBooks) {
-            if (eBook.getBookTitle().equals(bookName) && !(eBook.getEBookReadOnlineLink().equals("Not readable"))) {
-                System.out.println(eBook);
-                readEBook(scanner, user, eBook, user.geteBookReadList());
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void downloadEBook(Scanner scanner, User user, EBook eBook, List<EBook> eBooks) {
+    public void downloadEBook(Scanner scanner, User user, EBook eBook, List<EBook> eBooks) {
         outputMessages.printWouldYouDownloadBook();
         String input = scanner.nextLine();
 
@@ -100,101 +86,13 @@ public class LibraryService {
                 } else {
                     System.out.println("Can not add this book");
                 }
-                if (!userEBooksDownloadedList.contains(user)) {
-                    userEBooksDownloadedList.add(user);
+                if (!getUserEBooksDownloadedList().contains(user)) {
+                    getUserEBooksDownloadedList().add(user);
+                    setUserEBooksDownloadedList(getUserEBooksDownloadedList());
                 }
             }
 
             case "no" -> {
-            }
-        }
-    }
-
-    public boolean searchDownloadEBookByTitle(Scanner scanner, User user, List<EBook> eBooks) {
-        String bookName = libraryUtils.returnCorrectBookTitle(scanner);
-        for (EBook eBook : eBooks) {
-            if (eBook.getBookTitle().equals(bookName) && !(eBook.getEBookReadOnlineLink().equals("Not downloadable for free"))) {
-                System.out.println(eBook);
-                downloadEBook(scanner, user, eBook, user.geteBookReadList());
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean askForPostpone(Scanner scanner, User user) {
-        int bookISBN = libraryUtils.askForBookISBN(scanner, user);
-        for (User user1 : getBorrowedBook()) {
-            for (PaperBook paperBook : user1.getPaperBookList()) {
-                if (paperBook.getISBN() == bookISBN) {
-                    int numberOfDays = userUtils.returnCorrectPostponeDays(scanner);
-
-                    LocalDate newLocalDate = paperBook.getBorrowedDate().plusDays(numberOfDays);
-                    if (returnDate.plusDays(14).isAfter(newLocalDate)) {
-                        paperBook.setBorrowedDate(newLocalDate);
-                        System.out.println(paperBook.getBorrowedDate());
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public boolean searchPaperBookByTitle(Scanner scanner, User user, List<PaperBook> paperBooks) {
-        String bookName = libraryUtils.returnCorrectBookTitle(scanner);
-        for (PaperBook paperBook : paperBooks) {
-            if (paperBook.getBookTitle().equals(bookName)) {
-                System.out.println(paperBook);
-                if (paperBook.getPaperBookNumberOfCopiesAvailable() > 0) {
-                    borrowPaperBook(scanner, user, paperBook, user.getPaperBookList());
-                    return true;
-                } else if (paperBook.getPaperBookNumberOfCopiesAvailable() == 0) {
-                    outputMessages.printBookNotAvailable();
-                    return false;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public void searchBookByGenre(Scanner scanner, List<PaperBook> paperBooks) {
-        String bookGenre = libraryUtils.returnCorrectBookGenre(scanner);
-        for (PaperBook paperBook : paperBooks) {
-            if (paperBook.getBookGenre().equals(bookGenre)) {
-                System.out.println(paperBook);
-            }
-        }
-    }
-
-    public void searchBookByDescription(Scanner scanner, List<PaperBook> paperBooks) {
-        String bookDesc = libraryUtils.returnCorrectBookDescription(scanner);
-        for (PaperBook paperBook : paperBooks) {
-            if (paperBook.getBookDescription().contains(bookDesc)) {
-                System.out.println(paperBook);
-            }
-        }
-    }
-
-    public void searchBookByAuthorFirstName(Scanner scanner, List<PaperBook> paperBooks) {
-        String authorFirstName = libraryUtils.returnCorrectAuthorFirstName(scanner);
-        for (PaperBook paperBook : paperBooks) {
-            if (paperBook.getBookAuthor().contains(authorFirstName)) {
-                System.out.println(paperBook);
-            }
-        }
-    }
-
-    public void searchBookByAuthorLastName(Scanner scanner, List<PaperBook> paperBooks) {
-        String authorLastName = libraryUtils.returnCorrectAuthorLastName(scanner);
-        for (PaperBook paperBook : paperBooks) {
-            if (paperBook.getBookAuthor().contains(authorLastName)) {
-                System.out.println(paperBook);
             }
         }
     }
@@ -243,7 +141,23 @@ public class LibraryService {
         return borrowedBook;
     }
 
+    public void setBorrowedBook(List<User> borrowedBook) {
+        LibraryService.borrowedBook = borrowedBook;
+    }
+
     public List<User> getUserEBooksReadList() {
         return userEBooksReadList;
+    }
+
+    public static void setUserEBooksReadList(List<User> userEBooksReadList) {
+        LibraryService.userEBooksReadList = userEBooksReadList;
+    }
+
+    public static List<User> getUserEBooksDownloadedList() {
+        return userEBooksDownloadedList;
+    }
+
+    public static void setUserEBooksDownloadedList(List<User> userEBooksDownloadedList) {
+        LibraryService.userEBooksDownloadedList = userEBooksDownloadedList;
     }
 }

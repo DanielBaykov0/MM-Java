@@ -4,6 +4,7 @@ import com.FoundationProgramPhase1.core.User;
 import com.FoundationProgramPhase1.repositories.*;
 import com.FoundationProgramPhase1.service.LibraryService;
 import com.FoundationProgramPhase1.service.UsersService;
+import com.FoundationProgramPhase1.utils.LibraryUtils;
 import com.FoundationProgramPhase1.utils.OutputMessages;
 
 import java.util.InputMismatchException;
@@ -17,6 +18,7 @@ public class LibraryMenu {
     private final LibraryService libraryService;
     private final OutputMessages outputMessages;
     private final LibraryRepository libraryRepository = new LibraryRepository();
+    private final LibraryUtils libraryUtils = new LibraryUtils();
 
     public LibraryMenu(Scanner scanner, UsersService usersService, LibraryService libraryService, OutputMessages outputMessages) {
         this.scanner = scanner;
@@ -90,25 +92,25 @@ public class LibraryMenu {
                     outputMessages.printLibraryMenu();
                 }
                 case 2 -> {
-                    if (!libraryService.searchPaperBookByTitle(scanner, user, libraryRepository.getPaperBooks())) {
+                    if (!libraryUtils.searchPaperBookByTitle(scanner, user, libraryRepository.getPaperBooks())) {
                         outputMessages.printInvalidBookTitle();
                     }
                     outputMessages.printLibraryMenu();
                 }
                 case 3 -> {
-                    libraryService.searchBookByGenre(scanner, libraryRepository.getPaperBooks());
+                    libraryUtils.searchBookByGenre(scanner, libraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 4 -> {
-                    libraryService.searchBookByDescription(scanner, libraryRepository.getPaperBooks());
+                    libraryUtils.searchBookByDescription(scanner, libraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 5 -> {
-                    libraryService.searchBookByAuthorFirstName(scanner, libraryRepository.getPaperBooks());
+                    libraryUtils.searchBookByAuthorFirstName(scanner, libraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 6 -> {
-                    libraryService.searchBookByAuthorLastName(scanner, libraryRepository.getPaperBooks());
+                    libraryUtils.searchBookByAuthorLastName(scanner, libraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 7 -> {
@@ -116,7 +118,7 @@ public class LibraryMenu {
                     outputMessages.printLibraryMenu();
                 }
                 case 8 -> {
-                    if (libraryService.askForPostpone(scanner, user)) {
+                    if (libraryUtils.askForPostpone(scanner, user)) {
                         outputMessages.printLibraryMenu();
                     } else {
                         outputMessages.printBookNotAvailableOrPostponeDateTooLong();
@@ -169,14 +171,14 @@ public class LibraryMenu {
                 }
 
                 case 4 -> {
-                    if (!libraryService.searchReadEBookByTitle(scanner, user, libraryRepository.getEBooks())) {
+                    if (!libraryUtils.searchReadEBookByTitle(scanner, user, libraryRepository.getEBooks())) {
                         outputMessages.printInvalidBookTitle();
                     }
                     outputMessages.printEBookMenu();
                 }
 
                 case 5 -> {
-                    if (!libraryService.searchDownloadEBookByTitle(scanner, user, libraryRepository.getEBooks())) {
+                    if (!libraryUtils.searchDownloadEBookByTitle(scanner, user, libraryRepository.getEBooks())) {
                         outputMessages.printInvalidBookTitle();
                     }
                     outputMessages.printEBookMenu();
