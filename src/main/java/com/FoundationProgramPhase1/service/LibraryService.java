@@ -26,7 +26,7 @@ public class LibraryService {
         userEBooksDownloadedList = new ArrayList<>();
     }
 
-    public void borrowPaperBook(Scanner scanner, User user, int id, PaperBook paperBook, Map<Integer, PaperBook> bookList) {
+    public boolean borrowPaperBook(Scanner scanner, User user, int id, PaperBook paperBook, Map<Integer, PaperBook> bookList) {
         outputMessages.printWouldYouBorrowBook();
         String input = scanner.nextLine();
         LocalDate localDate = LocalDate.now();
@@ -43,11 +43,15 @@ public class LibraryService {
                 paperBook.setPaperBookNumberOfCopiesAvailable(paperBook.getPaperBookNumberOfCopiesAvailable() - 1);
                 System.out.println("You borrowed the book: " + paperBook.getBookTitle());
                 System.out.println(paperBook.getBookTitle() + " available copies = " + paperBook.getPaperBookNumberOfCopiesAvailable());
+                return true;
             }
 
             case "no" -> {
+                return false;
             }
         }
+
+        return false;
     }
 
     public void readEBook(Scanner scanner, User user, EBook eBook, List<EBook> eBooks) {

@@ -74,12 +74,10 @@ public class LibraryUtils {
             if (entry.getValue().getBookTitle().equals(bookName) && entry.getValue().getPaperBookNumberOfCopiesAvailable() > 0) {
                 System.out.println(entry.getValue());
                 if (entry.getValue().getPaperBookNumberOfCopiesAvailable() > 0) {
-                    libraryService.borrowPaperBook(scanner, user, entry.getKey(), entry.getValue(), user.getPaperBookList());
-                    libraryHelper.updatePaperBookTotalCopies(bookName);
-                    return true;
-                } else if (entry.getValue().getPaperBookNumberOfCopiesAvailable() == 0) {
-                    outputMessages.printBookNotAvailable();
-                    return false;
+                    if (libraryService.borrowPaperBook(scanner, user, entry.getKey(), entry.getValue(), user.getPaperBookList())) {
+                        libraryHelper.updatePaperBookTotalCopies(bookName);
+                        return true;
+                    }
                 }
             }
         }

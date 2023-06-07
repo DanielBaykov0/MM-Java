@@ -10,17 +10,11 @@ import java.util.Map;
 
 public class LibraryRepository {
 
-    private static Map<Integer, PaperBook> paperBooks;
-    private static List<EBook> eBooks;
-    private static List<Author> authors;
-    private static List<User> users;
+    private static final Map<Integer, PaperBook> paperBooks = PaperBookRepository.getPaperBooks();
+    private static final List<EBook> eBooks = EBookRepository.getEBooks();
+    private static final List<Author> authors = AuthorRepository.getAuthors();
+    private static final List<User> users = UserRepository.getUsers();
 
-    public LibraryRepository() {
-        paperBooks = PaperBookRepository.getPaperBooks();
-        eBooks = EBookRepository.getEBooks();
-        authors = AuthorRepository.getAuthors();
-        users = UserRepository.getUsers();
-    }
 
     public static Map<Integer, PaperBook> getPaperBooks() {
         return paperBooks;
