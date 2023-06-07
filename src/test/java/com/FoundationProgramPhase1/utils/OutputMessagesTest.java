@@ -116,6 +116,15 @@ class OutputMessagesTest {
     }
 
     @Test
+    void testPrintWouldYouReturnBook() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        outputMessages.printWouldYouReturnBook();
+        String expectedOutput = "Would you like to return this book?(yes/no)\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
     void testPrintWouldYouReadBook() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
@@ -166,8 +175,9 @@ class OutputMessagesTest {
                 "\t 6 - Search a paper book by author last name.\r\n" +
                 "\t 7 - Print all your books.\r\n" +
                 "\t 8 - Ask for postpone.\r\n" +
-                "\t 9 - Print all authors.\r\n" +
-                "\t 10 - Go back to main menu.\r\n";
+                "\t 9 - Ask to return a book.\r\n" +
+                "\t 10 - Print all authors.\r\n" +
+                "\t 11 - Go back to main menu.\r\n";
         Assertions.assertEquals(expectedOutput, outContent.toString());
     }
 

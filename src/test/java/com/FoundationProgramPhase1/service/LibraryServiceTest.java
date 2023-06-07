@@ -50,6 +50,34 @@ class LibraryServiceTest {
     }
 
     @Test
+    void testReturnPaperBook_Yes_True() {
+        Scanner scanner = new Scanner("\nyes");
+        User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
+        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 1, null);
+        int id = 1;
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        libraryService.returnPaperBook(scanner, user, id, paperBook, user.getPaperBookList());
+        String expectedOutput = "Would you like to return this book?(yes/no)\r\nYou returned the book: Avatar\r\nAvatar available copies = 2\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void testReturnPaperBook_No() {
+        Scanner scanner = new Scanner("\nno");
+        User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
+        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 1, null);
+        int id = 1;
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        libraryService.returnPaperBook(scanner, user, id, paperBook, user.getPaperBookList());
+        String expectedOutput = "Would you like to return this book?(yes/no)\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
     void testReadEBook_Yes_True() {
         Scanner scanner = new Scanner("yes");
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);

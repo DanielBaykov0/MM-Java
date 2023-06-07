@@ -100,6 +100,17 @@ class LibraryUtilsTest {
     }
 
     @Test
+    void testAskToReturnPaperBook() {
+        Scanner scanner = new Scanner(1 + "\n" + "yes");
+        User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
+        user.getPaperBookList().put(1, new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 113, 4, 0, null));
+        Assertions.assertTrue(libraryUtils.askToReturnPaperBook(scanner, user, user.getPaperBookList()));
+        Assertions.assertEquals(1, LibraryRepository.getPaperBooks().get(3).getPaperBookNumberOfCopiesAvailable());
+        Assertions.assertEquals(5, LibraryRepository.getPaperBooks().get(3).getPaperBookNumberOfCopiesTotal());
+        LibraryRepository.getPaperBooks().get(3).setPaperBookNumberOfCopiesTotal(4);
+    }
+
+    @Test
     void testSearchPaperBookByTitle_Yes_AvailableCopiesMoreThanZero() {
         Scanner scanner = new Scanner("Avatar\nyes");
         Map<Integer, PaperBook> list = LibraryRepository.getPaperBooks();
