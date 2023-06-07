@@ -34,7 +34,7 @@ public class OutputMessages {
     }
 
     public void enterBookId() {
-        System.out.println("Please enter paper book Id: ");
+        System.out.println("Please enter paper book id: ");
     }
 
     public void printBookNotAvailable() {
@@ -51,6 +51,10 @@ public class OutputMessages {
 
     public void printWouldYouBorrowBook() {
         System.out.println("Would you like to borrow this book?(yes/no)");
+    }
+
+    public void printWouldYouReturnBook() {
+        System.out.println("Would you like to return this book?(yes/no)");
     }
 
     public void printWouldYouReadBook() {
@@ -80,8 +84,9 @@ public class OutputMessages {
         System.out.println("\t 6 - Search a paper book by author last name.");
         System.out.println("\t 7 - Print all your books.");
         System.out.println("\t 8 - Ask for postpone.");
-        System.out.println("\t 9 - Print all authors.");
-        System.out.println("\t 10 - Go back to main menu.");
+        System.out.println("\t 9 - Ask to return a book.");
+        System.out.println("\t 10 - Print all authors.");
+        System.out.println("\t 11 - Go back to main menu.");
     }
 
     public void printEBookMenu() {

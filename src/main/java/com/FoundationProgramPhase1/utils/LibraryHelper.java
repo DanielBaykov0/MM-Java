@@ -96,10 +96,19 @@ public class LibraryHelper {
         return 0;
     }
 
-    public void updatePaperBookTotalCopies(String bookName) {
+    public void subtractPaperBookTotalCopies(String bookName) {
         for (Map.Entry<Integer, PaperBook> entry1 : LibraryRepository.getPaperBooks().entrySet()) {
             if (entry1.getValue().getBookTitle().equals(bookName)) {
                 entry1.getValue().setPaperBookNumberOfCopiesTotal(entry1.getValue().getPaperBookNumberOfCopiesTotal() - 1);
+            }
+            System.out.println(entry1.getValue().getBookTitle() + " total copies = " + entry1.getValue().getPaperBookNumberOfCopiesTotal());
+        }
+    }
+
+    public void addToPaperBookTotalCopies(String bookName) {
+        for (Map.Entry<Integer, PaperBook> entry1 : LibraryRepository.getPaperBooks().entrySet()) {
+            if (entry1.getValue().getBookTitle().equals(bookName)) {
+                entry1.getValue().setPaperBookNumberOfCopiesTotal(entry1.getValue().getPaperBookNumberOfCopiesTotal() + 1);
             }
             System.out.println(entry1.getValue().getBookTitle() + " total copies = " + entry1.getValue().getPaperBookNumberOfCopiesTotal());
         }

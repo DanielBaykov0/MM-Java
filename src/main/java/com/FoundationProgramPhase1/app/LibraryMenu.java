@@ -72,7 +72,7 @@ public class LibraryMenu {
                     outputMessages.printLibraryMenu();
                 }
                 case 8 -> {
-                    if (libraryUtils.askForPostpone(scanner, user, user.getPaperBookList())) {
+                    if (libraryUtils.askForPaperBookPostpone(scanner, user, user.getPaperBookList())) {
                         outputMessages.printLibraryMenu();
                     } else {
                         outputMessages.printBookNotAvailableOrPostponeDateTooLong();
@@ -81,11 +81,17 @@ public class LibraryMenu {
                 }
 
                 case 9 -> {
+                    if (libraryUtils.askToReturnPaperBook(scanner, user, LibraryRepository.getPaperBooks())) {
+                        outputMessages.printLibraryMenu();
+                    }
+                }
+
+                case 10 -> {
                     libraryService.listAuthors(LibraryRepository.getAuthors());
                     outputMessages.printLibraryMenu();
                 }
 
-                case 10 -> {
+                case 11 -> {
                     isRunning = false;
                     outputMessages.printUsersMenu();
                 }

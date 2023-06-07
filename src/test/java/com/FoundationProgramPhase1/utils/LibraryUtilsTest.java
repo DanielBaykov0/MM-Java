@@ -80,7 +80,7 @@ class LibraryUtilsTest {
         Scanner scanner = new Scanner(1 + "\n" + 10);
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
         user.getPaperBookList().put(1, new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, LocalDate.now()));
-        Assertions.assertTrue(libraryUtils.askForPostpone(scanner, user, user.getPaperBookList()));
+        Assertions.assertTrue(libraryUtils.askForPaperBookPostpone(scanner, user, user.getPaperBookList()));
     }
 
     @Test
@@ -88,7 +88,7 @@ class LibraryUtilsTest {
         Scanner scanner = new Scanner(1 + "\n" + 15);
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
         user.getPaperBookList().put(1, new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, LocalDate.now()));
-        Assertions.assertFalse(libraryUtils.askForPostpone(scanner, user, user.getPaperBookList()));
+        Assertions.assertFalse(libraryUtils.askForPaperBookPostpone(scanner, user, user.getPaperBookList()));
     }
 
     @Test
@@ -96,7 +96,7 @@ class LibraryUtilsTest {
         Scanner scanner = new Scanner(1 + "\n" + 10);
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
         user.getPaperBookList().put(1, new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, LocalDate.of(2023, 8, 10)));
-        Assertions.assertFalse(libraryUtils.askForPostpone(scanner, user, user.getPaperBookList()));
+        Assertions.assertFalse(libraryUtils.askForPaperBookPostpone(scanner, user, user.getPaperBookList()));
     }
 
     @Test

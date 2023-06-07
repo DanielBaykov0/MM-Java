@@ -48,7 +48,7 @@ public class LibraryUtils {
         return false;
     }
 
-    public boolean askForPostpone(Scanner scanner, User user, Map<Integer, PaperBook> paperBooks) {
+    public boolean askForPaperBookPostpone(Scanner scanner, User user, Map<Integer, PaperBook> paperBooks) {
         int bookId = libraryHelper.askForBookId(scanner, paperBooks);
         for (Map.Entry<Integer, PaperBook> entry : paperBooks.entrySet()) {
             if (entry.getKey() == bookId && user.getPaperBookList().containsKey(entry.getKey())) {
@@ -68,6 +68,21 @@ public class LibraryUtils {
         return false;
     }
 
+    public boolean askToReturnPaperBook(Scanner scanner, User user, Map<Integer, PaperBook> paperBooks) {
+        int bookId = libraryHelper.askForBookId(scanner, paperBooks);
+        for (Map.Entry<Integer, PaperBook> entry : paperBooks.entrySet()) {
+            if (entry.getKey() == bookId && user.getPaperBookList().containsKey(entry.getKey())) {
+                System.out.println(entry.getValue());
+                if (libraryService.returnPaperBook(scanner, user, entry.getKey(), entry.getValue(), user.getPaperBookList())) {
+                    libraryHelper.addToPaperBookTotalCopies(entry.getValue().getBookTitle());
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public boolean searchPaperBookByTitle(Scanner scanner, User user, Map<Integer, PaperBook> paperBooks) {
         String bookName = libraryHelper.returnCorrectBookTitle(scanner);
         for (Map.Entry<Integer, PaperBook> entry : paperBooks.entrySet()) {
@@ -75,7 +90,7 @@ public class LibraryUtils {
                 System.out.println(entry.getValue());
                 if (entry.getValue().getPaperBookNumberOfCopiesAvailable() > 0) {
                     if (libraryService.borrowPaperBook(scanner, user, entry.getKey(), entry.getValue(), user.getPaperBookList())) {
-                        libraryHelper.updatePaperBookTotalCopies(bookName);
+                        libraryHelper.subtractPaperBookTotalCopies(bookName);
                         return true;
                     }
                 }
