@@ -6,13 +6,14 @@ import com.FoundationProgramPhase1.core.PaperBook;
 import com.FoundationProgramPhase1.core.User;
 
 import java.util.List;
+import java.util.Map;
 
 public class LibraryRepository {
 
-    private final List<PaperBook> paperBooks;
-    private final List<EBook> eBooks;
-    private final List<Author> authors;
-    private final List<User> users;
+    private static Map<Integer, PaperBook> paperBooks;
+    private static List<EBook> eBooks;
+    private static List<Author> authors;
+    private static List<User> users;
 
     public LibraryRepository() {
         paperBooks = PaperBookRepository.getPaperBooks();
@@ -21,19 +22,19 @@ public class LibraryRepository {
         users = UserRepository.getUsers();
     }
 
-    public List<PaperBook> getPaperBooks() {
+    public static Map<Integer, PaperBook> getPaperBooks() {
         return paperBooks;
     }
 
-    public List<EBook> getEBooks() {
+    public static List<EBook> getEBooks() {
         return eBooks;
     }
 
-    public List<Author> getAuthors() {
+    public static List<Author> getAuthors() {
         return authors;
     }
 
-    public List<User> getUsers() {
+    public static List<User> getUsers() {
         return users;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
 public class PaperBook extends Book {
 
     private int paperBookNumberOfCopiesAvailable;
-    private final int paperBookNumberOfCopiesTotal;
+    private int paperBookNumberOfCopiesTotal;
     private LocalDate borrowedDate;
 
     public PaperBook(BookType bookType, String bookTitle, String bookAuthor, String bookGenre, String bookDescription, int ISBN, int paperBookNumberOfCopiesTotal, int paperBookNumberOfCopiesAvailable, LocalDate borrowedDate) {
@@ -24,9 +24,12 @@ public class PaperBook extends Book {
         return paperBookNumberOfCopiesTotal;
     }
 
-    public int setPaperBookNumberOfCopiesAvailable(int paperBookNumberOfCopiesAvailable) {
+    public void setPaperBookNumberOfCopiesTotal(int paperBookNumberOfCopiesTotal) {
+        this.paperBookNumberOfCopiesTotal = paperBookNumberOfCopiesTotal;
+    }
+
+    public void setPaperBookNumberOfCopiesAvailable(int paperBookNumberOfCopiesAvailable) {
         this.paperBookNumberOfCopiesAvailable = paperBookNumberOfCopiesAvailable;
-        return paperBookNumberOfCopiesAvailable;
     }
 
     public LocalDate getBorrowedDate() {

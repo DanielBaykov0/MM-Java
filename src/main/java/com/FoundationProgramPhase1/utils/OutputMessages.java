@@ -33,8 +33,8 @@ public class OutputMessages {
         System.out.println("Please enter author's last name: ");
     }
 
-    public void enterBookISBN() {
-        System.out.println("Please enter paper book ISBN: ");
+    public void enterBookId() {
+        System.out.println("Please enter paper book Id: ");
     }
 
     public void printBookNotAvailable() {

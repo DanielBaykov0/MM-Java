@@ -7,6 +7,7 @@ import com.FoundationProgramPhase1.service.LibraryService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class LibraryUtils {
@@ -47,16 +48,16 @@ public class LibraryUtils {
         return false;
     }
 
-    public boolean askForPostpone(Scanner scanner, User user, List<PaperBook> paperBooks) {
-        int bookISBN = libraryHelper.askForBookISBN(scanner, user);
-        for (PaperBook paperBook : paperBooks) {
-            if (paperBook.getISBN() == bookISBN) {
+    public boolean askForPostpone(Scanner scanner, User user, Map<Integer, PaperBook> paperBooks) {
+        int bookId = libraryHelper.askForBookId(scanner, paperBooks);
+        for (Map.Entry<Integer, PaperBook> entry : paperBooks.entrySet()) {
+            if (entry.getKey() == bookId && user.getPaperBookList().containsKey(entry.getKey())) {
                 int numberOfDays = userUtils.returnCorrectPostponeDays(scanner);
 
-                LocalDate newLocalDate = paperBook.getBorrowedDate().plusDays(numberOfDays);
+                LocalDate newLocalDate = entry.getValue().getBorrowedDate().plusDays(numberOfDays);
                 if (returnDate.plusDays(14).isAfter(newLocalDate)) {
-                    paperBook.setBorrowedDate(newLocalDate);
-                    System.out.println(paperBook.getBorrowedDate());
+                    entry.getValue().setBorrowedDate(newLocalDate);
+                    System.out.println(entry.getValue().getBorrowedDate());
                     return true;
                 } else {
                     return false;
@@ -67,15 +68,16 @@ public class LibraryUtils {
         return false;
     }
 
-    public boolean searchPaperBookByTitle(Scanner scanner, User user, List<PaperBook> paperBooks) {
+    public boolean searchPaperBookByTitle(Scanner scanner, User user, Map<Integer, PaperBook> paperBooks) {
         String bookName = libraryHelper.returnCorrectBookTitle(scanner);
-        for (PaperBook paperBook : paperBooks) {
-            if (paperBook.getBookTitle().equals(bookName)) {
-                System.out.println(paperBook);
-                if (paperBook.getPaperBookNumberOfCopiesAvailable() > 0) {
-                    libraryService.borrowPaperBook(scanner, user, paperBook, user.getPaperBookList());
+        for (Map.Entry<Integer, PaperBook> entry : paperBooks.entrySet()) {
+            if (entry.getValue().getBookTitle().equals(bookName) && entry.getValue().getPaperBookNumberOfCopiesAvailable() > 0) {
+                System.out.println(entry.getValue());
+                if (entry.getValue().getPaperBookNumberOfCopiesAvailable() > 0) {
+                    libraryService.borrowPaperBook(scanner, user, entry.getKey(), entry.getValue(), user.getPaperBookList());
+                    libraryHelper.updatePaperBookTotalCopies(bookName);
                     return true;
-                } else if (paperBook.getPaperBookNumberOfCopiesAvailable() == 0) {
+                } else if (entry.getValue().getPaperBookNumberOfCopiesAvailable() == 0) {
                     outputMessages.printBookNotAvailable();
                     return false;
                 }
@@ -85,36 +87,36 @@ public class LibraryUtils {
         return false;
     }
 
-    public void searchBookByGenre(Scanner scanner, List<PaperBook> paperBooks) {
+    public void searchBookByGenre(Scanner scanner, Map<Integer, PaperBook> paperBooks) {
         String bookGenre = libraryHelper.returnCorrectBookGenre(scanner);
-        for (PaperBook paperBook : paperBooks) {
+        for (PaperBook paperBook : paperBooks.values()) {
             if (paperBook.getBookGenre().equals(bookGenre)) {
                 System.out.println(paperBook);
             }
         }
     }
 
-    public void searchBookByDescription(Scanner scanner, List<PaperBook> paperBooks) {
+    public void searchBookByDescription(Scanner scanner, Map<Integer, PaperBook> paperBooks) {
         String bookDesc = libraryHelper.returnCorrectBookDescription(scanner);
-        for (PaperBook paperBook : paperBooks) {
+        for (PaperBook paperBook : paperBooks.values()) {
             if (paperBook.getBookDescription().contains(bookDesc)) {
                 System.out.println(paperBook);
             }
         }
     }
 
-    public void searchBookByAuthorFirstName(Scanner scanner, List<PaperBook> paperBooks) {
+    public void searchBookByAuthorFirstName(Scanner scanner, Map<Integer, PaperBook> paperBooks) {
         String authorFirstName = libraryHelper.returnCorrectAuthorFirstName(scanner);
-        for (PaperBook paperBook : paperBooks) {
+        for (PaperBook paperBook : paperBooks.values()) {
             if (paperBook.getBookAuthor().contains(authorFirstName)) {
                 System.out.println(paperBook);
             }
         }
     }
 
-    public void searchBookByAuthorLastName(Scanner scanner, List<PaperBook> paperBooks) {
+    public void searchBookByAuthorLastName(Scanner scanner, Map<Integer, PaperBook> paperBooks) {
         String authorLastName = libraryHelper.returnCorrectAuthorLastName(scanner);
-        for (PaperBook paperBook : paperBooks) {
+        for (PaperBook paperBook : paperBooks.values()) {
             if (paperBook.getBookAuthor().contains(authorLastName)) {
                 System.out.println(paperBook);
             }
