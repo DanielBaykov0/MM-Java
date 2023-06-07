@@ -15,13 +15,13 @@ public class LibraryMenu {
 
     private final LibraryService libraryService;
     private final OutputMessages outputMessages;
-    private final LibraryRepository libraryRepository = new LibraryRepository();
-    private final LibraryUtils libraryUtils = new LibraryUtils();
+    private final LibraryUtils libraryUtils;
 
-    public LibraryMenu(Scanner scanner, LibraryService libraryService, OutputMessages outputMessages) {
+    public LibraryMenu(Scanner scanner, LibraryService libraryService, OutputMessages outputMessages, LibraryUtils libraryUtils) {
         this.scanner = scanner;
         this.libraryService = libraryService;
         this.outputMessages = outputMessages;
+        this.libraryUtils = libraryUtils;
     }
 
     public void libraryLoop(User user) {
@@ -42,29 +42,29 @@ public class LibraryMenu {
 
             switch (choice) {
                 case 1 -> {
-                    libraryService.listPaperBooks(libraryRepository.getPaperBooks());
+                    libraryService.listPaperBooks(LibraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 2 -> {
-                    if (!libraryUtils.searchPaperBookByTitle(scanner, user, libraryRepository.getPaperBooks())) {
+                    if (!libraryUtils.searchPaperBookByTitle(scanner, user, LibraryRepository.getPaperBooks())) {
                         outputMessages.printInvalidBookTitle();
                     }
                     outputMessages.printLibraryMenu();
                 }
                 case 3 -> {
-                    libraryUtils.searchBookByGenre(scanner, libraryRepository.getPaperBooks());
+                    libraryUtils.searchBookByGenre(scanner, LibraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 4 -> {
-                    libraryUtils.searchBookByDescription(scanner, libraryRepository.getPaperBooks());
+                    libraryUtils.searchBookByDescription(scanner, LibraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 5 -> {
-                    libraryUtils.searchBookByAuthorFirstName(scanner, libraryRepository.getPaperBooks());
+                    libraryUtils.searchBookByAuthorFirstName(scanner, LibraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 6 -> {
-                    libraryUtils.searchBookByAuthorLastName(scanner, libraryRepository.getPaperBooks());
+                    libraryUtils.searchBookByAuthorLastName(scanner, LibraryRepository.getPaperBooks());
                     outputMessages.printLibraryMenu();
                 }
                 case 7 -> {
@@ -72,7 +72,7 @@ public class LibraryMenu {
                     outputMessages.printLibraryMenu();
                 }
                 case 8 -> {
-                    if (libraryUtils.askForPostpone(scanner, user, user.getPaperBookList())) {
+                    if (libraryUtils.askForPaperBookPostpone(scanner, user, user.getPaperBookList())) {
                         outputMessages.printLibraryMenu();
                     } else {
                         outputMessages.printBookNotAvailableOrPostponeDateTooLong();
@@ -81,11 +81,17 @@ public class LibraryMenu {
                 }
 
                 case 9 -> {
-                    libraryService.listAuthors(libraryRepository.getAuthors());
-                    outputMessages.printLibraryMenu();
+                    if (libraryUtils.askToReturnPaperBook(scanner, user, LibraryRepository.getPaperBooks())) {
+                        outputMessages.printLibraryMenu();
+                    }
                 }
 
                 case 10 -> {
+                    libraryService.listAuthors(LibraryRepository.getAuthors());
+                    outputMessages.printLibraryMenu();
+                }
+
+                case 11 -> {
                     isRunning = false;
                     outputMessages.printUsersMenu();
                 }
@@ -111,28 +117,28 @@ public class LibraryMenu {
 
             switch (choice) {
                 case 1 -> {
-                    libraryService.listEBooks(libraryRepository.getEBooks());
+                    libraryService.listEBooks(LibraryRepository.getEBooks());
                     outputMessages.printEBookMenu();
                 }
                 case 2 -> {
-                    libraryService.listReadableEBooks(libraryRepository.getEBooks());
+                    libraryService.listReadableEBooks(LibraryRepository.getEBooks());
                     outputMessages.printEBookMenu();
                 }
 
                 case 3 -> {
-                    libraryService.listDownloadableEBooks(libraryRepository.getEBooks());
+                    libraryService.listDownloadableEBooks(LibraryRepository.getEBooks());
                     outputMessages.printEBookMenu();
                 }
 
                 case 4 -> {
-                    if (!libraryUtils.searchReadEBookByTitle(scanner, user, libraryRepository.getEBooks())) {
+                    if (!libraryUtils.searchReadEBookByTitle(scanner, user, LibraryRepository.getEBooks())) {
                         outputMessages.printInvalidBookTitle();
                     }
                     outputMessages.printEBookMenu();
                 }
 
                 case 5 -> {
-                    if (!libraryUtils.searchDownloadEBookByTitle(scanner, user, libraryRepository.getEBooks())) {
+                    if (!libraryUtils.searchDownloadEBookByTitle(scanner, user, LibraryRepository.getEBooks())) {
                         outputMessages.printInvalidBookTitle();
                     }
                     outputMessages.printEBookMenu();

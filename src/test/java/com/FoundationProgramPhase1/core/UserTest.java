@@ -75,7 +75,7 @@ class UserTest {
         System.setOut(new PrintStream(outContent));
         System.out.println(user);
         String expectedOutput = "User{username='ivanivan', password='longOne', name='Ivan Georgiev', userAge=54, userGender='male', userAddress='123 Washington', userCity='Munich', userCounty='Germany', userEmail='ivan@abv.bg', GDPR=false,\n" +
-                " paperBookList=[],\n" +
+                " paperBookList={},\n" +
                 " eBookReadList=[],\n" +
                 " eBookDownloadedList=[]}\r\n";
         Assertions.assertEquals(expectedOutput, outContent.toString());

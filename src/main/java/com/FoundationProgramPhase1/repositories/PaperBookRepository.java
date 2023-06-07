@@ -3,28 +3,24 @@ package com.FoundationProgramPhase1.repositories;
 import com.FoundationProgramPhase1.core.BookType;
 import com.FoundationProgramPhase1.core.PaperBook;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PaperBookRepository {
 
-        public static List<PaperBook> getPaperBooks() {
-            List<PaperBook> list = new ArrayList<>();
-            list.add(new PaperBook(BookType.PAPER, "Star Wars", "Luke Shaw", "Fantasy",  "Fighting in the galaxy", 1, 2, 2, null));
-            list.add(new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null));
-            list.add(new PaperBook(BookType.PAPER, "Lord of the rings", "J. R. R. Tolkien", "Fantasy", "Journey to destroy a ring", 3, 12, 12, null));
-            list.add(new PaperBook(BookType.PAPER, "What a life", "Tom Leveen", "Autobiography", "Life ot Tom", 4, 5, 5, null));
-            list.add(new PaperBook(BookType.PAPER, "Game on", "Dan Brown", "Fiction", "Playing cards story", 5, 7, 7, null));
-            list.add(new PaperBook(BookType.PAPER, "Firefighters", "Wiley", "Action fiction", "A story for firefighters", 6,9, 9, null));
-            list.add(new PaperBook(BookType.PAPER, "World of cats", "James Patterson", "Novel", "The story of three cats", 7,11, 11, null));
-            list.add(new PaperBook(BookType.PAPER, "How to become a doctor", "Kazuo Ishiguro", "Guidebook", "Educative book for doctors", 8,6, 6, null));
-            list.add(new PaperBook(BookType.PAPER, "Be more productive", "Lewis Carroll", "Guidebook", "How to be more productive", 9,24, 24, null));
-            list.add(new PaperBook(BookType.PAPER, "Geometry", "Isabel Dalhousie", "Science", "Everything about geometry explained", 10, 3, 3, null));
-            list.add(new PaperBook(BookType.PAPER, "Statistics", "Isabel Dalhousie", "Science", "Everything about statistics explained", 11, 1, 1, null));
-            list.add(new PaperBook(BookType.PAPER, "Life of dinosaurs", "Rebecca Serle", "Fantasy", "How dinosaurs lived", 12,7, 7, null));
-            list.add(new PaperBook(BookType.PAPER, "The Wedding", "Jess Kidd", "Romance", "When a guy meets a woman", 13, 6, 6, null));
-            list.add(new PaperBook(BookType.PAPER, "8 perfect murders", "Paulo Coelho", "True crime", "Detective tries to catch a murderer", 14,5, 5, null));
-            list.add(new PaperBook(BookType.PAPER, "Learn the alphabet", "Rex Stout", "Guidebook", "Alphabet guide", 15, 4, 4, null));
+        public static Map<Integer, PaperBook> getPaperBooks() {
+            Map<Integer, PaperBook> list = new HashMap<>();
+            list.put(1, new PaperBook(BookType.PAPER, "Star Wars", "Luke Shaw", "Fantasy",  "Fighting in the galaxy", 111, 2, 1, null));
+            list.put(2, new PaperBook(BookType.PAPER, "Star Wars", "Luke Shaw", "Fantasy",  "Fighting in the galaxy", 112, 2, 1, null));
+            list.put(3, new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 113, 4, 1, null));
+            list.put(4, new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 114, 4, 1, null));
+            list.put(5, new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 115, 4, 1, null));
+            list.put(6, new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 116, 4, 1, null));
+            list.put(7, new PaperBook(BookType.PAPER, "Lord of the rings", "J. R. R. Tolkien", "Fantasy", "Journey to destroy a ring", 117, 3, 1, null));
+            list.put(8, new PaperBook(BookType.PAPER, "Lord of the rings", "J. R. R. Tolkien", "Fantasy", "Journey to destroy a ring", 118, 3, 1, null));
+            list.put(9, new PaperBook(BookType.PAPER, "Lord of the rings", "J. R. R. Tolkien", "Fantasy", "Journey to destroy a ring", 119, 3, 1, null));
+            list.put(10, new PaperBook(BookType.PAPER, "What a life", "Tom Leveen", "Autobiography", "Life ot Tom", 120, 2, 1, null));
+            list.put(11, new PaperBook(BookType.PAPER, "What a life", "Tom Leveen", "Autobiography", "Life ot Tom", 121, 2, 1, null));
             return list;
     }
 }

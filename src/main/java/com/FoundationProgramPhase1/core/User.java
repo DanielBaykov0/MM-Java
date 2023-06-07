@@ -1,8 +1,6 @@
 package com.FoundationProgramPhase1.core;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class User {
 
@@ -16,7 +14,7 @@ public class User {
     private final String userCounty;
     private final String userEmail;
     private final boolean GDPR;
-    private List<PaperBook> paperBookList;
+    private Map<Integer, PaperBook> paperBookList;
     private List<EBook> eBookReadList;
     private List<EBook> eBookDownloadedList;
 
@@ -31,7 +29,7 @@ public class User {
         this.userCounty = userCounty;
         this.userEmail = userEmail;
         this.GDPR = GDPR;
-        this.paperBookList = new ArrayList<>();
+        this.paperBookList = new HashMap<>();
         this.eBookReadList = new ArrayList<>();
         this.eBookDownloadedList = new ArrayList<>();
     }
@@ -76,11 +74,11 @@ public class User {
         return GDPR;
     }
 
-    public List<PaperBook> getPaperBookList() {
+    public Map<Integer, PaperBook> getPaperBookList() {
         return paperBookList;
     }
 
-    public void setPaperBookList(List<PaperBook> paperBookList) {
+    public void setPaperBookList(Map<Integer, PaperBook> paperBookList) {
         this.paperBookList = paperBookList;
     }
 

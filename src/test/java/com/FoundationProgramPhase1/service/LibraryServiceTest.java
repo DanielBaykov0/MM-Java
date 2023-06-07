@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 class LibraryServiceTest {
@@ -24,13 +25,13 @@ class LibraryServiceTest {
     void testBorrowPaperBook_Yes_True() {
         Scanner scanner = new Scanner("yes");
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
-        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
-
+        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 1, null);
+        int id = 1;
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        libraryService.borrowPaperBook(scanner, user, paperBook, user.getPaperBookList());
-        String expectedOutput = "Would you like to borrow this book?(yes/no)\r\nYou borrowed the book: Avatar\r\nAvatar available copies = 3\r\n";
+        libraryService.borrowPaperBook(scanner, user, id, paperBook, user.getPaperBookList());
+        String expectedOutput = "Would you like to borrow this book?(yes/no)\r\nYou borrowed the book: Avatar\r\nAvatar available copies = 0\r\n";
         Assertions.assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -38,13 +39,41 @@ class LibraryServiceTest {
     void testBorrowPaperBook_No() {
         Scanner scanner = new Scanner("no");
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
-        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
-
+        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 1, null);
+        int id = 1;
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        libraryService.borrowPaperBook(scanner, user, paperBook, user.getPaperBookList());
+        libraryService.borrowPaperBook(scanner, user, id, paperBook, user.getPaperBookList());
         String expectedOutput = "Would you like to borrow this book?(yes/no)\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void testReturnPaperBook_Yes_True() {
+        Scanner scanner = new Scanner("\nyes");
+        User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
+        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 1, null);
+        int id = 1;
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        libraryService.returnPaperBook(scanner, user, id, paperBook, user.getPaperBookList());
+        String expectedOutput = "Would you like to return this book?(yes/no)\r\nYou returned the book: Avatar\r\nAvatar available copies = 2\r\n";
+        Assertions.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void testReturnPaperBook_No() {
+        Scanner scanner = new Scanner("\nno");
+        User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", true);
+        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 1, null);
+        int id = 1;
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        libraryService.returnPaperBook(scanner, user, id, paperBook, user.getPaperBookList());
+        String expectedOutput = "Would you like to return this book?(yes/no)\r\n";
         Assertions.assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -131,11 +160,11 @@ class LibraryServiceTest {
     @Test
     void testListPaperBooks() {
         PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
-        List<PaperBook> paperBooks = List.of(paperBook);
+        Map<Integer, PaperBook> paperBooks = Map.of(1, paperBook);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         libraryService.listPaperBooks(paperBooks);
-        String expectedOutput = "Book{bookType=PAPER, bookTitle='Avatar', bookAuthor='James Cameron', bookGenre='Fantasy', bookDescription='Imaginary world', ISBN=2, paperBookNumberOfCopiesAvailable=4, paperBookNumberOfCopiesTotal=4, \n" +
+        String expectedOutput = "1 Book{bookType=PAPER, bookTitle='Avatar', bookAuthor='James Cameron', bookGenre='Fantasy', bookDescription='Imaginary world', ISBN=2, paperBookNumberOfCopiesAvailable=4, paperBookNumberOfCopiesTotal=4, \n" +
                 "borrowedDate=null}\r\n";
         Assertions.assertEquals(expectedOutput, outContent.toString());
     }
@@ -193,7 +222,7 @@ class LibraryServiceTest {
         System.setOut(new PrintStream(outContent));
         libraryService.printBooks(users);
         String expectedOutput = "User{username='ivanivan', password='longOne', name='Ivan Georgiev', userAge=54, userGender='male', userAddress='123 Washington', userCity='Munich', userCounty='Germany', userEmail='ivan@abv.bg', GDPR=true,\n" +
-                " paperBookList=[],\n" +
+                " paperBookList={},\n" +
                 " eBookReadList=[Book{bookType=EBOOK, bookTitle='The Great Gatsby', bookAuthor='Stella Gibbons', bookGenre='Novel', bookDescription='The adventures of a noble man', ISBN=23, eBookReadOnlineLink='https://openlibrary.org/read/TheGreatGatsby', eBookDownloadLink='https://openlibrary.org/download/TheGreatGatsby'}],\n" +
                 " eBookDownloadedList=[]}\r\n";
         Assertions.assertEquals(expectedOutput, outContent.toString());

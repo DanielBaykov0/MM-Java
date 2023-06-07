@@ -1,8 +1,9 @@
 package com.FoundationProgramPhase1.utils;
 
 import com.FoundationProgramPhase1.core.PaperBook;
-import com.FoundationProgramPhase1.core.User;
+import com.FoundationProgramPhase1.repositories.LibraryRepository;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class LibraryHelper {
@@ -82,16 +83,34 @@ public class LibraryHelper {
         return username;
     }
 
-    public int askForBookISBN(Scanner scanner, User user) {
-        outputMessages.enterBookISBN();
+    public int askForBookId(Scanner scanner, Map<Integer, PaperBook> paperBooks) {
+        outputMessages.enterBookId();
         int input = scanner.nextInt();
 
-        for (PaperBook paperBook : user.getPaperBookList()) {
-            if (paperBook.getISBN() == input) {
-                return paperBook.getISBN();
+        for (Map.Entry<Integer, PaperBook> entry : paperBooks.entrySet()) {
+            if (entry.getKey() == input) {
+                return entry.getKey();
             }
         }
 
         return 0;
+    }
+
+    public void subtractPaperBookTotalCopies(String bookName) {
+        for (Map.Entry<Integer, PaperBook> entry1 : LibraryRepository.getPaperBooks().entrySet()) {
+            if (entry1.getValue().getBookTitle().equals(bookName)) {
+                entry1.getValue().setPaperBookNumberOfCopiesTotal(entry1.getValue().getPaperBookNumberOfCopiesTotal() - 1);
+            }
+            System.out.println(entry1.getValue().getBookTitle() + " total copies = " + entry1.getValue().getPaperBookNumberOfCopiesTotal());
+        }
+    }
+
+    public void addToPaperBookTotalCopies(String bookName) {
+        for (Map.Entry<Integer, PaperBook> entry1 : LibraryRepository.getPaperBooks().entrySet()) {
+            if (entry1.getValue().getBookTitle().equals(bookName)) {
+                entry1.getValue().setPaperBookNumberOfCopiesTotal(entry1.getValue().getPaperBookNumberOfCopiesTotal() + 1);
+            }
+            System.out.println(entry1.getValue().getBookTitle() + " total copies = " + entry1.getValue().getPaperBookNumberOfCopiesTotal());
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.FoundationProgramPhase1.utils.OutputMessages;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class LibraryService {
@@ -25,14 +26,14 @@ public class LibraryService {
         userEBooksDownloadedList = new ArrayList<>();
     }
 
-    public void borrowPaperBook(Scanner scanner, User user, PaperBook paperBook, List<PaperBook> bookList) {
+    public boolean borrowPaperBook(Scanner scanner, User user, int id, PaperBook paperBook, Map<Integer, PaperBook> bookList) {
         outputMessages.printWouldYouBorrowBook();
         String input = scanner.nextLine();
         LocalDate localDate = LocalDate.now();
 
         switch (input) {
             case "yes" -> {
-                bookList.add(paperBook);
+                bookList.put(id, paperBook);
                 user.setPaperBookList(bookList);
                 paperBook.setBorrowedDate(localDate);
                 if (!getBorrowedBook().contains(user)) {
@@ -42,11 +43,39 @@ public class LibraryService {
                 paperBook.setPaperBookNumberOfCopiesAvailable(paperBook.getPaperBookNumberOfCopiesAvailable() - 1);
                 System.out.println("You borrowed the book: " + paperBook.getBookTitle());
                 System.out.println(paperBook.getBookTitle() + " available copies = " + paperBook.getPaperBookNumberOfCopiesAvailable());
+                return true;
             }
 
             case "no" -> {
+                return false;
             }
         }
+
+        return false;
+    }
+
+    public boolean returnPaperBook(Scanner scanner, User user, int id, PaperBook paperBook, Map<Integer, PaperBook> bookList) {
+        outputMessages.printWouldYouReturnBook();
+        scanner.nextLine();
+        String input = scanner.nextLine();
+
+        switch (input) {
+            case "yes" -> {
+                bookList.remove(id);
+                user.setPaperBookList(bookList);
+                paperBook.setBorrowedDate(null);
+                paperBook.setPaperBookNumberOfCopiesAvailable(paperBook.getPaperBookNumberOfCopiesAvailable() + 1);
+                System.out.println("You returned the book: " + paperBook.getBookTitle());
+                System.out.println(paperBook.getBookTitle() + " available copies = " + paperBook.getPaperBookNumberOfCopiesAvailable());
+                return true;
+            }
+
+            case "no" -> {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     public void readEBook(Scanner scanner, User user, EBook eBook, List<EBook> eBooks) {
@@ -97,9 +126,9 @@ public class LibraryService {
         }
     }
 
-    public void listPaperBooks(List<PaperBook> paperBooks) {
-        for (PaperBook paperBook : paperBooks) {
-            System.out.println(paperBook);
+    public void listPaperBooks(Map<Integer, PaperBook> paperBooks) {
+        for (Map.Entry<Integer, PaperBook> entry : paperBooks.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
         }
     }
 

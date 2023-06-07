@@ -14,13 +14,11 @@ public class UsersMenu {
 
     private final UsersService usersService;
     private final OutputMessages outputMessages;
-    private final LibraryRepository libraryRepository;
     private final LibraryMenu libraryMenu;
 
-    public UsersMenu(Scanner scanner, UsersService usersService, LibraryRepository libraryRepository, OutputMessages outputMessages, LibraryMenu libraryMenu) {
+    public UsersMenu(Scanner scanner, UsersService usersService, OutputMessages outputMessages, LibraryMenu libraryMenu) {
         this.scanner = scanner;
         this.usersService = usersService;
-        this.libraryRepository = libraryRepository;
         this.outputMessages = outputMessages;
         this.libraryMenu = libraryMenu;
     }
@@ -42,12 +40,12 @@ public class UsersMenu {
 
             switch (choice) {
                 case 1 -> {
-                    usersService.listAllUsers(libraryRepository.getUsers());
+                    usersService.listAllUsers(LibraryRepository.getUsers());
                     outputMessages.printUsersMenu();
                 }
                 case 2 -> {
-                    User user = usersService.returnCorrectUser(scanner, libraryRepository.getUsers());
-                    if (usersService.loginAsLibraryUser(user, libraryRepository.getUsers())) {
+                    User user = usersService.returnCorrectUser(scanner, LibraryRepository.getUsers());
+                    if (usersService.loginAsLibraryUser(user, LibraryRepository.getUsers())) {
                         libraryMenu.libraryLoop(user);
                     } else {
                         System.out.println("User doesn't exist");
@@ -55,8 +53,8 @@ public class UsersMenu {
                     }
                 }
                 case 3 -> {
-                    User user = usersService.returnCorrectUser(scanner, libraryRepository.getUsers());
-                    if (usersService.loginAsLibraryUser(user, libraryRepository.getUsers())) {
+                    User user = usersService.returnCorrectUser(scanner, LibraryRepository.getUsers());
+                    if (usersService.loginAsLibraryUser(user, LibraryRepository.getUsers())) {
                         libraryMenu.EBookLoop(user);
                     } else {
                         System.out.println("User doesn't exist");

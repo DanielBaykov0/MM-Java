@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 class LibraryHelperTest {
 
@@ -51,21 +49,25 @@ class LibraryHelperTest {
     }
 
     @Test
-    void testAskForBookISBN_ReturnCorrectNumber() {
-        Scanner scanner = new Scanner(String.valueOf(2));
-        List<PaperBook> paperBooks = new ArrayList<>();
+    void testAskForBookId_ReturnCorrectNumber() {
+        Scanner scanner = new Scanner(String.valueOf(1));
+        Map<Integer, PaperBook> paperBooks = new HashMap<>();
         PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
-        paperBooks.add(paperBook);
+        paperBooks.put(1, paperBook);
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", false);
         user.setPaperBookList(paperBooks);
-        Assertions.assertEquals(2, libraryHelper.askForBookISBN(scanner, user));
+        Assertions.assertEquals(1, libraryHelper.askForBookId(scanner, paperBooks));
     }
 
     @Test
-    void testAskForBookISBN_ReturnZero() {
+    void testAskForBookId_ReturnZero() {
         Scanner scanner = new Scanner(String.valueOf(2));
+        Map<Integer, PaperBook> paperBooks = new HashMap<>();
+        PaperBook paperBook = new PaperBook(BookType.PAPER, "Avatar", "James Cameron", "Fantasy", "Imaginary world", 2, 4, 4, null);
+        paperBooks.put(1, paperBook);
         User user = new User("ivanivan", "longOne", "Ivan Georgiev", 54, "male", "123 Washington", "Munich", "Germany", "ivan@abv.bg", false);
-        Assertions.assertEquals(0, libraryHelper.askForBookISBN(scanner, user));
+        user.setPaperBookList(paperBooks);
+        Assertions.assertEquals(0, libraryHelper.askForBookId(scanner, paperBooks));
     }
 }
 
